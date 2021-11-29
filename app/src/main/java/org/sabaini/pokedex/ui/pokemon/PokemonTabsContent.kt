@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,7 +88,7 @@ fun AboutContent() {
                     verticalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier.padding(top = 10.dp)
                 ) {
-                    Text(text = "87.5% male, 12.5% female", color = Color.White)
+                    Text(text = "\u2642 87.5% \u2640 12.5%", color = Color.White)
                     Text(text = "Monster, Grass", color = Color.White)
                     Text(text = "5140 - 5396 steps", color = Color.White)
                 }
@@ -125,9 +124,11 @@ fun BaseStatsContent() {
 @Composable
 fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(25.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(top = 10.dp)
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .fillMaxWidth()
     ) {
         Text(text = statName, color = Color.White)
 
@@ -139,7 +140,7 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
                     .height(15.dp)
-                    .fillMaxWidth()
+                    .width(280.dp)
             )
 
             Text(text = "${(progressValue * 100).toInt()}/300", color = Color.White)

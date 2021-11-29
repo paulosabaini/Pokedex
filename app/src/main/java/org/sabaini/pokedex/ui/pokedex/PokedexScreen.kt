@@ -54,7 +54,7 @@ fun PokemonList(pokemons: List<String>) {
         cells = GridCells.Adaptive(minSize = 150.dp)
     ) {
         items(items = pokemons) { pokemon ->
-            PokemonColumn(
+            PokemonCard(
                 pokemon = pokemon,
                 onItemClicked = {}
             )
@@ -63,7 +63,7 @@ fun PokemonList(pokemons: List<String>) {
 }
 
 @Composable
-fun PokemonColumn(
+fun PokemonCard(
     pokemon: String,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -139,9 +139,18 @@ fun PokemonType(
 @Composable
 fun PreviewPokemonColumn() {
     PokedexTheme {
-        PokemonColumn(
+        PokemonCard(
             pokemon = "Bulbasaur",
             onItemClicked = {}
         )
+    }
+}
+
+@ExperimentalFoundationApi
+@Preview
+@Composable
+fun PreviewPokedexScreen() {
+    PokedexTheme {
+        PokedexScreen()
     }
 }

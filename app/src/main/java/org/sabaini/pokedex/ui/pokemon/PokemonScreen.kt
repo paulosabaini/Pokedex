@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.*
@@ -92,7 +93,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     ) {
         tabs.forEachIndexed { index, tab ->
             Tab(
-                text = { Text(text = tab.title) },
+                text = { Text(text = tab.title, fontSize = 13.sp) },
                 selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
