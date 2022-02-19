@@ -10,13 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.home.HomeScreen
 import org.sabaini.pokedex.ui.theme.PokedexTheme
+import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
 @Composable
 @ExperimentalFoundationApi
-fun PokedexApp() {
+@ExperimentalCoilApi
+fun PokedexApp(pokedexViewModel: PokedexViewModel) {
     PokedexTheme {
         Scaffold(
             topBar = {
@@ -29,7 +32,7 @@ fun PokedexApp() {
                 }
             }
         ) {
-            HomeScreen()
+            HomeScreen(pokedexUiState = pokedexViewModel.pokedexUiState)
         }
     }
 }

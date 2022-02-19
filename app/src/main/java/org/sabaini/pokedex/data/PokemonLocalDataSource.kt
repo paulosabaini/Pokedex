@@ -1,4 +1,4 @@
 package org.sabaini.pokedex.data
 
-class PokedexRepository {
+class PokemonLocalDataSource {
 }

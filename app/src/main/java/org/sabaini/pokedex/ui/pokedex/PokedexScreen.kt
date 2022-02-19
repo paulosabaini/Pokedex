@@ -20,12 +20,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.state.PokedexItemUiState
+import org.sabaini.pokedex.ui.state.PokedexUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 
 @Composable
 @ExperimentalFoundationApi
-fun PokedexScreen() {
+@ExperimentalCoilApi
+fun PokedexScreen(pokedexUiState: PokedexUiState) {
     val pokemons = listOf(
         "bulbasaur",
         "charmander",
@@ -44,12 +49,12 @@ fun PokedexScreen() {
         "magikarp"
     )
 
-    PokemonList(pokemons = pokemons)
+    PokemonList(pokemons = pokedexUiState.results)
 }
 
 @Composable
 @ExperimentalFoundationApi
-fun PokemonList(pokemons: List<String>) {
+fun PokemonList(pokemons: List<PokedexItemUiState>) {
     LazyVerticalGrid(
         cells = GridCells.Adaptive(minSize = 150.dp)
     ) {
@@ -64,7 +69,7 @@ fun PokemonList(pokemons: List<String>) {
 
 @Composable
 fun PokemonCard(
-    pokemon: String,
+    pokemon: PokedexItemUiState,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -73,7 +78,7 @@ fun PokemonCard(
             .padding(5.dp)
             .clip(RoundedCornerShape(10.dp))
             .size(150.dp)
-            .clickable { onItemClicked(pokemon) }
+            .clickable { onItemClicked(pokemon.name) }
             .background(Color.Blue)
     ) {
         Box(
@@ -82,13 +87,13 @@ fun PokemonCard(
                 .padding(5.dp)
         ) {
             Text(
-                text = pokemon,
+                text = pokemon.name,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.CenterStart)
             )
             Text(
-                text = "#001",
+                text = pokemon.getFormatedPokemonNumber(),
                 color = Color.LightGray,
                 modifier = Modifier.align(Alignment.CenterEnd)
             )
@@ -107,8 +112,8 @@ fun PokemonCard(
                 PokemonType(type = "Grass")
             }
             Image(
-                painter = painterResource(id = R.drawable.bulbasaur),
-                contentDescription = "bulbasaur",
+                painter = rememberImagePainter(pokemon.getImageUrl()),
+                contentDescription = pokemon.name,
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(2f)
@@ -135,22 +140,22 @@ fun PokemonType(
     }
 }
 
-@Preview
-@Composable
-fun PreviewPokemonColumn() {
-    PokedexTheme {
-        PokemonCard(
-            pokemon = "Bulbasaur",
-            onItemClicked = {}
-        )
-    }
-}
-
-@ExperimentalFoundationApi
-@Preview
-@Composable
-fun PreviewPokedexScreen() {
-    PokedexTheme {
-        PokedexScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun PreviewPokemonColumn() {
+//    PokedexTheme {
+//        PokemonCard(
+//            pokemon = "Bulbasaur",
+//            onItemClicked = {}
+//        )
+//    }
+//}
+//
+//@ExperimentalFoundationApi
+//@Preview
+//@Composable
+//fun PreviewPokedexScreen() {
+//    PokedexTheme {
+//        PokedexScreen()
+//    }
+//}

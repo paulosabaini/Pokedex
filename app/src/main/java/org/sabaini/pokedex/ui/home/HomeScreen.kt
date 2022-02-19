@@ -7,11 +7,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.runtime.Composable
+import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.ui.pokedex.PokedexScreen
+import org.sabaini.pokedex.ui.state.PokedexUiState
 
 @Composable
 @ExperimentalFoundationApi
-fun HomeScreen() {
+@ExperimentalCoilApi
+fun HomeScreen(pokedexUiState: PokedexUiState) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { /*TODO*/ }) {
@@ -19,6 +22,6 @@ fun HomeScreen() {
             }
         }
     ) {
-        PokedexScreen()
+        PokedexScreen(pokedexUiState = pokedexUiState)
     }
 }
