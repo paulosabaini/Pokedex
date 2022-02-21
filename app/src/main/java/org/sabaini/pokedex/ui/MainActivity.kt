@@ -14,7 +14,7 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    val pokedexViewModel by viewModels<PokedexViewModel>()
+    private val pokedexViewModel by viewModels<PokedexViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

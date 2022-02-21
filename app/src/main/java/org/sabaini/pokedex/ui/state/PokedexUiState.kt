@@ -12,7 +12,7 @@ data class PokedexItemUiState(
     val name: String,
     val url: String
 ) {
-    fun getPokemonNumber(): String {
+    private fun getPokemonNumber(): String {
         return url.split("/".toRegex()).dropLast(1).last()
     }
 

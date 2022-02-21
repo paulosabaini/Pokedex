@@ -32,7 +32,7 @@ fun PokedexApp(pokedexViewModel: PokedexViewModel) {
                 }
             }
         ) {
-            HomeScreen(pokedexUiState = pokedexViewModel.pokedexUiState)
+            HomeScreen(pokedexUiState = pokedexViewModel.pokedexUiState, pokedexViewModel)
         }
     }
 }
