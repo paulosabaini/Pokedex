@@ -10,12 +10,11 @@ import androidx.compose.runtime.Composable
 import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.ui.pokedex.PokedexScreen
 import org.sabaini.pokedex.ui.state.PokedexUiState
-import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun HomeScreen(pokedexUiState: PokedexUiState, pokedexViewModel: PokedexViewModel) {
+fun HomeScreen(pokedexUiState: PokedexUiState) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { /*TODO*/ }) {
@@ -23,6 +22,6 @@ fun HomeScreen(pokedexUiState: PokedexUiState, pokedexViewModel: PokedexViewMode
             }
         }
     ) {
-        PokedexScreen(pokedexUiState = pokedexUiState, pokedexViewModel = pokedexViewModel)
+        PokedexScreen(pokedexUiState = pokedexUiState)
     }
 }
