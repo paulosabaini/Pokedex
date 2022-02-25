@@ -62,8 +62,7 @@ fun PokemonCard(
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val dominantColor = remember { mutableStateOf(Color.Blue) }
+    val dominantColor = remember { mutableStateOf(Color.Transparent) }
 
     Column(
         modifier = modifier
@@ -71,7 +70,7 @@ fun PokemonCard(
             .clip(RoundedCornerShape(10.dp))
             .size(150.dp)
             .clickable { onItemClicked(pokemon.name) }
-            .background(dominantColor.value)
+            .background(dominantColor.value),
     ) {
         val painter = rememberImagePainter(data = pokemon.getImageUrl())
         val painterState = painter.state
