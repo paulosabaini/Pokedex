@@ -4,7 +4,8 @@ Pokedex app using modern android development
 ### Todo
 - [x] Get pokemon list from api and show them on home screen  https://developer.android.com/jetpack/guide/data-layer#network-request
     - [ ] Cache with Room
-    - [ ] Implement pagination  
+    - [ ] Implement pagination
+    - [ ] Show loading and errors
 - [ ] Create fab with filters in the home screen  
 - [ ] Show pokemon info in the pokemon screen  
 - [ ] Create Animations

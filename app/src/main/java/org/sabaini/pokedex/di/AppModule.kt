@@ -8,7 +8,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.sabaini.pokedex.data.remote.PokemonApi
 import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.PokemonRepository
@@ -45,13 +47,19 @@ object AppModule {
         return Dispatchers.IO
     }
 
+    @Provides
+    fun provideCoroutineScope(): CoroutineScope {
+        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    }
+
     @Singleton
     @Provides
     fun providePokemonRepository(
         pokemonRemoteDataSource: PokemonRemoteDataSource,
-        pokemonLocalDataSource: PokemonLocalDataSource
+        pokemonLocalDataSource: PokemonLocalDataSource,
+        externalScope: CoroutineScope
     ): PokemonRepository {
-        return PokemonRepository(pokemonRemoteDataSource, pokemonLocalDataSource)
+        return PokemonRepository(pokemonRemoteDataSource, pokemonLocalDataSource, externalScope)
     }
 
     @Singleton

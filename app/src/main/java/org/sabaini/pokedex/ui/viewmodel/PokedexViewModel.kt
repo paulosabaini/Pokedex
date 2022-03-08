@@ -9,8 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.data.PokemonRepository
-import org.sabaini.pokedex.ui.state.PokedexItemUiState
-import org.sabaini.pokedex.ui.state.PokedexUiState
+import org.sabaini.pokedex.ui.state.PokemonUiState
 import java.io.IOException
 import javax.inject.Inject
 
@@ -18,27 +17,20 @@ import javax.inject.Inject
 class PokedexViewModel @Inject constructor(private val repository: PokemonRepository) :
     ViewModel() {
 
-    var pokedexUiState by mutableStateOf(PokedexUiState())
+    var pokemonUiState by mutableStateOf(listOf<PokemonUiState>())
         private set
 
     private var fetchJob: Job? = null
 
     init {
-        fetchPokedex()
+        fetchPokemons()
     }
 
-    fun fetchPokedex() {
+    fun fetchPokemons() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val pokemons = repository.fetchPokemonList()
-                val pokedexItems = pokemons.results.map { PokedexItemUiState(it.name, it.url) }
-                pokedexUiState = pokedexUiState.copy(
-                    count = pokemons.count,
-                    next = pokemons.next,
-                    previous = pokemons.previous,
-                    results = pokedexItems
-                )
+                pokemonUiState = repository.getPokemonList(true)
             } catch (ioe: IOException) {
 
             }

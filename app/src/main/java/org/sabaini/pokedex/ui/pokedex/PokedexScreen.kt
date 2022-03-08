@@ -29,21 +29,20 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
-import org.sabaini.pokedex.ui.state.PokedexItemUiState
-import org.sabaini.pokedex.ui.state.PokedexUiState
+import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 import org.sabaini.pokedex.util.ColorUtils
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokedexScreen(pokedexUiState: PokedexUiState) {
-    PokemonList(pokemons = pokedexUiState.results)
+fun PokedexScreen(pokemonUiState: List<PokemonUiState>) {
+    PokemonList(pokemons = pokemonUiState)
 }
 
 @Composable
 @ExperimentalFoundationApi
-fun PokemonList(pokemons: List<PokedexItemUiState>) {
+fun PokemonList(pokemons: List<PokemonUiState>) {
     LazyVerticalGrid(
         cells = GridCells.Adaptive(minSize = 150.dp)
     ) {
@@ -58,7 +57,7 @@ fun PokemonList(pokemons: List<PokedexItemUiState>) {
 
 @Composable
 fun PokemonCard(
-    pokemon: PokedexItemUiState,
+    pokemon: PokemonUiState,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -157,7 +156,7 @@ fun PokemonType(
 fun PreviewPokemonColumn() {
     PokedexTheme {
         PokemonCard(
-            pokemon = PokedexItemUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
+            pokemon = PokemonUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
             onItemClicked = {}
         )
     }
@@ -170,21 +169,16 @@ fun PreviewPokemonColumn() {
 fun PreviewPokedexScreen() {
     PokedexTheme {
         PokedexScreen(
-            PokedexUiState(
-                1126,
-                "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
-                null,
-                listOf(
-                    PokedexItemUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
-                    PokedexItemUiState("ivysaur", url = "https://pokeapi.co/api/v2/pokemon/2/"),
-                    PokedexItemUiState("venusaur", url = "https://pokeapi.co/api/v2/pokemon/3/"),
-                    PokedexItemUiState("charmander", url = "https://pokeapi.co/api/v2/pokemon/4/"),
-                    PokedexItemUiState("charmeleon", url = "https://pokeapi.co/api/v2/pokemon/5/"),
-                    PokedexItemUiState("charizard", url = "https://pokeapi.co/api/v2/pokemon/6/"),
-                    PokedexItemUiState("squirtle", url = "https://pokeapi.co/api/v2/pokemon/7/"),
-                    PokedexItemUiState("wartortle", url = "https://pokeapi.co/api/v2/pokemon/8/"),
-                    PokedexItemUiState("blastoise", url = "https://pokeapi.co/api/v2/pokemon/9/")
-                )
+            listOf(
+                PokemonUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
+                PokemonUiState("ivysaur", url = "https://pokeapi.co/api/v2/pokemon/2/"),
+                PokemonUiState("venusaur", url = "https://pokeapi.co/api/v2/pokemon/3/"),
+                PokemonUiState("charmander", url = "https://pokeapi.co/api/v2/pokemon/4/"),
+                PokemonUiState("charmeleon", url = "https://pokeapi.co/api/v2/pokemon/5/"),
+                PokemonUiState("charizard", url = "https://pokeapi.co/api/v2/pokemon/6/"),
+                PokemonUiState("squirtle", url = "https://pokeapi.co/api/v2/pokemon/7/"),
+                PokemonUiState("wartortle", url = "https://pokeapi.co/api/v2/pokemon/8/"),
+                PokemonUiState("blastoise", url = "https://pokeapi.co/api/v2/pokemon/9/")
             )
         )
     }

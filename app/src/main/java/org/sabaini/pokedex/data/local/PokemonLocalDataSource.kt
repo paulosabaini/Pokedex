@@ -9,7 +9,7 @@ class PokemonLocalDataSource @Inject constructor(
     private val pokemonDao: PokemonDao,
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun fetchPokemons(): Flow<List<PokemonLocalModel>> =
+    suspend fun fetchPokemons(): List<PokemonLocalModel> =
         withContext(ioDispatcher) {
             pokemonDao.loadAll()
         }

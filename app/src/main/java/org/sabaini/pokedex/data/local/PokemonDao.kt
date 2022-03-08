@@ -13,7 +13,7 @@ interface PokemonDao {
     fun saveAll(pokemons: List<PokemonLocalModel>)
 
     @Query("select * from PokemonLocalModel")
-    fun loadAll(): Flow<List<PokemonLocalModel>>
+    fun loadAll(): List<PokemonLocalModel>
 
     @Query("delete from PokemonLocalModel")
     fun deleteAll()
