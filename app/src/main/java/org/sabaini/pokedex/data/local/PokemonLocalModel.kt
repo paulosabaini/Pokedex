@@ -15,6 +15,7 @@ data class PokemonLocalModel(
 fun List<PokemonLocalModel>.asUiState(): List<PokemonUiState> {
     return map {
         PokemonUiState(
+            page = it.page,
             name = it.name,
             url = it.url
         )

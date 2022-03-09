@@ -31,13 +31,14 @@ import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
+import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 import org.sabaini.pokedex.util.ColorUtils
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokedexScreen(pokemonUiState: List<PokemonUiState>) {
-    PokemonList(pokemons = pokemonUiState)
+fun PokedexScreen(viewModel: PokedexViewModel) {
+    PokemonList(pokemons = viewModel.pokemonUiState)
 }
 
 @Composable
@@ -92,18 +93,18 @@ fun PokemonCard(
             )
         }
         Row {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .align(Alignment.Bottom)
-                    .padding(start = 5.dp, bottom = 5.dp)
-            ) {
-                PokemonType(
-                    type = "Poison",
-                    modifier = Modifier.padding(bottom = 5.dp)
-                )
-                PokemonType(type = "Grass")
-            }
+//            Column(
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .align(Alignment.Bottom)
+//                    .padding(start = 5.dp, bottom = 5.dp)
+//            ) {
+//                PokemonType(
+//                    type = "Poison",
+//                    modifier = Modifier.padding(bottom = 5.dp)
+//                )
+//                PokemonType(type = "Grass")
+//            }
             Image(
                 painter = painter,
                 contentDescription = pokemon.name,
@@ -156,30 +157,8 @@ fun PokemonType(
 fun PreviewPokemonColumn() {
     PokedexTheme {
         PokemonCard(
-            pokemon = PokemonUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
+            pokemon = PokemonUiState(0, "bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
             onItemClicked = {}
-        )
-    }
-}
-
-@ExperimentalFoundationApi
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun PreviewPokedexScreen() {
-    PokedexTheme {
-        PokedexScreen(
-            listOf(
-                PokemonUiState("bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
-                PokemonUiState("ivysaur", url = "https://pokeapi.co/api/v2/pokemon/2/"),
-                PokemonUiState("venusaur", url = "https://pokeapi.co/api/v2/pokemon/3/"),
-                PokemonUiState("charmander", url = "https://pokeapi.co/api/v2/pokemon/4/"),
-                PokemonUiState("charmeleon", url = "https://pokeapi.co/api/v2/pokemon/5/"),
-                PokemonUiState("charizard", url = "https://pokeapi.co/api/v2/pokemon/6/"),
-                PokemonUiState("squirtle", url = "https://pokeapi.co/api/v2/pokemon/7/"),
-                PokemonUiState("wartortle", url = "https://pokeapi.co/api/v2/pokemon/8/"),
-                PokemonUiState("blastoise", url = "https://pokeapi.co/api/v2/pokemon/9/")
-            )
         )
     }
 }

@@ -14,9 +14,10 @@ data class PokemonApiModel(
     val url: String
 )
 
-fun List<PokemonApiModel>.asLocalModel(): List<PokemonLocalModel> {
+fun List<PokemonApiModel>.asLocalModel(page: Int): List<PokemonLocalModel> {
     return map {
         PokemonLocalModel(
+            page = page,
             name = it.name,
             url = it.url
         )

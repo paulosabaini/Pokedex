@@ -14,12 +14,11 @@ import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.home.HomeScreen
 import org.sabaini.pokedex.ui.theme.PokedexTheme
-import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokedexApp(pokedexViewModel: PokedexViewModel) {
+fun PokedexApp() {
     PokedexTheme {
         Scaffold(
             topBar = {
@@ -32,7 +31,7 @@ fun PokedexApp(pokedexViewModel: PokedexViewModel) {
                 }
             }
         ) {
-            HomeScreen(pokemonUiState = pokedexViewModel.pokemonUiState)
+            HomeScreen()
         }
     }
 }

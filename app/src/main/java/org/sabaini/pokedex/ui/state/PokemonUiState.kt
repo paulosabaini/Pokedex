@@ -1,6 +1,7 @@
 package org.sabaini.pokedex.ui.state
 
 data class PokemonUiState(
+    var page: Int,
     val name: String,
     val url: String
 ) {

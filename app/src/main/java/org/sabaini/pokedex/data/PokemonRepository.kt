@@ -14,16 +14,16 @@ class PokemonRepository @Inject constructor(
     private val pokemonLocalDataSource: PokemonLocalDataSource,
     private val externalScope: CoroutineScope
 ) {
-    suspend fun getPokemonList(refresh: Boolean = false): List<PokemonUiState> {
+    suspend fun getPokemonList(page: Int, refresh: Boolean = false): List<PokemonUiState> {
         return if (refresh) {
             externalScope.async {
-                pokemonRemoteDataSource.fetchPokemonList().also { networkResult ->
-                    pokemonLocalDataSource.insertPokemons(networkResult.results.asLocalModel())
+                pokemonRemoteDataSource.fetchPokemonList(page = page).also { networkResult ->
+                    pokemonLocalDataSource.insertPokemons(networkResult.results.asLocalModel(page = page))
                 }
-                pokemonLocalDataSource.fetchPokemons().asUiState()
+                pokemonLocalDataSource.fetchPokemons(page).asUiState()
             }.await()
         } else {
-            return pokemonLocalDataSource.fetchPokemons().asUiState()
+            return pokemonLocalDataSource.fetchPokemons(page).asUiState()
         }
     }
 }

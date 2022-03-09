@@ -26,11 +26,14 @@ class PokedexViewModel @Inject constructor(private val repository: PokemonReposi
         fetchPokemons()
     }
 
-    fun fetchPokemons() {
+    private fun fetchPokemons() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                pokemonUiState = repository.getPokemonList(true)
+                pokemonUiState = repository.getPokemonList(0, false)
+                if (pokemonUiState.isEmpty()) {
+                    pokemonUiState = repository.getPokemonList(0, true)
+                }
             } catch (ioe: IOException) {
 
             }
