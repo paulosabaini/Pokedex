@@ -25,9 +25,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
@@ -38,20 +42,25 @@ import org.sabaini.pokedex.util.ColorUtils
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 fun PokedexScreen(viewModel: PokedexViewModel) {
-    PokemonList(pokemons = viewModel.pokemonUiState)
+    PokemonList(pokemons = viewModel.pokeFlow)
 }
 
 @Composable
 @ExperimentalFoundationApi
-fun PokemonList(pokemons: List<PokemonUiState>) {
+fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>) {
+
+    val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
+
     LazyVerticalGrid(
         cells = GridCells.Adaptive(minSize = 150.dp)
     ) {
-        items(items = pokemons) { pokemon ->
-            PokemonCard(
-                pokemon = pokemon,
-                onItemClicked = {}
-            )
+        items(lazyPokemonItems.itemCount) { index ->
+            lazyPokemonItems[index]?.let {
+                PokemonCard(
+                    pokemon = it,
+                    onItemClicked = {}
+                )
+            }
         }
     }
 }
