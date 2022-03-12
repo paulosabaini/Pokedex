@@ -36,6 +36,8 @@ import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 import org.sabaini.pokedex.util.ColorUtils
+import org.sabaini.pokedex.util.Constants.BLANK
+import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 
 @Composable
 @ExperimentalFoundationApi
@@ -46,6 +48,7 @@ fun PokedexScreen(viewModel: PokedexViewModel) {
 
 @Composable
 @ExperimentalFoundationApi
+@ExperimentalCoilApi
 fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>) {
 
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
@@ -65,9 +68,9 @@ fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<PokemonUiState>) {
-    val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(100) }
+    val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(SPAN_OVER_SIZED) }
 
     lazyPokemonItems.apply {
         when {
@@ -81,7 +84,7 @@ private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<Pokemo
                 val e = lazyPokemonItems.loadState.refresh as LoadState.Error
                 item(span) {
                     ErrorItem(
-                        message = e.error.localizedMessage ?: "",
+                        message = e.error.localizedMessage ?: BLANK,
                         modifier = Modifier.fillParentMaxSize(),
                         onClickRetry = { retry() }
                     )
@@ -91,7 +94,7 @@ private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<Pokemo
                 val e = lazyPokemonItems.loadState.append as LoadState.Error
                 item(span) {
                     ErrorItem(
-                        message = e.error.localizedMessage ?: "",
+                        message = e.error.localizedMessage ?: BLANK,
                         onClickRetry = { retry() }
                     )
                 }
@@ -100,6 +103,7 @@ private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<Pokemo
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun PokemonCard(
     pokemon: PokemonUiState,
@@ -198,6 +202,7 @@ fun PokemonType(
 
 @Preview
 @Composable
+@ExperimentalCoilApi
 fun PreviewPokemonColumn() {
     PokedexTheme {
         PokemonCard(
