@@ -3,6 +3,7 @@ Pokedex app using modern android development
 
 ### Todo
 - [ ] Show pokemon info in the pokemon screen
+  - [ ] Save list state when navigate
 - [ ] Improve performance of pokedex screen  
 - [ ] Create fab with filters in the home screen
 - [ ] Create Animations

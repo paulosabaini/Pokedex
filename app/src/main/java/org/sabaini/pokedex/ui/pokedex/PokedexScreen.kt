@@ -42,14 +42,14 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokedexScreen(viewModel: PokedexViewModel) {
-    PokemonList(pokemons = viewModel.pokeFlow)
+fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
+    PokemonList(pokemons = viewModel.pokeFlow, onClickPokemon)
 }
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>) {
+fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (String) -> Unit) {
 
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
@@ -60,7 +60,7 @@ fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>) {
             lazyPokemonItems[index]?.let {
                 PokemonCard(
                     pokemon = it,
-                    onItemClicked = {}
+                    onItemClicked = onClickPokemon
                 )
             }
         }

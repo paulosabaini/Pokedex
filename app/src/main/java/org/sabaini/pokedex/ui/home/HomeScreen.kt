@@ -14,7 +14,7 @@ import org.sabaini.pokedex.ui.pokedex.PokedexScreen
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun HomeScreen() {
+fun HomeScreen(onClickPokemon: (String) -> Unit = {}) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { /*TODO*/ }) {
@@ -22,6 +22,6 @@ fun HomeScreen() {
             }
         }
     ) {
-        PokedexScreen(hiltViewModel())
+        PokedexScreen(hiltViewModel(), onClickPokemon)
     }
 }

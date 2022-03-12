@@ -26,7 +26,7 @@ import org.sabaini.pokedex.ui.pokedex.PokemonType
 
 @ExperimentalPagerApi
 @Composable
-fun PokemonScreen() {
+fun PokemonScreen(pokemonName: String) {
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution, TabItem.Moves)
     val pagerState = rememberPagerState(0)
     Column(modifier = Modifier.background(Color(0xFF97CBAE))) {
@@ -37,7 +37,7 @@ fun PokemonScreen() {
                     .padding(5.dp)
             ) {
                 Text(
-                    text = "Bulbasaur",
+                    text = pokemonName,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.CenterStart),
@@ -116,5 +116,5 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
 @Preview
 @Composable
 fun PokemonScreenPreview() {
-    PokemonScreen()
+    PokemonScreen("1")
 }
