@@ -116,5 +116,5 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
 @Preview
 @Composable
 fun PokemonScreenPreview() {
-    PokemonScreen("1")
+    PokemonScreen("bulbasaur")
 }

@@ -13,5 +13,10 @@ class PokemonRemoteDataSource @Inject constructor(
         withContext(ioDispatcher) {
             pokemonApi.fetchPokemonList(limit = PAGING_SIZE, offset = page * PAGING_SIZE)
         }
+
+    suspend fun fetchPokemonInfo(name: String): PokemonInfoApiModel =
+        withContext(ioDispatcher) {
+            pokemonApi.fetchPokemonInfo(name)
+        }
 }
 
