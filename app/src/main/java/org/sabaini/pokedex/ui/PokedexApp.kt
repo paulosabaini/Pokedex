@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,7 +61,7 @@ fun PokedexApp() {
                     )
                 ) { entry ->
                     val pokemonName = entry.arguments?.getString("pokemonName")
-                    PokemonScreen(pokemonName = pokemonName ?: BLANK)
+                    PokemonScreen(pokemonName = pokemonName ?: BLANK, hiltViewModel())
                 }
             }
         }

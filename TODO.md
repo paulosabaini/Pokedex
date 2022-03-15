@@ -9,6 +9,7 @@ Pokedex app using modern android development
 - [ ] Create Animations
 - [ ] Create layout for Moves tab in PokemonScreen
 - [ ] Add refresh button in the pokedex screen
+- [ ] Add refresh button in the pokemon screen
 - [ ] Improve dominantColor state on PokemonCard
 - [ ] App icon
 

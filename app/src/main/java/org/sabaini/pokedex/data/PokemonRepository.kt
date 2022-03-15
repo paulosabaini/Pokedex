@@ -6,6 +6,8 @@ import org.sabaini.pokedex.data.local.PokemonLocalDataSource
 import org.sabaini.pokedex.data.local.asUiState
 import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.remote.asLocalModel
+import org.sabaini.pokedex.data.remote.asUiSate
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import javax.inject.Inject
 
@@ -25,5 +27,9 @@ class PokemonRepository @Inject constructor(
         } else {
             return pokemonLocalDataSource.fetchPokemons(page).asUiState()
         }
+    }
+
+    suspend fun getPokemonInfo(name: String, refresh: Boolean = false): PokemonInfoUiState {
+        return pokemonRemoteDataSource.fetchPokemonInfo(name).asUiSate()
     }
 }
