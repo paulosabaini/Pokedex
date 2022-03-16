@@ -18,5 +18,10 @@ class PokemonRemoteDataSource @Inject constructor(
         withContext(ioDispatcher) {
             pokemonApi.fetchPokemonInfo(name)
         }
+
+    suspend fun fetchPokemonInfoSpecies(id: String): PokemonInfoSpeciesApiModel =
+        withContext(ioDispatcher) {
+            pokemonApi.fetchPokemonInfoSpecies(id)
+        }
 }
 

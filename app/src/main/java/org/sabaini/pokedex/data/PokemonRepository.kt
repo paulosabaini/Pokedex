@@ -9,6 +9,7 @@ import org.sabaini.pokedex.data.remote.asLocalModel
 import org.sabaini.pokedex.data.remote.asUiSate
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.util.Constants.BLANK
 import javax.inject.Inject
 
 class PokemonRepository @Inject constructor(
@@ -30,6 +31,11 @@ class PokemonRepository @Inject constructor(
     }
 
     suspend fun getPokemonInfo(name: String, refresh: Boolean = false): PokemonInfoUiState {
-        return pokemonRemoteDataSource.fetchPokemonInfo(name).asUiSate()
+        val pokemonInfo = pokemonRemoteDataSource.fetchPokemonInfo(name)
+        val pokemonDescription =
+            pokemonRemoteDataSource.fetchPokemonInfoSpecies(pokemonInfo.id.toString())
+        val descriptionText =
+            pokemonDescription.flavorTextEntries.find { it.version.name == "firered" && it.language.name == "en" }
+        return pokemonInfo.asUiSate().copy(description = (descriptionText?.flavorText ?: BLANK).replace("\n"," "))
     }
 }

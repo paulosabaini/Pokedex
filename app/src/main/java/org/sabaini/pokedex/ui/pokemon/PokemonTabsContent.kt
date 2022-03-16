@@ -22,11 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokedex.PokemonType
+import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 
 @Composable
-fun AboutContent() {
+fun AboutContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,7 +36,7 @@ fun AboutContent() {
             .padding(15.dp)
     ) {
         Text(
-            text = "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
+            text = viewModel.pokemonInfoUiState.description,
             color = Color.White,
             textAlign = TextAlign.Justify,
             fontSize = 16.sp
@@ -53,7 +55,10 @@ fun AboutContent() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "Height", color = Color(0xFF707070))
-                    Text(text = "2' 04\"", color = Color.Black)
+                    Text(
+                        text = viewModel.pokemonInfoUiState.getFormattedHeight(),
+                        color = Color.Black
+                    )
                 }
 
                 Column(
@@ -61,36 +66,10 @@ fun AboutContent() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "Weight", color = Color(0xFF707070))
-                    Text(text = "15.2 lbs", color = Color.Black)
-                }
-            }
-        }
-
-        Column(Modifier.padding(top = 15.dp)) {
-            Text(
-                text = "Breeding",
-                color = Color.White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.padding(top = 10.dp, end = 25.dp)
-                ) {
-                    Text(text = "Gender", color = Color.White, fontWeight = FontWeight.Bold)
-                    Text(text = "Egg Groups", color = Color.White, fontWeight = FontWeight.Bold)
-                    Text(text = "Egg Cycle", color = Color.White, fontWeight = FontWeight.Bold)
-                }
-
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.padding(top = 10.dp)
-                ) {
-                    Text(text = "\u2642 87.5% \u2640 12.5%", color = Color.White)
-                    Text(text = "Monster, Grass", color = Color.White)
-                    Text(text = "5140 - 5396 steps", color = Color.White)
+                    Text(
+                        text = viewModel.pokemonInfoUiState.getFormattedWeight(),
+                        color = Color.Black
+                    )
                 }
             }
         }
@@ -100,11 +79,11 @@ fun AboutContent() {
 @Preview
 @Composable
 fun AboutContentPreview() {
-    AboutContent()
+    AboutContent(hiltViewModel())
 }
 
 @Composable
-fun BaseStatsContent() {
+fun BaseStatsContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -159,11 +138,11 @@ fun StatsBarPreview() {
 @Preview
 @Composable
 fun BaseStatsPreview() {
-    BaseStatsContent()
+    BaseStatsContent(hiltViewModel())
 }
 
 @Composable
-fun EvolutionContent() {
+fun EvolutionContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -273,11 +252,11 @@ fun EvolutionStep(level: Int) {
 @Preview
 @Composable
 fun EvolutionContentPreview() {
-    EvolutionContent()
+    EvolutionContent(hiltViewModel())
 }
 
 @Composable
-fun MovesContent() {
+fun MovesContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -298,5 +277,5 @@ fun MovesContent() {
 @Preview
 @Composable
 fun MovesContentPreview() {
-    MovesContent()
+    MovesContent(hiltViewModel())
 }

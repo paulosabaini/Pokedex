@@ -190,7 +190,7 @@ fun PokemonType(
     Box(
         modifier = modifier
             .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(10.dp))
-            .padding(3.dp)
+            .padding(5.dp)
     ) {
         Text(
             text = type,

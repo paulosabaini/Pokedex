@@ -24,6 +24,7 @@ data class PokemonInfoUiState(
     val id: Int = 0,
     val name: String = BLANK,
     val types: List<String> = listOf(),
+    val description: String = BLANK,
     val height: Int = 0,
     val weight: Int = 0
 ) {
@@ -34,4 +35,8 @@ data class PokemonInfoUiState(
     fun getImageUrl(): String {
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png"
     }
+
+    fun getFormattedHeight(): String = String.format("%.1f m", height.toFloat() / 10)
+
+    fun getFormattedWeight(): String = String.format("%.1f kg", weight.toFloat() / 10)
 }

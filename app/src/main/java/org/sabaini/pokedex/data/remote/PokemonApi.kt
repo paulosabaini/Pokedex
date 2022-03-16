@@ -15,4 +15,7 @@ interface PokemonApi {
 
     @GET("pokemon/{name}")
     suspend fun fetchPokemonInfo(@Path("name") name: String): PokemonInfoApiModel
+
+    @GET("pokemon-species/{id}")
+    suspend fun fetchPokemonInfoSpecies(@Path("id") id: String): PokemonInfoSpeciesApiModel
 }
