@@ -1,5 +1,6 @@
 package org.sabaini.pokedex.ui.state
 
+import androidx.compose.ui.graphics.Color
 import org.sabaini.pokedex.util.Constants.BLANK
 
 data class PokemonUiState(
@@ -26,7 +27,8 @@ data class PokemonInfoUiState(
     val types: List<String> = listOf(),
     val description: String = BLANK,
     val height: Int = 0,
-    val weight: Int = 0
+    val weight: Int = 0,
+    val baseStats: List<PokemonInfoStatUiState> = listOf()
 ) {
     fun getFormatedPokemonNumber(): String {
         return "#" + id.toString().padStart(3, '0')
@@ -40,3 +42,9 @@ data class PokemonInfoUiState(
 
     fun getFormattedWeight(): String = String.format("%.1f kg", weight.toFloat() / 10)
 }
+
+data class PokemonInfoStatUiState(
+    val name: String,
+    val baseState: Float,
+    val color: Color
+)

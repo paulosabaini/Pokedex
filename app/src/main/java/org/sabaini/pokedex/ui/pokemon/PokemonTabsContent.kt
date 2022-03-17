@@ -90,13 +90,9 @@ fun BaseStatsContent(viewModel: PokemonViewModel) {
             .background(Color(0xFF2B292C))
             .padding(15.dp)
     ) {
-        StatsBar(statName = "HP", barColor = Color(0xFFFF0000), progressValue = 0.45f)
-        StatsBar(statName = "Attack", barColor = Color(0xFFF08030), progressValue = 0.49f)
-        StatsBar(statName = "Defense", barColor = Color(0xFFF8D030), progressValue = 0.49f)
-        StatsBar(statName = "Sp. Atk", barColor = Color(0xFF6890F0), progressValue = 0.65f)
-        StatsBar(statName = "Sp. Def", barColor = Color(0xFF78C850), progressValue = 0.65f)
-        StatsBar(statName = "Speed", barColor = Color(0xFFF85888), progressValue = 0.45f)
-        StatsBar(statName = "Total", barColor = Color(0xFFA7DB8D), progressValue = 0.318f)
+        viewModel.pokemonInfoUiState.baseStats.forEach {
+            StatsBar(statName = it.name, barColor = it.color, progressValue = it.baseState)
+        }
     }
 }
 
@@ -113,7 +109,7 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
 
         Box(contentAlignment = Alignment.Center) {
             LinearProgressIndicator(
-                progress = progressValue,
+                progress = progressValue / 3,
                 backgroundColor = Color.DarkGray,
                 color = barColor,
                 modifier = Modifier
