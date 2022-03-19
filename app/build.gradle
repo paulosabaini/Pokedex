@@ -69,6 +69,7 @@ dependencies {
     // Accompanist
     implementation "com.google.accompanist:accompanist-pager:0.19.0" // Pager
     implementation "com.google.accompanist:accompanist-pager-indicators:0.19.0" // Pager Indicators
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.19.0" // System UI Controller
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

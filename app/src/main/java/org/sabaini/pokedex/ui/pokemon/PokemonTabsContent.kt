@@ -257,20 +257,22 @@ fun Evolution(
     }
 }
 
-//@Preview
-//@Composable
-//fun EvolutionPreview() {
-//    Surface(color = Color(0xFF2B292C)) {
-//        Evolution(
-//            image = painterResource(id = R.drawable.bulbasaur),
-//            pokemon = "Bulbasaur",
-//            borderColor = Color(0xFF682A68),
-//            stage = "Unevolved",
-//            pokemonTypes = listOf("Grass", "Poison")
-//        )
-//    }
-//}
+@ExperimentalCoilApi
+@Preview
+@Composable
+fun EvolutionPreview() {
+    Surface(color = Color(0xFF2B292C)) {
+        Evolution(
+            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+            pokemon = "bulbasaur",
+            stage = "Unevolved",
+            pokemonTypes = listOf("Grass", "Poison"),
+            minLevel = 0
+        )
+    }
+}
 
+@ExperimentalCoilApi
 @Preview
 @Composable
 fun EvolutionContentPreview() {
@@ -286,7 +288,7 @@ fun MovesContent(viewModel: PokemonViewModel) {
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Moves",
+            text = "Coming soon...",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

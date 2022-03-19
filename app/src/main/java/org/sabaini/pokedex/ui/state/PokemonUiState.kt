@@ -1,7 +1,6 @@
 package org.sabaini.pokedex.ui.state
 
 import androidx.compose.ui.graphics.Color
-import com.google.gson.annotations.SerializedName
 import org.sabaini.pokedex.util.Constants.BLANK
 
 data class PokemonUiState(
