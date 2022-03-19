@@ -1,6 +1,7 @@
 package org.sabaini.pokedex.ui.state
 
 import androidx.compose.ui.graphics.Color
+import com.google.gson.annotations.SerializedName
 import org.sabaini.pokedex.util.Constants.BLANK
 
 data class PokemonUiState(
@@ -28,7 +29,8 @@ data class PokemonInfoUiState(
     val description: String = BLANK,
     val height: Int = 0,
     val weight: Int = 0,
-    val baseStats: List<PokemonInfoStatUiState> = listOf()
+    val baseStats: List<PokemonInfoStatUiState> = listOf(),
+    val evolutionChain: List<PokemonInfoEvolutionUiState> = listOf()
 ) {
     fun getFormatedPokemonNumber(): String {
         return "#" + id.toString().padStart(3, '0')
@@ -47,4 +49,9 @@ data class PokemonInfoStatUiState(
     val name: String,
     val baseState: Float,
     val color: Color
+)
+
+data class PokemonInfoEvolutionUiState(
+    val pokemon: PokemonInfoUiState,
+    val minLevel: Int
 )

@@ -4,28 +4,35 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.sabaini.pokedex.R
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
+import kotlinx.coroutines.launch
 import org.sabaini.pokedex.ui.pokedex.PokemonType
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
+import org.sabaini.pokedex.util.ColorUtils
 
 @Composable
 fun AboutContent(viewModel: PokemonViewModel) {
@@ -137,113 +144,132 @@ fun BaseStatsPreview() {
     BaseStatsContent(hiltViewModel())
 }
 
+@ExperimentalCoilApi
 @Composable
 fun EvolutionContent(viewModel: PokemonViewModel) {
+    val evolutionStage =
+        listOf("Unevolved", "First evolution", "Second evolution", "Third evolution")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF2B292C))
-            .wrapContentSize(Alignment.Center),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(15.dp)
     ) {
-        Evolution(
-            image = painterResource(id = R.drawable.bulbasaur),
-            pokemon = "Bulbasaur",
-            pokemonColor = Color(0xFF97CBAE),
-            borderColor = Color(0xFF682A68),
-            stage = "Unevolved",
-            pokemonTypes = listOf("Grass", "Poison")
-        )
-
-        EvolutionStep(16)
-
-        Evolution(
-            image = painterResource(id = R.drawable.bulbasaur),
-            pokemon = "Ivysaur",
-            pokemonColor = Color(0xFF97CBAE),
-            borderColor = Color(0xFF682A68),
-            stage = "First evolution",
-            pokemonTypes = listOf("Grass", "Poison")
-        )
-
-        EvolutionStep(level = 32)
-
-        Evolution(
-            image = painterResource(id = R.drawable.bulbasaur),
-            pokemon = "Venusaur",
-            pokemonColor = Color(0xFF97CBAE),
-            borderColor = Color(0xFF682A68),
-            stage = "Second evolution",
-            pokemonTypes = listOf("Grass", "Poison")
-        )
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            itemsIndexed(viewModel.pokemonInfoUiState.evolutionChain) { index, evolution ->
+                Evolution(
+                    imageUrl = evolution.pokemon.getImageUrl(),
+                    pokemon = evolution.pokemon.name,
+                    stage = evolutionStage[index],
+                    pokemonTypes = evolution.pokemon.types,
+                    minLevel = evolution.minLevel
+                )
+            }
+        }
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun Evolution(
-    image: Painter,
+    imageUrl: String,
     pokemon: String,
-    borderColor: Color,
-    pokemonColor: Color,
     stage: String,
-    pokemonTypes: List<String>
+    pokemonTypes: List<String>,
+    minLevel: Int
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = image,
-            contentDescription = pokemon,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape)
-                .border(2.dp, borderColor, CircleShape)
-                .background(color = pokemonColor)
-        )
+    val painter = rememberImagePainter(data = imageUrl)
+    val painterState = painter.state
+    val dominantColor = remember { mutableStateOf(Color.Transparent) }
+    val vibrantColor = remember { mutableStateOf(Color.Transparent) }
 
-        Text(text = stage, color = Color.White)
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        if (minLevel != 0) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Level $minLevel", color = Color.White)
+                Icon(Icons.Filled.ArrowDownward, contentDescription = "Arrow", tint = Color.White)
+            }
+        }
 
         Column(
-            modifier = Modifier.background(
-                Color.White.copy(alpha = 0.1f),
-                RoundedCornerShape(5.dp)
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(10.dp)
         ) {
-            Text(text = pokemon, color = Color.White, fontWeight = FontWeight.Bold)
-            Row {
-                pokemonTypes.forEach { type ->
-                    PokemonType(
-                        type = type,
-                        modifier = Modifier.padding(1.dp)
+            Image(
+                painter = painter,
+                contentDescription = pokemon,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, vibrantColor.value, CircleShape)
+                    .background(color = dominantColor.value)
+            )
+
+            if (painterState is ImagePainter.State.Loading) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, Color.Transparent, CircleShape)
+                )
+            } else if (painterState is ImagePainter.State.Success) {
+                LaunchedEffect(key1 = painter) {
+                    launch {
+                        val image = painter.imageLoader.execute(painter.request).drawable
+                        ColorUtils.calculateDominantColor(image!!) {
+                            dominantColor.value = it
+                        }
+                        ColorUtils.calculateVibrantColor(image) {
+                            vibrantColor.value = it
+                        }
+                    }
+                }
+            }
+
+            Text(text = stage, color = Color.White)
+
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.White.copy(alpha = 0.1f),
+                        RoundedCornerShape(5.dp)
                     )
+                    .padding(5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = pokemon, color = Color.White, fontWeight = FontWeight.Bold)
+                Row {
+                    pokemonTypes.forEach { type ->
+                        PokemonType(
+                            type = type,
+                            modifier = Modifier.padding(1.dp)
+                        )
+                    }
                 }
             }
         }
     }
 }
 
-@Preview
-@Composable
-fun EvolutionPreview() {
-    Surface(color = Color(0xFF2B292C)) {
-        Evolution(
-            image = painterResource(id = R.drawable.bulbasaur),
-            pokemon = "Bulbasaur",
-            pokemonColor = Color(0xFF97CBAE),
-            borderColor = Color(0xFF682A68),
-            stage = "Unevolved",
-            pokemonTypes = listOf("Grass", "Poison")
-        )
-    }
-}
-
-@Composable
-fun EvolutionStep(level: Int) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Level $level", color = Color.White)
-        Icon(Icons.Filled.ArrowDownward, contentDescription = "Arrow", tint = Color.White)
-    }
-}
+//@Preview
+//@Composable
+//fun EvolutionPreview() {
+//    Surface(color = Color(0xFF2B292C)) {
+//        Evolution(
+//            image = painterResource(id = R.drawable.bulbasaur),
+//            pokemon = "Bulbasaur",
+//            borderColor = Color(0xFF682A68),
+//            stage = "Unevolved",
+//            pokemonTypes = listOf("Grass", "Poison")
+//        )
+//    }
+//}
 
 @Preview
 @Composable

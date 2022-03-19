@@ -1,7 +1,5 @@
 package org.sabaini.pokedex.data.remote
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.toUpperCase
 import com.google.gson.annotations.SerializedName
 import org.sabaini.pokedex.data.local.PokemonLocalModel
 import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
@@ -38,7 +36,6 @@ data class PokemonInfoApiModel(
     val height: Int,
     val weight: Int,
     val stats: List<PokemonInfoStatsApiModel>,
-    // evolution chain: https://pokeapi.co/api/v2/evolution-chain/1/
     // val moves: List<PokemonInfoMovesApiModel>
 )
 
@@ -82,7 +79,9 @@ data class PokemonInfoMoveDetailApiModel(
 
 data class PokemonInfoSpeciesApiModel(
     @SerializedName("flavor_text_entries")
-    val flavorTextEntries: List<PokemonInfoSpeciesFlavorTextApiModel>
+    val flavorTextEntries: List<PokemonInfoSpeciesFlavorTextApiModel>,
+    @SerializedName("evolution_chain")
+    val evolutionChain: PokemonInfoSpeciesEvolutionChain
 )
 
 data class PokemonInfoSpeciesFlavorTextApiModel(
@@ -98,6 +97,32 @@ data class PokemonInfoSpeciesFlavorTextLanguageApiModel(
 )
 
 data class PokemonInfoSpeciesFlavorTextVersionApiModel(
+    val name: String,
+    val url: String
+)
+
+data class PokemonInfoSpeciesEvolutionChain(
+    val url: String
+)
+
+data class PokemonInfoEvolutionApiModel(
+    val chain: PokemonInfoEvolutionChainApiModel
+)
+
+data class PokemonInfoEvolutionChainApiModel(
+    @SerializedName("evolution_details")
+    val evolutionDetails: List<PokemonInfoEvolutionDetailsApiModel>,
+    @SerializedName("evolves_to")
+    val evolvesTo: List<PokemonInfoEvolutionChainApiModel>,
+    val species: PokemonInfoEvolutionSpecieApiModel
+)
+
+data class PokemonInfoEvolutionDetailsApiModel(
+    @SerializedName("min_level")
+    val minLevel: Int
+)
+
+data class PokemonInfoEvolutionSpecieApiModel(
     val name: String,
     val url: String
 )
