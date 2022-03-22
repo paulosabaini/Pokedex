@@ -16,6 +16,7 @@ import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.PokemonRepository
 import org.sabaini.pokedex.data.local.PokemonDao
 import org.sabaini.pokedex.data.local.PokemonDatabase
+import org.sabaini.pokedex.data.local.PokemonInfoDao
 import org.sabaini.pokedex.data.local.PokemonLocalDataSource
 import org.sabaini.pokedex.util.Constants.BASE_URL
 import retrofit2.Retrofit
@@ -40,6 +41,11 @@ object AppModule {
     @Provides
     fun providePokemonDao(database: PokemonDatabase): PokemonDao {
         return database.PokemonDao()
+    }
+
+    @Provides
+    fun providePokemonInfoDao(database: PokemonDatabase): PokemonInfoDao {
+        return database.PokemonInfoDao()
     }
 
     @Provides
@@ -75,9 +81,10 @@ object AppModule {
     @Provides
     fun providePokemonLocalDataSource(
         pokemonDao: PokemonDao,
+        pokemonInfoDao: PokemonInfoDao,
         ioDispatcher: CoroutineDispatcher
     ): PokemonLocalDataSource {
-        return PokemonLocalDataSource(pokemonDao, ioDispatcher)
+        return PokemonLocalDataSource(pokemonDao, pokemonInfoDao, ioDispatcher)
     }
 
     @Singleton

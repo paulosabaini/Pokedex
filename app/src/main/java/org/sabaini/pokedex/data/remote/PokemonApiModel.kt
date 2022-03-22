@@ -1,6 +1,8 @@
 package org.sabaini.pokedex.data.remote
 
 import com.google.gson.annotations.SerializedName
+import org.sabaini.pokedex.data.local.PokemonInfoLocalModel
+import org.sabaini.pokedex.data.local.PokemonInfoStatLocalModel
 import org.sabaini.pokedex.data.local.PokemonLocalModel
 import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
@@ -38,6 +40,28 @@ data class PokemonInfoApiModel(
     val stats: List<PokemonInfoStatsApiModel>,
     // val moves: List<PokemonInfoMovesApiModel>
 )
+
+fun PokemonInfoApiModel.asLocalModel(): PokemonInfoLocalModel {
+    return PokemonInfoLocalModel(
+        id = this.id,
+        name = this.name,
+        types = this.types.joinToString(separator = ",") { it.type.name },
+        description = BLANK,
+        height = this.height,
+        weight = this.weight,
+        evolutionChainId = BLANK
+    )
+}
+
+fun List<PokemonInfoStatsApiModel>.asStatLocalModel(id: Int): List<PokemonInfoStatLocalModel> {
+    return map {
+        PokemonInfoStatLocalModel(
+            idPokemon = id,
+            name = it.stat.name,
+            baseState = it.baseState
+        )
+    }
+}
 
 data class PokemonInfoTypesApiModel(
     val slot: Int,

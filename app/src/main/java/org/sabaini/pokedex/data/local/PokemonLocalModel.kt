@@ -1,8 +1,14 @@
 package org.sabaini.pokedex.data.local
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.sabaini.pokedex.data.remote.PokemonInfoStatsApiModel
+import org.sabaini.pokedex.data.remote.PokemonInfoTypesApiModel
+import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.util.Enums
 
 @Entity
 data class PokemonLocalModel(
@@ -10,6 +16,33 @@ data class PokemonLocalModel(
     @PrimaryKey
     val name: String,
     val url: String
+)
+
+@Entity
+data class PokemonInfoLocalModel(
+    @PrimaryKey
+    val id: Int,
+    val name: String,
+    val types: String,
+    val description: String,
+    val height: Int,
+    val weight: Int,
+    val evolutionChainId: String
+)
+
+@Entity
+data class PokemonInfoStatLocalModel(
+    @PrimaryKey
+    val idPokemon: Int,
+    val name: String,
+    val baseState: Int
+)
+
+@Entity
+data class PokemonInfoEvolutionLocalModel(
+    @PrimaryKey
+    val idPokemon: Int,
+    val minLevel: Int
 )
 
 fun List<PokemonLocalModel>.asUiState(): List<PokemonUiState> {
@@ -20,4 +53,17 @@ fun List<PokemonLocalModel>.asUiState(): List<PokemonUiState> {
             url = it.url
         )
     }
+}
+
+fun PokemonInfoLocalModel.asUiState(): PokemonInfoUiState {
+    return PokemonInfoUiState(
+        id = this.id,
+        name = this.name,
+        types = this.types.split(","),
+        description = this.description,
+        height = this.height,
+        weight = this.weight,
+        baseStats = listOf(),
+        evolutionChain = listOf()
+    )
 }
