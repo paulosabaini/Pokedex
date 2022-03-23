@@ -4,10 +4,7 @@ import com.google.gson.annotations.SerializedName
 import org.sabaini.pokedex.data.local.PokemonInfoLocalModel
 import org.sabaini.pokedex.data.local.PokemonInfoStatLocalModel
 import org.sabaini.pokedex.data.local.PokemonLocalModel
-import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.util.Constants.BLANK
-import org.sabaini.pokedex.util.Enums
 
 data class PokemonListApiModel(
     val count: Int,
@@ -150,24 +147,3 @@ data class PokemonInfoEvolutionSpecieApiModel(
     val name: String,
     val url: String
 )
-
-fun PokemonInfoApiModel.asUiSate(): PokemonInfoUiState {
-    return PokemonInfoUiState(
-        id = this.id,
-        name = this.name,
-        types = this.types.map { it.type.name },
-        description = BLANK,
-        height = this.height,
-        weight = this.weight,
-        baseStats = this.stats.map { getUiStat(it) }
-    )
-}
-
-private fun getUiStat(apiStat: PokemonInfoStatsApiModel): PokemonInfoStatUiState {
-    val statEnum = Enums.StatType.valueOf(apiStat.stat.name.replace("-", "_").uppercase())
-    return PokemonInfoStatUiState(
-        name = statEnum.stat,
-        baseState = apiStat.baseState / 100f,
-        color = statEnum.color
-    )
-}

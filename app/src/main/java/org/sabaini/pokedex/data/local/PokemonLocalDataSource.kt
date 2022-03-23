@@ -24,6 +24,11 @@ class PokemonLocalDataSource @Inject constructor(
             pokemonInfoDao.loadPokemonInfo(id)
         }
 
+    suspend fun fetchPokemonInfoByName(name: String): PokemonInfoLocalModel =
+        withContext(ioDispatcher) {
+            pokemonInfoDao.loadPokemonInfoByName(name)
+        }
+
     suspend fun insertPokemonInfo(pokemon: PokemonInfoLocalModel) =
         withContext(ioDispatcher) {
             pokemonInfoDao.savePokemonInfo(pokemon)
@@ -39,9 +44,9 @@ class PokemonLocalDataSource @Inject constructor(
             pokemonInfoDao.savePokemonInfoStat(pokemonStat)
         }
 
-    suspend fun fetchPokemonInfoEvolution(id: Int): List<PokemonInfoEvolutionLocalModel> =
+    suspend fun fetchPokemonInfoEvolution(evolutionChainId: Int): List<PokemonInfoEvolutionLocalModel> =
         withContext(ioDispatcher) {
-            pokemonInfoDao.loadPokemonInfoEvolution(id)
+            pokemonInfoDao.loadPokemonInfoEvolution(evolutionChainId)
         }
 
     suspend fun insertPokemonInfoEvolution(pokemonEvolution: List<PokemonInfoEvolutionLocalModel>) =

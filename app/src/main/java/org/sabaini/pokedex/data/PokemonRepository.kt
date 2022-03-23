@@ -30,15 +30,14 @@ class PokemonRepository @Inject constructor(
         }
     }
 
-    suspend fun getPokemonInfoTemp(
+    suspend fun getPokemonInfo(
         name: String,
-        id: Int,
         refresh: Boolean = false
     ): PokemonInfoUiState {
         return if (refresh) {
             externalScope.async {
                 pokemonRemoteDataSource.fetchPokemonInfo(name).also { networkResult ->
-                    val localPokemon = savePokemonInfo(networkResult)
+                    val localPokemon = saveLocalPokemonInfo(networkResult)
 
                     val localStats = networkResult.stats.asStatLocalModel(localPokemon.id)
                     pokemonLocalDataSource.insertPokemonInfoStat(localStats)
@@ -54,9 +53,13 @@ class PokemonRepository @Inject constructor(
                         val minLevel = chain.evolutionDetails.firstOrNull()?.minLevel ?: 0
                         val pokemonInfo =
                             pokemonRemoteDataSource.fetchPokemonInfo(chain.species.name)
-                        savePokemonInfo(pokemonInfo)
+                        saveLocalPokemonInfo(pokemonInfo)
                         val evolution =
-                            PokemonInfoEvolutionLocalModel(pokemonInfo.id, minLevel)
+                            PokemonInfoEvolutionLocalModel(
+                                pokemonInfo.id,
+                                minLevel,
+                                localPokemon.evolutionChainId.toInt()
+                            )
                         evolutionCounter++
                         localModelEvolutions.add(evolution)
 
@@ -68,14 +71,14 @@ class PokemonRepository @Inject constructor(
                     }
                     pokemonLocalDataSource.insertPokemonInfoEvolution(localModelEvolutions)
                 }
-                getLocalPokemonInfo(id)
+                getLocalPokemonInfo(name)
             }.await()
         } else {
-            return getLocalPokemonInfo(id)
+            return getLocalPokemonInfo(name)
         }
     }
 
-    private suspend fun savePokemonInfo(pokeInfo: PokemonInfoApiModel): PokemonInfoLocalModel {
+    private suspend fun saveLocalPokemonInfo(pokeInfo: PokemonInfoApiModel): PokemonInfoLocalModel {
         val species = pokemonRemoteDataSource.fetchPokemonInfoSpecies(pokeInfo.id.toString())
         val descriptionText =
             species.flavorTextEntries.find { it.version.name == "firered" && it.language.name == "en" }?.flavorText?.replace(
@@ -89,65 +92,29 @@ class PokemonRepository @Inject constructor(
         return pokemon
     }
 
-    private suspend fun getLocalPokemonInfo(id: Int): PokemonInfoUiState {
-        val pokemonInfo = pokemonLocalDataSource.fetchPokemonInfo(id)
-        val pokemonStats = pokemonLocalDataSource.fetchPokemonInfoStat(id)
-        val pokemonEvolutions = pokemonLocalDataSource.fetchPokemonInfoEvolution(id)
-        val evolutionChain = pokemonEvolutions.map {
-            val pokemon = pokemonLocalDataSource.fetchPokemonInfo(it.idPokemon)
-            PokemonInfoEvolutionUiState(
-                pokemon = pokemon.asUiState(),
-                minLevel = it.minLevel
-            )
-        }
-        val stats = pokemonStats.map {
-            val statEnum = Enums.StatType.valueOf(it.name.replace("-", "_").uppercase())
-            PokemonInfoStatUiState(
-                name = statEnum.stat,
-                baseState = it.baseState / 100f,
-                color = statEnum.color
-            )
-        }
-        return pokemonInfo.asUiState()
-            .copy(evolutionChain = evolutionChain, baseStats = stats)
-    }
-
-    suspend fun getPokemonInfo(name: String, refresh: Boolean = false): PokemonInfoUiState {
-        val pokemonInfo = pokemonRemoteDataSource.fetchPokemonInfo(name)
-
-        val pokemonDescription =
-            pokemonRemoteDataSource.fetchPokemonInfoSpecies(pokemonInfo.id.toString())
-        val descriptionText =
-            pokemonDescription.flavorTextEntries.find { it.version.name == "firered" && it.language.name == "en" }
-
-        val pokemonEvolutions =
-            pokemonRemoteDataSource.fetchPokemonInfoEvolutions(
-                pokemonDescription.evolutionChain.url.split(
-                    "/".toRegex()
-                ).dropLast(1).last()
-            )
-        val uiStateEvolutions = mutableListOf<PokemonInfoEvolutionUiState>()
-
-        var chain = pokemonEvolutions.chain
-        var evolutionCounter = 0
-
-        while (evolutionCounter != -1) {
-            val minLevel = chain.evolutionDetails.firstOrNull()?.minLevel ?: 0
-            val pokemonInfoEvo = pokemonRemoteDataSource.fetchPokemonInfo(chain.species.name)
-            val evolution = PokemonInfoEvolutionUiState(pokemonInfoEvo.asUiSate(), minLevel)
-            evolutionCounter++
-            uiStateEvolutions.add(evolution)
-
-            if (chain.evolvesTo.isNotEmpty()) {
-                chain = chain.evolvesTo.first()
-            } else {
-                evolutionCounter = -1
+    private suspend fun getLocalPokemonInfo(name: String): PokemonInfoUiState {
+        val pokemonInfo = pokemonLocalDataSource.fetchPokemonInfoByName(name)
+        pokemonInfo.let {
+            val pokemonStats = pokemonLocalDataSource.fetchPokemonInfoStat(pokemonInfo.id)
+            val pokemonEvolutions =
+                pokemonLocalDataSource.fetchPokemonInfoEvolution(pokemonInfo.evolutionChainId.toInt())
+            val evolutionChain = pokemonEvolutions.map {
+                val pokemon = pokemonLocalDataSource.fetchPokemonInfo(it.idPokemon)
+                PokemonInfoEvolutionUiState(
+                    pokemon = pokemon.asUiState(),
+                    minLevel = it.minLevel
+                )
             }
+            val stats = pokemonStats.map {
+                val statEnum = Enums.StatType.valueOf(it.name.replace("-", "_").uppercase())
+                PokemonInfoStatUiState(
+                    name = statEnum.stat,
+                    baseState = it.baseState / 100f,
+                    color = statEnum.color
+                )
+            }
+            return pokemonInfo.asUiState()
+                .copy(evolutionChain = evolutionChain, baseStats = stats)
         }
-
-        return pokemonInfo.asUiSate().copy(
-            description = (descriptionText?.flavorText ?: BLANK).replace("\n", " "),
-            evolutionChain = uiStateEvolutions
-        )
     }
 }

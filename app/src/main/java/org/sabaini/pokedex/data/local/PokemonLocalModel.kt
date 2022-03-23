@@ -1,14 +1,9 @@
 package org.sabaini.pokedex.data.local
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.sabaini.pokedex.data.remote.PokemonInfoStatsApiModel
-import org.sabaini.pokedex.data.remote.PokemonInfoTypesApiModel
-import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
-import org.sabaini.pokedex.util.Enums
 
 @Entity
 data class PokemonLocalModel(
@@ -30,17 +25,16 @@ data class PokemonInfoLocalModel(
     val evolutionChainId: String
 )
 
-@Entity
+@Entity(primaryKeys = ["idPokemon", "name", "baseState"])
 data class PokemonInfoStatLocalModel(
-    @PrimaryKey
     val idPokemon: Int,
     val name: String,
     val baseState: Int
 )
 
-@Entity
+@Entity(primaryKeys = ["evolutionChainId", "idPokemon", "minLevel"])
 data class PokemonInfoEvolutionLocalModel(
-    @PrimaryKey
+    val evolutionChainId: Int,
     val idPokemon: Int,
     val minLevel: Int
 )
