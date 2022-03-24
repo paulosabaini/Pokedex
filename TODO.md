@@ -2,8 +2,7 @@
 Pokedex app using modern android development
 
 ### Todo
-- [ ] Show pokemon info in the pokemon screen
-  - [ ] Save list state when navigate
+- [ ] Save list state when navigate
 - [ ] Improve performance of pokedex screen  
 - [ ] Create fab with filters in the home screen
 - [ ] Create Animations
@@ -16,6 +15,7 @@ Pokedex app using modern android development
 - [ ] Display pokemon type in the home screen
 - [ ] Create mocks to display previews properly
 - [ ] PokemonType composable background color based on the type
+- [ ] When touch in a pokemon image in evolution tab, load the pokemon info
 
 ### Done ✓
 - [x] Create project
@@ -27,3 +27,4 @@ Pokedex app using modern android development
   - [x] Cache with Room
   - [x] Implement pagination
   - [x] Show loading and errors
+- [x] Show pokemon info in the pokemon screen

@@ -33,14 +33,11 @@ class PokemonRepository @Inject constructor(
     suspend fun getPokemonInfo(
         name: String,
         refresh: Boolean = false
-    ): PokemonInfoUiState {
+    ): PokemonInfoUiState? {
         return if (refresh) {
             externalScope.async {
                 pokemonRemoteDataSource.fetchPokemonInfo(name).also { networkResult ->
                     val localPokemon = saveLocalPokemonInfo(networkResult)
-
-                    val localStats = networkResult.stats.asStatLocalModel(localPokemon.id)
-                    pokemonLocalDataSource.insertPokemonInfoStat(localStats)
 
                     val pokemonEvolutions =
                         pokemonRemoteDataSource.fetchPokemonInfoEvolutions(localPokemon.evolutionChainId)
@@ -56,9 +53,9 @@ class PokemonRepository @Inject constructor(
                         saveLocalPokemonInfo(pokemonInfo)
                         val evolution =
                             PokemonInfoEvolutionLocalModel(
+                                localPokemon.evolutionChainId.toInt(),
                                 pokemonInfo.id,
-                                minLevel,
-                                localPokemon.evolutionChainId.toInt()
+                                minLevel
                             )
                         evolutionCounter++
                         localModelEvolutions.add(evolution)
@@ -86,15 +83,17 @@ class PokemonRepository @Inject constructor(
                 " "
             ) ?: BLANK
         val evolutionChainId = species.evolutionChain.url.split("/".toRegex()).dropLast(1).last()
+        val localStats = pokeInfo.stats.asStatLocalModel(pokeInfo.id)
+        pokemonLocalDataSource.insertPokemonInfoStat(localStats)
         val pokemon = pokeInfo.asLocalModel()
             .copy(description = descriptionText, evolutionChainId = evolutionChainId)
         pokemonLocalDataSource.insertPokemonInfo(pokemon)
         return pokemon
     }
 
-    private suspend fun getLocalPokemonInfo(name: String): PokemonInfoUiState {
+    private suspend fun getLocalPokemonInfo(name: String): PokemonInfoUiState? {
         val pokemonInfo = pokemonLocalDataSource.fetchPokemonInfoByName(name)
-        pokemonInfo.let {
+        return pokemonInfo?.let {
             val pokemonStats = pokemonLocalDataSource.fetchPokemonInfoStat(pokemonInfo.id)
             val pokemonEvolutions =
                 pokemonLocalDataSource.fetchPokemonInfoEvolution(pokemonInfo.evolutionChainId.toInt())
@@ -113,7 +112,7 @@ class PokemonRepository @Inject constructor(
                     color = statEnum.color
                 )
             }
-            return pokemonInfo.asUiState()
+            pokemonInfo.asUiState()
                 .copy(evolutionChain = evolutionChain, baseStats = stats)
         }
     }

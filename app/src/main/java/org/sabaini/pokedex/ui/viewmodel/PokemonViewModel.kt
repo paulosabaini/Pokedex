@@ -20,9 +20,10 @@ class PokemonViewModel @Inject constructor(private val pokemonRepository: Pokemo
 
     fun fetchPokemonInfo(name: String) {
         viewModelScope.launch {
-            pokemonInfoUiState = pokemonRepository.getPokemonInfo(name, false)
-            if (pokemonInfoUiState.id == 0) {
-                pokemonInfoUiState = pokemonRepository.getPokemonInfo(name, true)
+            pokemonRepository.getPokemonInfo(name, false)?.let { pokemonInfo ->
+                pokemonInfoUiState = pokemonInfo
+            } ?: pokemonRepository.getPokemonInfo(name, true)?.let { pokemonInfo ->
+                pokemonInfoUiState = pokemonInfo
             }
         }
     }

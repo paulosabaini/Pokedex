@@ -15,7 +15,7 @@ interface PokemonInfoDao {
     fun loadPokemonInfo(id: Int): PokemonInfoLocalModel
 
     @Query("select * from PokemonInfoLocalModel where name = :name")
-    fun loadPokemonInfoByName(name: String): PokemonInfoLocalModel
+    fun loadPokemonInfoByName(name: String): PokemonInfoLocalModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePokemonInfoStat(pokemonStat: List<PokemonInfoStatLocalModel>)

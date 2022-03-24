@@ -24,7 +24,7 @@ class PokemonLocalDataSource @Inject constructor(
             pokemonInfoDao.loadPokemonInfo(id)
         }
 
-    suspend fun fetchPokemonInfoByName(name: String): PokemonInfoLocalModel =
+    suspend fun fetchPokemonInfoByName(name: String): PokemonInfoLocalModel? =
         withContext(ioDispatcher) {
             pokemonInfoDao.loadPokemonInfoByName(name)
         }
