@@ -38,6 +38,7 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
+import org.sabaini.pokedex.util.Enums
 
 @Composable
 @ExperimentalFoundationApi
@@ -189,7 +190,7 @@ fun PokemonType(
 ) {
     Box(
         modifier = modifier
-            .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(10.dp))
+            .background(Enums.PokemonTypeColor.valueOf(type.uppercase()).color, RoundedCornerShape(10.dp))
             .padding(5.dp)
     ) {
         Text(

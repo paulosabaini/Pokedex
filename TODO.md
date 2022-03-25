@@ -13,7 +13,6 @@ Pokedex app using modern android development
 - [ ] Clean some api model classes
 - [ ] Display pokemon type in the home screen
 - [ ] Create mocks to display previews properly
-- [ ] PokemonType composable background color based on the type
 - [ ] When touch in a pokemon image in evolution tab, load the pokemon info
 
 ### Done ✓
@@ -28,3 +27,4 @@ Pokedex app using modern android development
   - [x] Show loading and errors
 - [x] Show pokemon info in the pokemon screen
 - [x] Save list state when navigate
+- [x] PokemonType composable background color based on the type
