@@ -1,9 +1,11 @@
 package org.sabaini.pokedex.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import org.sabaini.pokedex.data.PokemonsSource
@@ -18,5 +20,5 @@ class PokedexViewModel @Inject constructor(
 
     val pokeFlow: Flow<PagingData<PokemonUiState>> = Pager(PagingConfig(PAGING_SIZE)) {
         source
-    }.flow
+    }.flow.cachedIn(viewModelScope)
 }
