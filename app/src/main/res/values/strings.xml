@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="pokedex">Pokédex</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="stat_value">%s/300</string>
+    <string name="level_value">Level %s</string>
+    <string name="arrow">Arrow</string>
+    <string name="coming_soon">Coming soon...</string>
 </resources>

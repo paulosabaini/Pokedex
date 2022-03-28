@@ -10,9 +10,9 @@ Pokedex app using modern android development
 - [ ] Add refresh button in the pokemon screen
 - [ ] Improve dominantColor state on PokemonCard
 - [ ] Clean some api model classes
-- [ ] Display pokemon type in the home screen
 - [ ] Create mocks to display previews properly
 - [ ] When touch in a pokemon image in evolution tab, load the pokemon info
+- [ ] Back button on toolbar
 
 ### Done ✓
 - [x] Create project

@@ -21,15 +21,15 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
-import org.sabaini.pokedex.ui.pokedex.PokemonType
+import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
+import org.sabaini.pokedex.util.Enums
 
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
 fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
-
     viewModel.fetchPokemonInfo(pokemonName)
 
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution, TabItem.Moves)
@@ -105,13 +105,14 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
 }
 
 @ExperimentalPagerApi
+@ExperimentalCoilApi
 @Composable
 fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
 
     TabRow(
         selectedTabIndex = pagerState.currentPage,
-        backgroundColor = Color(0xFF2B292C),
+        backgroundColor = Black,
         contentColor = Color.White,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
@@ -134,10 +135,32 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 }
 
 @ExperimentalPagerApi
+@ExperimentalCoilApi
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
     HorizontalPager(state = pagerState, count = tabs.size) { page ->
         tabs[page].screen()
+    }
+}
+
+@Composable
+fun PokemonType(
+    type: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .background(
+                Enums.PokemonTypeColor.valueOf(type.uppercase()).color,
+                RoundedCornerShape(10.dp)
+            )
+            .padding(5.dp)
+    ) {
+        Text(
+            text = type,
+            color = Color.White,
+            fontSize = 12.sp,
+        )
     }
 }
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,9 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
-import org.sabaini.pokedex.ui.pokedex.PokemonType
+import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
 
@@ -39,7 +42,7 @@ fun AboutContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF2B292C))
+            .background(Black)
             .padding(15.dp)
     ) {
         Text(
@@ -61,7 +64,7 @@ fun AboutContent(viewModel: PokemonViewModel) {
                     modifier = Modifier.padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Height", color = Color(0xFF707070))
+                    Text(text = stringResource(id = R.string.height), color = LightGray)
                     Text(
                         text = viewModel.pokemonInfoUiState.getFormattedHeight(),
                         color = Color.Black
@@ -72,7 +75,7 @@ fun AboutContent(viewModel: PokemonViewModel) {
                     modifier = Modifier.padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Weight", color = Color(0xFF707070))
+                    Text(text = stringResource(id = R.string.weight), color = LightGray)
                     Text(
                         text = viewModel.pokemonInfoUiState.getFormattedWeight(),
                         color = Color.Black
@@ -83,18 +86,12 @@ fun AboutContent(viewModel: PokemonViewModel) {
     }
 }
 
-@Preview
-@Composable
-fun AboutContentPreview() {
-    AboutContent(hiltViewModel())
-}
-
 @Composable
 fun BaseStatsContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF2B292C))
+            .background(Black)
             .padding(15.dp)
     ) {
         viewModel.pokemonInfoUiState.baseStats.forEach {
@@ -125,23 +122,14 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
                     .width(280.dp)
             )
 
-            Text(text = "${(progressValue * 100).toInt()}/300", color = Color.White)
+            Text(
+                text = stringResource(
+                    R.string.stat_value,
+                    (progressValue * 100).toInt().toString()
+                ), color = Color.White
+            )
         }
     }
-}
-
-@Preview
-@Composable
-fun StatsBarPreview() {
-    Surface(color = Color(0xFF2B292C)) {
-        StatsBar("EXP", Color.Red, 0.5f)
-    }
-}
-
-@Preview
-@Composable
-fun BaseStatsPreview() {
-    BaseStatsContent(hiltViewModel())
 }
 
 @ExperimentalCoilApi
@@ -153,7 +141,7 @@ fun EvolutionContent(viewModel: PokemonViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF2B292C))
+            .background(Black)
             .padding(15.dp)
     ) {
         LazyColumn(
@@ -190,8 +178,15 @@ fun Evolution(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         if (minLevel != 0) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Level $minLevel", color = Color.White)
-                Icon(Icons.Filled.ArrowDownward, contentDescription = "Arrow", tint = Color.White)
+                Text(
+                    text = stringResource(R.string.level_value, minLevel.toString()),
+                    color = Color.White
+                )
+                Icon(
+                    Icons.Filled.ArrowDownward,
+                    contentDescription = stringResource(R.string.arrow),
+                    tint = Color.White
+                )
             }
         }
 
@@ -257,11 +252,50 @@ fun Evolution(
     }
 }
 
+@Composable
+fun MovesContent(viewModel: PokemonViewModel) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Black)
+            .wrapContentSize(Alignment.Center)
+    ) {
+        Text(
+            text = stringResource(R.string.coming_soon),
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            fontSize = 25.sp
+        )
+    }
+}
+
+@Preview
+@Composable
+fun AboutContentPreview() {
+    AboutContent(hiltViewModel())
+}
+
+@Preview
+@Composable
+fun StatsBarPreview() {
+    Surface(color = Black) {
+        StatsBar("EXP", Color.Red, 0.5f)
+    }
+}
+
+@Preview
+@Composable
+fun BaseStatsPreview() {
+    BaseStatsContent(hiltViewModel())
+}
+
 @ExperimentalCoilApi
 @Preview
 @Composable
 fun EvolutionPreview() {
-    Surface(color = Color(0xFF2B292C)) {
+    Surface(color = Black) {
         Evolution(
             imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
             pokemon = "bulbasaur",
@@ -277,25 +311,6 @@ fun EvolutionPreview() {
 @Composable
 fun EvolutionContentPreview() {
     EvolutionContent(hiltViewModel())
-}
-
-@Composable
-fun MovesContent(viewModel: PokemonViewModel) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF2B292C))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Coming soon...",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
-    }
 }
 
 @Preview
