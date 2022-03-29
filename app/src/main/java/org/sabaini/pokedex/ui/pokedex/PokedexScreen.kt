@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -31,12 +31,15 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
+import org.sabaini.pokedex.util.Constants.TWO_FLOAT
+import org.sabaini.pokedex.util.Constants.ZERO_POINT_FIVE_FLOAT
 
 @Composable
 @ExperimentalFoundationApi
@@ -53,7 +56,7 @@ fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (Str
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
     LazyVerticalGrid(
-        cells = GridCells.Adaptive(minSize = 150.dp)
+        cells = GridCells.Adaptive(minSize = dimensionResource(R.dimen.dimen_of_150_dp))
     ) {
         items(lazyPokemonItems.itemCount) { index ->
             lazyPokemonItems[index]?.let {
@@ -78,9 +81,9 @@ fun PokemonCard(
 
     Column(
         modifier = modifier
-            .padding(5.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .size(150.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_5_dp))
+            .clip(RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp)))
+            .size(dimensionResource(R.dimen.dimen_of_150_dp))
             .clickable { onItemClicked(pokemon.name) }
             .background(dominantColor.value),
     ) {
@@ -90,7 +93,7 @@ fun PokemonCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)
+                .padding(dimensionResource(R.dimen.dimen_of_5_dp))
         ) {
             Text(
                 text = pokemon.name,
@@ -110,15 +113,15 @@ fun PokemonCard(
                 contentDescription = pokemon.name,
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(2f)
+                    .weight(TWO_FLOAT)
             )
             if (painterState is ImagePainter.State.Loading) {
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,
                     modifier = Modifier
-                        .scale(0.5f)
+                        .scale(ZERO_POINT_FIVE_FLOAT)
                         .fillMaxSize()
-                        .weight(2f)
+                        .weight(TWO_FLOAT)
                 )
             } else if (painterState is ImagePainter.State.Success) {
                 LaunchedEffect(key1 = painter) {

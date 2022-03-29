@@ -11,9 +11,9 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
@@ -21,9 +21,11 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
+import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
+import org.sabaini.pokedex.util.Constants.ZERO
 import org.sabaini.pokedex.util.Enums
 
 @ExperimentalCoilApi
@@ -33,7 +35,7 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
     viewModel.fetchPokemonInfo(pokemonName)
 
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution, TabItem.Moves)
-    val pagerState = rememberPagerState(0)
+    val pagerState = rememberPagerState(ZERO)
     val dominantColor = remember { mutableStateOf(Color.Transparent) }
 
     Column(modifier = Modifier.background(color = dominantColor.value)) {
@@ -44,28 +46,33 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
+                    .padding(dimensionResource(R.dimen.dimen_of_5_dp))
             ) {
                 Text(
                     text = viewModel.pokemonInfoUiState.name,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.CenterStart),
-                    fontSize = 35.sp,
+                    fontSize = dimensionResource(R.dimen.dimen_of_35_sp).value.sp,
                 )
                 Text(
                     text = viewModel.pokemonInfoUiState.getFormatedPokemonNumber(),
                     color = Color.LightGray,
                     modifier = Modifier.align(Alignment.CenterEnd),
-                    fontSize = 25.sp,
+                    fontSize = dimensionResource(R.dimen.dimen_of_25_sp).value.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
+            Row(
+                modifier = Modifier.padding(
+                    start = dimensionResource(R.dimen.dimen_of_5_dp),
+                    top = dimensionResource(R.dimen.dimen_of_5_dp)
+                )
+            ) {
                 viewModel.pokemonInfoUiState.types.forEach {
                     PokemonType(
                         type = it,
-                        modifier = Modifier.padding(end = 5.dp)
+                        modifier = Modifier.padding(end = dimensionResource(R.dimen.dimen_of_5_dp))
                     )
                 }
             }
@@ -73,17 +80,17 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
                 painter = painter,
                 contentDescription = viewModel.pokemonInfoUiState.name,
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(dimensionResource(R.dimen.dimen_of_150_dp))
                     .align(CenterHorizontally)
-                    .padding(bottom = 10.dp)
+                    .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp))
             )
             if (painterState is ImagePainter.State.Loading) {
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,
                     modifier = Modifier
-                        .size(150.dp)
+                        .size(dimensionResource(R.dimen.dimen_of_150_dp))
                         .align(CenterHorizontally)
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp))
                 )
             } else if (painterState is ImagePainter.State.Success) {
                 LaunchedEffect(key1 = painter) {
@@ -97,7 +104,14 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
             }
         }
 
-        Column(modifier = Modifier.clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))) {
+        Column(
+            modifier = Modifier.clip(
+                RoundedCornerShape(
+                    topStart = dimensionResource(R.dimen.dimen_of_30_dp),
+                    topEnd = dimensionResource(R.dimen.dimen_of_30_dp)
+                )
+            )
+        ) {
             Tabs(tabs = tabs, pagerState = pagerState)
             TabsContent(tabs = tabs, pagerState = pagerState)
         }
@@ -122,7 +136,12 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     ) {
         tabs.forEachIndexed { index, tab ->
             Tab(
-                text = { Text(text = tab.title, fontSize = 13.sp) },
+                text = {
+                    Text(
+                        text = tab.title,
+                        fontSize = dimensionResource(R.dimen.dimen_of_13_sp).value.sp
+                    )
+                },
                 selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
@@ -152,14 +171,14 @@ fun PokemonType(
         modifier = modifier
             .background(
                 Enums.PokemonTypeColor.valueOf(type.uppercase()).color,
-                RoundedCornerShape(10.dp)
+                RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp))
             )
-            .padding(5.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_5_dp))
     ) {
         Text(
             text = type,
             color = Color.White,
-            fontSize = 12.sp,
+            fontSize = dimensionResource(R.dimen.dimen_of_12_sp).value.sp,
         )
     }
 }

@@ -7,9 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,6 +21,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.Destinations.POKEDEX_SCREEN
 import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN
+import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN_ARGUMENT
 import org.sabaini.pokedex.ui.home.HomeScreen
 import org.sabaini.pokedex.ui.pokemon.PokemonScreen
 import org.sabaini.pokedex.ui.theme.PokedexTheme
@@ -39,7 +40,7 @@ fun PokedexApp() {
                     Text(
                         text = stringResource(R.string.pokedex),
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp))
                     )
                 }
             }
@@ -53,14 +54,14 @@ fun PokedexApp() {
                     })
                 }
                 composable(
-                    route = "$POKEMON_SCREEN/{pokemonName}",
+                    route = "$POKEMON_SCREEN/{$POKEMON_SCREEN_ARGUMENT}",
                     arguments = listOf(
-                        navArgument("pokemonName") {
+                        navArgument(POKEMON_SCREEN_ARGUMENT) {
                             type = NavType.StringType
                         }
                     )
                 ) { entry ->
-                    val pokemonName = entry.arguments?.getString("pokemonName")
+                    val pokemonName = entry.arguments?.getString(POKEMON_SCREEN_ARGUMENT)
                     PokemonScreen(pokemonName = pokemonName ?: BLANK, hiltViewModel())
                 }
             }
@@ -71,4 +72,5 @@ fun PokedexApp() {
 object Destinations {
     const val POKEDEX_SCREEN = "pokedex"
     const val POKEMON_SCREEN = "pokemon"
+    const val POKEMON_SCREEN_ARGUMENT = "pokemonName"
 }

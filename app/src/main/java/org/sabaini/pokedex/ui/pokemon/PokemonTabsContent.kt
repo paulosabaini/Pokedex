@@ -20,11 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
@@ -36,6 +36,10 @@ import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
+import org.sabaini.pokedex.util.Constants.ONE_HUNDRED
+import org.sabaini.pokedex.util.Constants.THREE
+import org.sabaini.pokedex.util.Constants.ZERO
+import org.sabaini.pokedex.util.Constants.ZERO_POINT_ONE_FLOAT
 
 @Composable
 fun AboutContent(viewModel: PokemonViewModel) {
@@ -43,28 +47,33 @@ fun AboutContent(viewModel: PokemonViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
-            .padding(15.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_15_dp))
     ) {
         Text(
             text = viewModel.pokemonInfoUiState.description,
             color = Color.White,
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
+            fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp
         )
 
         Card(
             backgroundColor = Color.White,
-            elevation = 3.dp,
+            elevation = dimensionResource(R.dimen.dimen_of_3_dp),
             modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp, start = 5.dp, end = 5.dp)
+                .padding(
+                    top = dimensionResource(R.dimen.dimen_of_10_dp),
+                    bottom = dimensionResource(R.dimen.dimen_of_10_dp),
+                    start = dimensionResource(R.dimen.dimen_of_5_dp),
+                    end = dimensionResource(R.dimen.dimen_of_5_dp)
+                )
                 .fillMaxWidth()
         ) {
             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                 Column(
-                    modifier = Modifier.padding(10.dp),
+                    modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = stringResource(id = R.string.height), color = LightGray)
+                    Text(text = stringResource(R.string.height), color = LightGray)
                     Text(
                         text = viewModel.pokemonInfoUiState.getFormattedHeight(),
                         color = Color.Black
@@ -72,7 +81,7 @@ fun AboutContent(viewModel: PokemonViewModel) {
                 }
 
                 Column(
-                    modifier = Modifier.padding(10.dp),
+                    modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = stringResource(id = R.string.weight), color = LightGray)
@@ -92,7 +101,7 @@ fun BaseStatsContent(viewModel: PokemonViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
-            .padding(15.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_15_dp))
     ) {
         viewModel.pokemonInfoUiState.baseStats.forEach {
             StatsBar(statName = it.name, barColor = it.color, progressValue = it.baseState)
@@ -106,26 +115,26 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(top = 10.dp)
+            .padding(top = dimensionResource(R.dimen.dimen_of_10_dp))
             .fillMaxWidth()
     ) {
         Text(text = statName, color = Color.White)
 
         Box(contentAlignment = Alignment.Center) {
             LinearProgressIndicator(
-                progress = progressValue / 3,
+                progress = progressValue / THREE,
                 backgroundColor = Color.DarkGray,
                 color = barColor,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .height(15.dp)
-                    .width(280.dp)
+                    .clip(RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp)))
+                    .height(dimensionResource(R.dimen.dimen_of_15_dp))
+                    .width(dimensionResource(R.dimen.dimen_of_280_dp))
             )
 
             Text(
                 text = stringResource(
                     R.string.stat_value,
-                    (progressValue * 100).toInt().toString()
+                    (progressValue * ONE_HUNDRED).toInt().toString()
                 ), color = Color.White
             )
         }
@@ -136,13 +145,18 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
 @Composable
 fun EvolutionContent(viewModel: PokemonViewModel) {
     val evolutionStage =
-        listOf("Unevolved", "First evolution", "Second evolution", "Third evolution")
+        listOf(
+            stringResource(R.string.evolution_stage_unevolved),
+            stringResource(R.string.evolution_stage_first),
+            stringResource(R.string.evolution_stage_second),
+            stringResource(R.string.evolution_stage_third)
+        )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
-            .padding(15.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_15_dp))
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -176,7 +190,7 @@ fun Evolution(
     val vibrantColor = remember { mutableStateOf(Color.Transparent) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        if (minLevel != 0) {
+        if (minLevel != ZERO) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = stringResource(R.string.level_value, minLevel.toString()),
@@ -192,16 +206,20 @@ fun Evolution(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp))
         ) {
             Image(
                 painter = painter,
                 contentDescription = pokemon,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(dimensionResource(R.dimen.dimen_of_64_dp))
                     .clip(CircleShape)
-                    .border(2.dp, vibrantColor.value, CircleShape)
+                    .border(
+                        dimensionResource(R.dimen.dimen_of_2_dp),
+                        vibrantColor.value,
+                        CircleShape
+                    )
                     .background(color = dominantColor.value)
             )
 
@@ -209,9 +227,13 @@ fun Evolution(
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,
                     modifier = Modifier
-                        .size(64.dp)
+                        .size(dimensionResource(R.dimen.dimen_of_64_dp))
                         .clip(CircleShape)
-                        .border(2.dp, Color.Transparent, CircleShape)
+                        .border(
+                            dimensionResource(R.dimen.dimen_of_2_dp),
+                            Color.Transparent,
+                            CircleShape
+                        )
                 )
             } else if (painterState is ImagePainter.State.Success) {
                 LaunchedEffect(key1 = painter) {
@@ -232,10 +254,10 @@ fun Evolution(
             Column(
                 modifier = Modifier
                     .background(
-                        Color.White.copy(alpha = 0.1f),
-                        RoundedCornerShape(5.dp)
+                        Color.White.copy(alpha = ZERO_POINT_ONE_FLOAT),
+                        RoundedCornerShape(dimensionResource(R.dimen.dimen_of_5_dp))
                     )
-                    .padding(5.dp),
+                    .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(text = pokemon, color = Color.White, fontWeight = FontWeight.Bold)
@@ -243,7 +265,7 @@ fun Evolution(
                     pokemonTypes.forEach { type ->
                         PokemonType(
                             type = type,
-                            modifier = Modifier.padding(1.dp)
+                            modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_1_dp))
                         )
                     }
                 }
@@ -266,7 +288,7 @@ fun MovesContent(viewModel: PokemonViewModel) {
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
-            fontSize = 25.sp
+            fontSize = dimensionResource(R.dimen.dimen_of_25_sp).value.sp
         )
     }
 }

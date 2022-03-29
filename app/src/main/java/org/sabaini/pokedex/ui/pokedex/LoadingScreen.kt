@@ -6,9 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 
 @Composable
@@ -38,7 +40,7 @@ fun LoadingItem() {
         color = MaterialTheme.colors.primary,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(dimensionResource(R.dimen.dimen_of_16_dp))
             .wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
@@ -58,7 +60,7 @@ fun ErrorItem(
     onClickRetry: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(10.dp),
+        modifier = modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -66,10 +68,13 @@ fun ErrorItem(
             text = message,
             color = Color.White,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp))
         )
-        Button(onClick = onClickRetry, contentPadding = PaddingValues(10.dp)) {
-            Text(text = "Retry")
+        Button(
+            onClick = onClickRetry,
+            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp))
+        ) {
+            Text(text = stringResource(R.string.retry))
         }
     }
 }
