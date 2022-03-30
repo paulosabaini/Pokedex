@@ -102,7 +102,7 @@ fun PokemonCard(
                 modifier = Modifier.align(Alignment.CenterStart)
             )
             Text(
-                text = pokemon.getFormatedPokemonNumber(),
+                text = pokemon.getFormattedPokemonNumber(),
                 color = Color.LightGray,
                 modifier = Modifier.align(Alignment.CenterEnd)
             )

@@ -4,10 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.util.Constants.COMMA
+import org.sabaini.pokedex.util.Constants.ZERO
 
 @Entity
 data class PokemonLocalModel(
-    var page: Int = 0,
+    var page: Int = ZERO,
     @PrimaryKey
     val name: String,
     val url: String
@@ -53,7 +55,7 @@ fun PokemonInfoLocalModel.asUiState(): PokemonInfoUiState {
     return PokemonInfoUiState(
         id = this.id,
         name = this.name,
-        types = this.types.split(","),
+        types = this.types.split(COMMA),
         description = this.description,
         height = this.height,
         weight = this.weight,

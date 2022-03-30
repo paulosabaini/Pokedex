@@ -5,6 +5,7 @@ import org.sabaini.pokedex.data.local.PokemonInfoLocalModel
 import org.sabaini.pokedex.data.local.PokemonInfoStatLocalModel
 import org.sabaini.pokedex.data.local.PokemonLocalModel
 import org.sabaini.pokedex.util.Constants.BLANK
+import org.sabaini.pokedex.util.Constants.COMMA
 
 data class PokemonListApiModel(
     val count: Int,
@@ -42,7 +43,7 @@ fun PokemonInfoApiModel.asLocalModel(): PokemonInfoLocalModel {
     return PokemonInfoLocalModel(
         id = this.id,
         name = this.name,
-        types = this.types.joinToString(separator = ",") { it.type.name },
+        types = this.types.joinToString(separator = COMMA) { it.type.name },
         description = BLANK,
         height = this.height,
         weight = this.weight,
@@ -82,21 +83,21 @@ data class PokemonInfoStatApiModel(
     val url: String
 )
 
-data class PokemonInfoMovesApiModel(
-    val move: PokemonInfoMoveApiModel,
-    @SerializedName("version_group_details")
-    val versionGroupDetails: PokemonInfoMoveDetailApiModel
-)
-
-data class PokemonInfoMoveApiModel(
-    val name: String,
-    val url: String
-)
-
-data class PokemonInfoMoveDetailApiModel(
-    @SerializedName("level_learned_at")
-    val levelLearnedAt: Int
-)
+//data class PokemonInfoMovesApiModel(
+//    val move: PokemonInfoMoveApiModel,
+//    @SerializedName("version_group_details")
+//    val versionGroupDetails: PokemonInfoMoveDetailApiModel
+//)
+//
+//data class PokemonInfoMoveApiModel(
+//    val name: String,
+//    val url: String
+//)
+//
+//data class PokemonInfoMoveDetailApiModel(
+//    @SerializedName("level_learned_at")
+//    val levelLearnedAt: Int
+//)
 
 data class PokemonInfoSpeciesApiModel(
     @SerializedName("flavor_text_entries")

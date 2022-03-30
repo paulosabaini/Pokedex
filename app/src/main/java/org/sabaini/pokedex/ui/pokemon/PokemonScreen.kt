@@ -56,7 +56,7 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
                     fontSize = dimensionResource(R.dimen.dimen_of_35_sp).value.sp,
                 )
                 Text(
-                    text = viewModel.pokemonInfoUiState.getFormatedPokemonNumber(),
+                    text = viewModel.pokemonInfoUiState.getFormattedPokemonNumber(),
                     color = Color.LightGray,
                     modifier = Modifier.align(Alignment.CenterEnd),
                     fontSize = dimensionResource(R.dimen.dimen_of_25_sp).value.sp,

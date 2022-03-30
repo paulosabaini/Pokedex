@@ -9,6 +9,12 @@ object Constants {
     const val ZERO_POINT_ONE_FLOAT = 0.1f
     const val ZERO_POINT_FIVE_FLOAT = 0.5f
     const val ZERO = 0
+    const val ONE = 1
     const val THREE = 3
+    const val TEN = 10
     const val ONE_HUNDRED = 100
+    const val ZERO_CHAR = '0'
+    const val NUMBER = "#"
+    const val SLASH = "/"
+    const val COMMA = ","
 }
