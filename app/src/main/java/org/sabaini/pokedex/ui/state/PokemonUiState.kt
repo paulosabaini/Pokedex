@@ -2,13 +2,12 @@ package org.sabaini.pokedex.ui.state
 
 import androidx.compose.ui.graphics.Color
 import org.sabaini.pokedex.util.Constants.BLANK
-import org.sabaini.pokedex.util.Constants.NUMBER
 import org.sabaini.pokedex.util.Constants.ONE
 import org.sabaini.pokedex.util.Constants.SLASH
 import org.sabaini.pokedex.util.Constants.TEN
-import org.sabaini.pokedex.util.Constants.THREE
 import org.sabaini.pokedex.util.Constants.ZERO
-import org.sabaini.pokedex.util.Constants.ZERO_CHAR
+import org.sabaini.pokedex.util.PokemonUtils.getDisplayPokemonNumber
+import org.sabaini.pokedex.util.PokemonUtils.getPokemonImageUrl
 
 data class PokemonUiState(
     var page: Int,
@@ -20,11 +19,11 @@ data class PokemonUiState(
     }
 
     fun getFormattedPokemonNumber(): String {
-        return NUMBER + getPokemonNumber().padStart(THREE, ZERO_CHAR)
+        return getDisplayPokemonNumber(getPokemonNumber())
     }
 
     fun getImageUrl(): String {
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonNumber()}.png"
+        return getPokemonImageUrl(getPokemonNumber())
     }
 }
 
@@ -39,11 +38,11 @@ data class PokemonInfoUiState(
     val evolutionChain: List<PokemonInfoEvolutionUiState> = listOf()
 ) {
     fun getFormattedPokemonNumber(): String {
-        return NUMBER + id.toString().padStart(THREE, ZERO_CHAR)
+        return getDisplayPokemonNumber(id.toString())
     }
 
     fun getImageUrl(): String {
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png"
+        return getPokemonImageUrl(id.toString())
     }
 
     fun getFormattedHeight(): String = String.format("%.1f m", height.toFloat() / TEN)

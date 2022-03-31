@@ -111,17 +111,12 @@ fun PokemonCard(
             Image(
                 painter = painter,
                 contentDescription = pokemon.name,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(TWO_FLOAT)
+                modifier = Modifier.fillMaxSize()
             )
             if (painterState is ImagePainter.State.Loading) {
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .scale(ZERO_POINT_FIVE_FLOAT)
-                        .fillMaxSize()
-                        .weight(TWO_FLOAT)
+                    modifier = Modifier.fillMaxSize()
                 )
             } else if (painterState is ImagePainter.State.Success) {
                 LaunchedEffect(key1 = painter) {
