@@ -12,7 +12,8 @@ import org.sabaini.pokedex.util.PokemonUtils.getPokemonImageUrl
 data class PokemonUiState(
     var page: Int,
     val name: String,
-    val url: String
+    val url: String,
+    var backgroundColor: Color? = null
 ) {
     private fun getPokemonNumber(): String {
         return url.split(SLASH.toRegex()).dropLast(ONE).last()
@@ -24,6 +25,10 @@ data class PokemonUiState(
 
     fun getImageUrl(): String {
         return getPokemonImageUrl(getPokemonNumber())
+    }
+
+    fun getBackgroundColor(): Color {
+        return backgroundColor ?: Color.Transparent
     }
 }
 

@@ -74,7 +74,7 @@ fun PokemonCard(
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dominantColor = remember { mutableStateOf(Color.Transparent) }
+    val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
 
     Column(
         modifier = modifier
@@ -115,15 +115,18 @@ fun PokemonCard(
                     color = MaterialTheme.colors.primary,
                     modifier = Modifier.fillMaxSize()
                 )
-            } else if (painterState is ImagePainter.State.Success) {
+            } else if (painterState is ImagePainter.State.Success && dominantColor.value == Color.Transparent) {
                 LaunchedEffect(key1 = painter) {
                     launch {
                         val image = painter.imageLoader.execute(painter.request).drawable
                         ColorUtils.calculateDominantColor(image!!) {
                             dominantColor.value = it
+                            pokemon.backgroundColor = it
                         }
                     }
                 }
+            } else {
+                pokemon.backgroundColor?.let { dominantColor.value = it }
             }
         }
     }
