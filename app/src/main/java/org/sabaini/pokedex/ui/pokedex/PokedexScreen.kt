@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,8 +37,6 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
-import org.sabaini.pokedex.util.Constants.TWO_FLOAT
-import org.sabaini.pokedex.util.Constants.ZERO_POINT_FIVE_FLOAT
 
 @Composable
 @ExperimentalFoundationApi
