@@ -39,6 +39,8 @@ data class PokemonInfoUiState(
     val description: String = BLANK,
     val height: Int = ZERO,
     val weight: Int = ZERO,
+    var backgroundColor: Color? = null,
+    var borderColor: Color? = null,
     val baseStats: List<PokemonInfoStatUiState> = listOf(),
     val evolutionChain: List<PokemonInfoEvolutionUiState> = listOf()
 ) {
@@ -53,6 +55,14 @@ data class PokemonInfoUiState(
     fun getFormattedHeight(): String = String.format("%.1f m", height.toFloat() / TEN)
 
     fun getFormattedWeight(): String = String.format("%.1f kg", weight.toFloat() / TEN)
+
+    fun getBackgroundColor(): Color {
+        return backgroundColor ?: Color.Transparent
+    }
+
+    fun getBorderColor(): Color {
+        return borderColor ?: Color.Transparent
+    }
 }
 
 data class PokemonInfoStatUiState(

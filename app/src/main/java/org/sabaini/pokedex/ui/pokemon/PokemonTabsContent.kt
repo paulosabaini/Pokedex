@@ -32,6 +32,8 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
@@ -164,10 +166,8 @@ fun EvolutionContent(viewModel: PokemonViewModel) {
         ) {
             itemsIndexed(viewModel.pokemonInfoUiState.evolutionChain) { index, evolution ->
                 Evolution(
-                    imageUrl = evolution.pokemon.getImageUrl(),
-                    pokemon = evolution.pokemon.name,
+                    pokemon = evolution.pokemon,
                     stage = evolutionStage[index],
-                    pokemonTypes = evolution.pokemon.types,
                     minLevel = evolution.minLevel
                 )
             }
@@ -178,16 +178,14 @@ fun EvolutionContent(viewModel: PokemonViewModel) {
 @ExperimentalCoilApi
 @Composable
 fun Evolution(
-    imageUrl: String,
-    pokemon: String,
+    pokemon: PokemonInfoUiState,
     stage: String,
-    pokemonTypes: List<String>,
     minLevel: Int
 ) {
-    val painter = rememberImagePainter(data = imageUrl)
+    val painter = rememberImagePainter(data = pokemon.getImageUrl())
     val painterState = painter.state
-    val dominantColor = remember { mutableStateOf(Color.Transparent) }
-    val vibrantColor = remember { mutableStateOf(Color.Transparent) }
+    val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
+    val vibrantColor = remember { mutableStateOf(pokemon.getBorderColor()) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         if (minLevel != ZERO) {
@@ -210,7 +208,7 @@ fun Evolution(
         ) {
             Image(
                 painter = painter,
-                contentDescription = pokemon,
+                contentDescription = pokemon.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.dimen_of_64_dp))
@@ -235,15 +233,17 @@ fun Evolution(
                             CircleShape
                         )
                 )
-            } else if (painterState is ImagePainter.State.Success) {
+            } else if (painterState is ImagePainter.State.Success && dominantColor.value == Color.Transparent && vibrantColor.value == Color.Transparent) {
                 LaunchedEffect(key1 = painter) {
                     launch {
                         val image = painter.imageLoader.execute(painter.request).drawable
                         ColorUtils.calculateDominantColor(image!!) {
                             dominantColor.value = it
+                            pokemon.backgroundColor = it
                         }
                         ColorUtils.calculateVibrantColor(image) {
                             vibrantColor.value = it
+                            pokemon.borderColor = it
                         }
                     }
                 }
@@ -260,9 +260,9 @@ fun Evolution(
                     .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = pokemon, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(text = pokemon.name, color = Color.White, fontWeight = FontWeight.Bold)
                 Row {
-                    pokemonTypes.forEach { type ->
+                    pokemon.types.forEach { type ->
                         PokemonType(
                             type = type,
                             modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_1_dp))
@@ -319,10 +319,8 @@ fun BaseStatsPreview() {
 fun EvolutionPreview() {
     Surface(color = Black) {
         Evolution(
-            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-            pokemon = "bulbasaur",
+            pokemon = PokemonInfoUiState(name = "bulbasaur", types = listOf("Grass", "Poison")),
             stage = "Unevolved",
-            pokemonTypes = listOf("Grass", "Poison"),
             minLevel = 0
         )
     }

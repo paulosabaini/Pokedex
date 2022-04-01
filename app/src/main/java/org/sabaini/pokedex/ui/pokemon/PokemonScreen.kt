@@ -36,7 +36,7 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
 
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution, TabItem.Moves)
     val pagerState = rememberPagerState(ZERO)
-    val dominantColor = remember { mutableStateOf(Color.Transparent) }
+    val dominantColor = remember { mutableStateOf(viewModel.pokemonInfoUiState.getBackgroundColor()) }
 
     Column(modifier = Modifier.background(color = dominantColor.value)) {
         Column {
@@ -92,12 +92,13 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
                         .align(CenterHorizontally)
                         .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp))
                 )
-            } else if (painterState is ImagePainter.State.Success) {
+            } else if (painterState is ImagePainter.State.Success && dominantColor.value == Color.Transparent) {
                 LaunchedEffect(key1 = painter) {
                     launch {
                         val image = painter.imageLoader.execute(painter.request).drawable
                         ColorUtils.calculateDominantColor(image!!) {
                             dominantColor.value = it
+                            viewModel.pokemonInfoUiState.backgroundColor = it
                         }
                     }
                 }

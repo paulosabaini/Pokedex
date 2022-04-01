@@ -125,8 +125,6 @@ fun PokemonCard(
                         }
                     }
                 }
-            } else {
-                pokemon.backgroundColor?.let { dominantColor.value = it }
             }
         }
     }
