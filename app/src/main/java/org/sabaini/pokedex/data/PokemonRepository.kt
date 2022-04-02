@@ -1,5 +1,6 @@
 package org.sabaini.pokedex.data
 
+import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import org.sabaini.pokedex.data.local.*
@@ -112,8 +113,12 @@ class PokemonRepository @Inject constructor(
                     color = statEnum.color
                 )
             }
+            val pokedexPokemon = pokemonLocalDataSource.fetchPokemon(pokemonInfo.name)
             pokemonInfo.asUiState()
-                .copy(evolutionChain = evolutionChain, baseStats = stats)
+                .copy(
+                    evolutionChain = evolutionChain,
+                    baseStats = stats,
+                    backgroundColor = pokedexPokemon.backgroundColor?.let { color -> Color(color) })
         }
     }
 

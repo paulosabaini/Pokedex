@@ -19,4 +19,7 @@ interface PokemonDao {
 
     @Query("update PokemonLocalModel set backgroundColor = :color where name = :name")
     fun updateBackgroundColor(name: String, color: Int?)
+
+    @Query("select * from PokemonLocalModel where name = :name")
+    fun getPokemon(name: String): PokemonLocalModel
 }

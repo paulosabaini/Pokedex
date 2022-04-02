@@ -19,6 +19,11 @@ class PokemonLocalDataSource @Inject constructor(
             pokemonDao.saveAll(pokemons)
         }
 
+    suspend fun fetchPokemon(name: String): PokemonLocalModel =
+        withContext(ioDispatcher) {
+            pokemonDao.getPokemon(name)
+        }
+
     suspend fun fetchPokemonInfo(id: Int): PokemonInfoLocalModel =
         withContext(ioDispatcher) {
             pokemonInfoDao.loadPokemonInfo(id)
