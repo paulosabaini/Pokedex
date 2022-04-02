@@ -1,9 +1,6 @@
 package org.sabaini.pokedex.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface PokemonDao {
@@ -19,4 +16,7 @@ interface PokemonDao {
 
     @Query("delete from PokemonLocalModel")
     fun deleteAll()
+
+    @Query("update PokemonLocalModel set backgroundColor = :color where name = :name")
+    fun updateBackgroundColor(name: String, color: Int?)
 }

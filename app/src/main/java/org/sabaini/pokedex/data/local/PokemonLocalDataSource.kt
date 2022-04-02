@@ -53,4 +53,10 @@ class PokemonLocalDataSource @Inject constructor(
         withContext(ioDispatcher) {
             pokemonInfoDao.savePokemonInfoEvolution(pokemonEvolution)
         }
+
+    suspend fun updatePokemonBackgroundColor(name: String, color: Int?) {
+        withContext(ioDispatcher) {
+            pokemonDao.updateBackgroundColor(name, color)
+        }
+    }
 }

@@ -42,13 +42,13 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
-    PokemonList(pokemons = viewModel.pokeFlow, onClickPokemon)
+    PokemonList(pokemons = viewModel.pokeFlow, onClickPokemon) { viewModel.updatePokemonColor(it) }
 }
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (String) -> Unit) {
+fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (String) -> Unit, onBackgroundColorChange: (PokemonUiState) -> Unit) {
 
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
@@ -59,7 +59,8 @@ fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (Str
             lazyPokemonItems[index]?.let {
                 PokemonCard(
                     pokemon = it,
-                    onItemClicked = onClickPokemon
+                    onItemClicked = onClickPokemon,
+                    onBackgroundColorChange = onBackgroundColorChange
                 )
             }
         }
@@ -72,6 +73,7 @@ fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (Str
 fun PokemonCard(
     pokemon: PokemonUiState,
     onItemClicked: (String) -> Unit,
+    onBackgroundColorChange: (PokemonUiState) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
@@ -122,6 +124,7 @@ fun PokemonCard(
                         ColorUtils.calculateDominantColor(image!!) {
                             dominantColor.value = it
                             pokemon.backgroundColor = it
+                            onBackgroundColorChange(pokemon)
                         }
                     }
                 }
@@ -172,7 +175,8 @@ fun PreviewPokemonColumn() {
     PokedexTheme {
         PokemonCard(
             pokemon = PokemonUiState(0, "bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
-            onItemClicked = {}
+            onItemClicked = {},
+            onBackgroundColorChange = { }
         )
     }
 }

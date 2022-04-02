@@ -1,5 +1,6 @@
 package org.sabaini.pokedex.data.local
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
@@ -12,7 +13,8 @@ data class PokemonLocalModel(
     var page: Int = ZERO,
     @PrimaryKey
     val name: String,
-    val url: String
+    val url: String,
+    val backgroundColor: Int? = null
 )
 
 @Entity
@@ -46,7 +48,8 @@ fun List<PokemonLocalModel>.asUiState(): List<PokemonUiState> {
         PokemonUiState(
             page = it.page,
             name = it.name,
-            url = it.url
+            url = it.url,
+            backgroundColor = it.backgroundColor?.let { color -> Color(color) }
         )
     }
 }

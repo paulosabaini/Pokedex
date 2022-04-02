@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [PokemonLocalModel::class, PokemonInfoLocalModel::class, PokemonInfoStatLocalModel::class, PokemonInfoEvolutionLocalModel::class],
     exportSchema = false,
-    version = 6
+    version = 7
 )
 abstract class PokemonDatabase : RoomDatabase() {
     abstract fun PokemonDao(): PokemonDao

@@ -116,4 +116,8 @@ class PokemonRepository @Inject constructor(
                 .copy(evolutionChain = evolutionChain, baseStats = stats)
         }
     }
+
+    suspend fun updatePokemonBackgroundColor(name: String, color: Int?) {
+        pokemonLocalDataSource.updatePokemonBackgroundColor(name, color)
+    }
 }
