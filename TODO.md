@@ -7,6 +7,7 @@ Pokedex app using modern android development
 - [ ] Display animations when open/close pokemon screen
 - [ ] Refresh button in toolbar
 - [ ] Review displayed info
+- [ ] Add readme
 
 ### Done ✓
 - [x] Create project
