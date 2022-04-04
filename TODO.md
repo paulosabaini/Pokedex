@@ -1,18 +1,12 @@
 # Pokedex
 Pokedex app using modern android development
 
-### Todo
-- [ ] Improve performance of pokedex screen  
-- [ ] Create fab with filters in the home screen
-- [ ] Create Animations
-- [ ] Create layout for Moves tab in PokemonScreen
-- [ ] Add refresh button in the pokedex screen
-- [ ] Add refresh button in the pokemon screen
-- [ ] Improve dominantColor state on PokemonCard
-- [ ] Clean some api model classes
-- [ ] Create mocks to display previews properly
-- [ ] When touch in a pokemon image in evolution tab, load the pokemon info
-- [ ] Back button on toolbar
+### Todo 
+- [ ] Create fab in pokedex screen with filter by type, gen and search
+- [ ] Show back button on toolbar when in pokemon info screen
+- [ ] Display animations when open/close pokemon screen
+- [ ] Refresh button in toolbar
+- [ ] Review displayed info
 
 ### Done ✓
 - [x] Create project
@@ -28,3 +22,5 @@ Pokedex app using modern android development
 - [x] Save list state when navigate
 - [x] PokemonType composable background color based on the type
 - [x] App icon
+- [x] Improve performance of pokedex screen
+- [x] Improve dominantColor state on PokemonCard
