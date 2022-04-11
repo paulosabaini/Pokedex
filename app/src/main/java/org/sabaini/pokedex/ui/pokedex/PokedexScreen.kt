@@ -7,9 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +42,18 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
-    PokemonList(pokemons = viewModel.pokeFlow, onClickPokemon) { viewModel.updatePokemonColor(it) }
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Filled.Tune, contentDescription = "Filter")
+            }
+        }
+    ) {
+        PokemonList(
+            pokemons = viewModel.pokeFlow,
+            onClickPokemon
+        ) { viewModel.updatePokemonColor(it) }
+    }
 }
 
 @Composable

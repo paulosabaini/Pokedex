@@ -25,7 +25,7 @@ import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.Destinations.POKEDEX_SCREEN
 import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN
 import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN_ARGUMENT
-import org.sabaini.pokedex.ui.home.HomeScreen
+import org.sabaini.pokedex.ui.pokedex.PokedexScreen
 import org.sabaini.pokedex.ui.pokemon.PokemonScreen
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 import org.sabaini.pokedex.util.Constants.BLANK
@@ -75,7 +75,7 @@ fun PokedexApp() {
             NavHost(navController = navController, startDestination = POKEDEX_SCREEN) {
                 composable(POKEDEX_SCREEN) {
                     upAvailable.value = false
-                    HomeScreen(onClickPokemon = { name ->
+                    PokedexScreen(viewModel = hiltViewModel(), onClickPokemon = { name ->
                         navController.navigate(
                             "$POKEMON_SCREEN/$name"
                         )
