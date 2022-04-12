@@ -43,11 +43,9 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 @ExperimentalCoilApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Filled.Tune, contentDescription = "Filter")
-            }
-        }
+    floatingActionButton = {
+        FabSpeedDial(onClick = { })
+    }
     ) {
         PokemonList(
             pokemons = viewModel.pokeFlow,
