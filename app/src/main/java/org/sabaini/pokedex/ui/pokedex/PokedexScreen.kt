@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +42,16 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
     Scaffold(
     floatingActionButton = {
-        FabSpeedDial(onClick = { })
+        FabSpeedDial {
+            when (it) {
+                R.id.menu_item_search -> {
+
+                }
+                R.id.menu_item_gen -> {
+
+                }
+            }
+        }
     }
     ) {
         PokemonList(
