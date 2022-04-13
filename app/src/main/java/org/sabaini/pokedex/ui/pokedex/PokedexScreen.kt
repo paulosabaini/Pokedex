@@ -8,10 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +23,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
@@ -44,17 +42,21 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
 
     val searchModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val genModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    // https://proandroiddev.com/replacing-bottomsheetdialogfragment-with-jetpack-composes-modalbottomsheetlayout-a-compose-901d31a18aa3
-    // https://www.google.com/search?q=open+composable+in+onclick&oq=open+composable+in+onclick&aqs=chrome..69i57j69i64.6526j0j7&sourceid=chrome&ie=UTF-8
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         floatingActionButton = {
             FabSpeedDial {
                 when (it) {
                     R.id.menu_item_search -> {
-                        searchModalBottomSheetState.show()
+                        coroutineScope.launch {
+                            searchModalBottomSheetState.show()
+                        }
                     }
                     R.id.menu_item_gen -> {
-                        genModalBottomSheetState.show()
+                        coroutineScope.launch {
+                            genModalBottomSheetState.show()
+                        }
                     }
                 }
             }
@@ -66,13 +68,8 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
         ) { viewModel.updatePokemonColor(it) }
     }
 
-    if (searchModalBottomSheetState.isVisible) {
-        SearchBottomSheetLayout(sheetState = searchModalBottomSheetState)
-    }
-
-    if (genModalBottomSheetState.isVisible) {
-        GenFilterBottomSheetLayout(sheetState = genModalBottomSheetState)
-    }
+    SearchBottomSheetLayout(sheetState = searchModalBottomSheetState)
+    GenFilterBottomSheetLayout(sheetState = genModalBottomSheetState)
 }
 
 @Composable
