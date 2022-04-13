@@ -34,6 +34,7 @@ import org.sabaini.pokedex.util.Constants.BLANK
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 @ExperimentalPagerApi
+@ExperimentalMaterialApi
 fun PokedexApp() {
     PokedexTheme {
         val navController = rememberNavController()

@@ -39,32 +39,50 @@ import org.sabaini.pokedex.util.Constants.SPAN_OVER_SIZED
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
+@ExperimentalMaterialApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
+
+    val searchModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val genModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    // https://proandroiddev.com/replacing-bottomsheetdialogfragment-with-jetpack-composes-modalbottomsheetlayout-a-compose-901d31a18aa3
+    // https://www.google.com/search?q=open+composable+in+onclick&oq=open+composable+in+onclick&aqs=chrome..69i57j69i64.6526j0j7&sourceid=chrome&ie=UTF-8
     Scaffold(
-    floatingActionButton = {
-        FabSpeedDial {
-            when (it) {
-                R.id.menu_item_search -> {
-
-                }
-                R.id.menu_item_gen -> {
-
+        floatingActionButton = {
+            FabSpeedDial {
+                when (it) {
+                    R.id.menu_item_search -> {
+                        searchModalBottomSheetState.show()
+                    }
+                    R.id.menu_item_gen -> {
+                        genModalBottomSheetState.show()
+                    }
                 }
             }
         }
-    }
     ) {
         PokemonList(
             pokemons = viewModel.pokeFlow,
             onClickPokemon
         ) { viewModel.updatePokemonColor(it) }
     }
+
+    if (searchModalBottomSheetState.isVisible) {
+        SearchBottomSheetLayout(sheetState = searchModalBottomSheetState)
+    }
+
+    if (genModalBottomSheetState.isVisible) {
+        GenFilterBottomSheetLayout(sheetState = genModalBottomSheetState)
+    }
 }
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-fun PokemonList(pokemons: Flow<PagingData<PokemonUiState>>, onClickPokemon: (String) -> Unit, onBackgroundColorChange: (PokemonUiState) -> Unit) {
+fun PokemonList(
+    pokemons: Flow<PagingData<PokemonUiState>>,
+    onClickPokemon: (String) -> Unit,
+    onBackgroundColorChange: (PokemonUiState) -> Unit
+) {
 
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
