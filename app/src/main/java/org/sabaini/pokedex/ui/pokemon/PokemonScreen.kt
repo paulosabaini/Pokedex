@@ -27,6 +27,7 @@ import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants.ZERO
 import org.sabaini.pokedex.util.Enums
+import java.util.*
 
 @ExperimentalCoilApi
 @ExperimentalPagerApi
@@ -49,7 +50,11 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
                     .padding(dimensionResource(R.dimen.dimen_of_5_dp))
             ) {
                 Text(
-                    text = viewModel.pokemonInfoUiState.name,
+                    text = viewModel.pokemonInfoUiState.name.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    },
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.CenterStart),

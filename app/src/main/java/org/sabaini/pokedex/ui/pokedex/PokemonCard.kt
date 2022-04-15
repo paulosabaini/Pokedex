@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.ColorUtils
+import java.util.*
 
 @ExperimentalCoilApi
 @Composable
@@ -53,7 +55,9 @@ fun PokemonCard(
                 .padding(dimensionResource(R.dimen.dimen_of_5_dp))
         ) {
             Text(
-                text = pokemon.name,
+                text = pokemon.name.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                },
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.CenterStart)
