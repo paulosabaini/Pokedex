@@ -1,6 +1,5 @@
 package org.sabaini.pokedex.ui.viewmodel
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

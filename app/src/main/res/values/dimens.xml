@@ -9,7 +9,9 @@
     <dimen name="dimen_of_16_dp">16dp</dimen>
     <dimen name="dimen_of_30_dp">30dp</dimen>
     <dimen name="dimen_of_64_dp">64dp</dimen>
+    <dimen name="dimen_of_80_dp">80dp</dimen>
     <dimen name="dimen_of_150_dp">150dp</dimen>
+    <dimen name="dimen_of_160_dp">160dp</dimen>
     <dimen name="dimen_of_280_dp">280dp</dimen>
 
     <dimen name="dimen_of_12_sp">12sp</dimen>

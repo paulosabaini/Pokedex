@@ -1,8 +1,7 @@
 # Pokedex
 Pokedex app using modern android development
 
-### Todo 
-- [ ] Create fab in pokedex screen with filter by type, gen and search
+### Todo
 - [ ] Display animations when open/close pokemon screen
 - [ ] Refresh button in toolbar
 - [ ] Review displayed info
@@ -25,3 +24,4 @@ Pokedex app using modern android development
 - [x] Improve performance of pokedex screen
 - [x] Improve dominantColor state on PokemonCard
 - [x] Show back button on toolbar when in pokemon info screen
+- [x] Create fab in pokedex screen with filter by type, gen and search

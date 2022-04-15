@@ -40,7 +40,7 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
     ) {
         PokemonList(
             pokemons = viewModel.pokeFlow,
-            onClickPokemon
+            onClickPokemon = onClickPokemon
         ) { viewModel.updatePokemonColor(it) }
     }
 
