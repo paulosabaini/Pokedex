@@ -1,8 +1,11 @@
 package org.sabaini.pokedex.ui.pokedex
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.util.Constants.BLANK
+import org.sabaini.pokedex.util.Constants.TWO
+import org.sabaini.pokedex.util.Enums
 
 @Composable
 @ExperimentalMaterialApi
@@ -70,7 +75,11 @@ fun SearchTextField(onSearch: (String) -> Unit) {
         },
         shape = RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp)),
         leadingIcon = {
-            Icon(Icons.Filled.Search, BLANK, tint = Color.Black)
+            Icon(
+                Icons.Filled.Search,
+                stringResource(R.string.search_placeholder),
+                tint = Color.Black
+            )
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.White,
@@ -85,6 +94,7 @@ fun SearchTextField(onSearch: (String) -> Unit) {
 
 @Composable
 @ExperimentalMaterialApi
+@ExperimentalFoundationApi
 fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
     ModalBottomSheetLayout(
         sheetState = sheetState,
@@ -99,10 +109,13 @@ fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
 }
 
 @Composable
+@ExperimentalFoundationApi
 fun GenerationsOptions() {
+    val generations = Enums.Generations.values().asList()
+
     Column {
         Text(
-            text = "Generation",
+            text = stringResource(R.string.generation),
             textAlign = Center,
             fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp,
             fontWeight = FontWeight.Bold,
@@ -110,49 +123,26 @@ fun GenerationsOptions() {
                 .fillMaxWidth()
                 .padding(top = dimensionResource(R.dimen.dimen_of_10_dp))
         )
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp))) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Generation(name = "Generation I", image = painterResource(id = R.drawable.gen_1))
-                Generation(name = "Generation II", image = painterResource(id = R.drawable.gen_2))
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Generation(name = "Generation III", image = painterResource(id = R.drawable.gen_3))
-                Generation(name = "Generation IV", image = painterResource(id = R.drawable.gen_4))
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Generation(name = "Generation V", image = painterResource(id = R.drawable.gen_5))
-                Generation(name = "Generation VI", image = painterResource(id = R.drawable.gen_6))
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Generation(name = "Generation VII", image = painterResource(id = R.drawable.gen_7))
-                Generation(name = "Generation VIII", image = painterResource(id = R.drawable.gen_8))
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(TWO),
+            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp))
+        ) {
+            items(generations.size) { index ->
+                GenerationCard(
+                    name = generations[index].gen,
+                    image = painterResource(generations[index].drawable)
+                )
             }
         }
     }
 }
 
 @Composable
-fun Generation(name: String, image: Painter) {
+fun GenerationCard(name: String, image: Painter) {
     Card(
         elevation = dimensionResource(R.dimen.dimen_of_3_dp),
         modifier = Modifier
-            .padding(
-                bottom = dimensionResource(
-                    R.dimen.dimen_of_10_dp
-                )
-            )
+            .padding(dimensionResource(R.dimen.dimen_of_10_dp))
             .clickable { }
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -172,6 +162,14 @@ fun Generation(name: String, image: Painter) {
 
 @Preview
 @Composable
+@ExperimentalFoundationApi
 fun GenerationsOptionsPreview() {
     GenerationsOptions()
+}
+
+@Preview
+@Composable
+@ExperimentalComposeUiApi
+fun SearchTextFieldPreview() {
+    SearchTextField {}
 }

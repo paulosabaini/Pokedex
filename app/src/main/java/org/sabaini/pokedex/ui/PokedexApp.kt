@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -44,34 +45,8 @@ fun PokedexApp() {
 
         Scaffold(
             topBar = {
-                if (upAvailable.value) {
-                    TopAppBar(
-                        title = {
-                            Text(
-                                text = stringResource(R.string.pokedex),
-                                fontWeight = FontWeight.Bold
-                            )
-                        },
-                        navigationIcon = {
-                            IconButton(onClick = { navController.navigateUp() }) {
-                                Icon(
-                                    imageVector = Icons.Filled.ArrowBack,
-                                    contentDescription = "Back",
-                                    tint = Color.White
-                                )
-                            }
-                        }
-                    )
-                } else {
-                    TopAppBar(
-                        title = {
-                            Text(
-                                text = stringResource(R.string.pokedex),
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp))
-                            )
-                        }
-                    )
+                PokedexTopBar(upAvailable) {
+                    navController.navigateUp()
                 }
             }
         ) {
@@ -98,6 +73,39 @@ fun PokedexApp() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) {
+    if (upAvailable.value) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(R.string.pokedex),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = { onNavigateUp() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back),
+                        tint = Color.White
+                    )
+                }
+            }
+        )
+    } else {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(R.string.pokedex),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp))
+                )
+            }
+        )
     }
 }
 

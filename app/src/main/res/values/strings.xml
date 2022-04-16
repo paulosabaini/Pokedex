@@ -15,4 +15,6 @@
     <string name="all_gen">All gen</string>
     <string name="search">Search</string>
     <string name="search_placeholder">Search Pokemon</string>
+    <string name="generation">Generation</string>
+    <string name="back">Back</string>
 </resources>

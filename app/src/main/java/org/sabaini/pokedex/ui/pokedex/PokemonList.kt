@@ -2,6 +2,7 @@ package org.sabaini.pokedex.ui.pokedex
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -18,6 +19,7 @@ import org.sabaini.pokedex.util.Constants
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
+@ExperimentalMaterialApi
 fun PokemonList(
     pokemons: Flow<PagingData<PokemonUiState>>,
     onClickPokemon: (String) -> Unit,
