@@ -35,8 +35,7 @@ data class PokemonInfoApiModel(
     val types: List<PokemonInfoTypesApiModel>,
     val height: Int,
     val weight: Int,
-    val stats: List<PokemonInfoStatsApiModel>,
-    // val moves: List<PokemonInfoMovesApiModel>
+    val stats: List<PokemonInfoStatsApiModel>
 )
 
 fun PokemonInfoApiModel.asLocalModel(): PokemonInfoLocalModel {
@@ -82,22 +81,6 @@ data class PokemonInfoStatApiModel(
     val name: String,
     val url: String
 )
-
-//data class PokemonInfoMovesApiModel(
-//    val move: PokemonInfoMoveApiModel,
-//    @SerializedName("version_group_details")
-//    val versionGroupDetails: PokemonInfoMoveDetailApiModel
-//)
-//
-//data class PokemonInfoMoveApiModel(
-//    val name: String,
-//    val url: String
-//)
-//
-//data class PokemonInfoMoveDetailApiModel(
-//    @SerializedName("level_learned_at")
-//    val levelLearnedAt: Int
-//)
 
 data class PokemonInfoSpeciesApiModel(
     @SerializedName("flavor_text_entries")

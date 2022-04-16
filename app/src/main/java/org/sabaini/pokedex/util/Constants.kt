@@ -6,6 +6,7 @@ object Constants {
     const val BLANK = ""
     const val SPAN_OVER_SIZED = 100
     const val ZERO_POINT_ONE_FLOAT = 0.1f
+    const val MINUS_ONE = -1
     const val ZERO = 0
     const val ONE = 1
     const val TWO = 2
@@ -16,4 +17,8 @@ object Constants {
     const val NUMBER = "#"
     const val SLASH = "/"
     const val COMMA = ","
+    const val NEW_LINE = "\n"
+    const val SPACE = " "
+    const val ENGLISH = "en"
+    const val FIRE_RED = "firered"
 }

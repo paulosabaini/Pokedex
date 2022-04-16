@@ -3,6 +3,8 @@ package org.sabaini.pokedex.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.util.Constants.ONE
+import org.sabaini.pokedex.util.Constants.ZERO
 import javax.inject.Inject
 
 class PokemonsSource @Inject constructor(private val repository: PokemonRepository) :
@@ -10,7 +12,7 @@ class PokemonsSource @Inject constructor(private val repository: PokemonReposito
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonUiState> {
         return try {
-            val nextPage = params.key ?: 0
+            val nextPage = params.key ?: ZERO
 
             var pokemons = repository.getPokemonList(nextPage, false)
             if (pokemons.isEmpty()) {
@@ -19,8 +21,8 @@ class PokemonsSource @Inject constructor(private val repository: PokemonReposito
 
             LoadResult.Page(
                 data = pokemons,
-                prevKey = if (nextPage == 0) null else nextPage - 1,
-                nextKey = nextPage.plus(1)
+                prevKey = if (nextPage == ZERO) null else nextPage - ONE,
+                nextKey = nextPage.plus(ONE)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
