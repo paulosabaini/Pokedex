@@ -2,22 +2,23 @@
 
 # Pokédex 🔴
 
-![Github Followers](https://img.shields.io/github/followers/paulosabaini?label=Follow&style=social)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Kotlin](https://img.shields.io/badge/kotlin-%230095D5.svg?style=for-the-badge&logo=kotlin&logoColor=white)
+![GPL License](https://img.shields.io/badge/License-GPL-red.svg?style=for-the-badge&logoColor=white)
+
 ![GitHub stars](https://img.shields.io/github/stars/paulosabaini/pokedex?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/paulosabaini/pokedex?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/paulosabaini/pokedex?style=social)
 
-**Pokédex** is a sample Android application 📱 built to demonstrate use of *Jetpack Compose* and *Modern Android development* tools.
+**Pokédex** is a sample Android application 📱 built to demonstrate the use of *Jetpack Compose* and *Modern Android development* tools.
 
 ***You can Install and test latest Pokédex app from below 👇***
 
-[![Pokédex App](https://img.shields.io/badge/Foodium🍲-APK-red.svg?style=for-the-badge&logo=android)](https://github.com/paulosabaini/pokedex/releases/latest/download/app.apk)
-
+[![Pokédex App](https://img.shields.io/badge/Pokédex🔴-APK-red.svg?style=for-the-badge&logo=android)](https://github.com/paulosabaini/pokedex/releases/latest/download/app.apk)
 
 ## About
-It loads **Pokémon** data from PokéAPI and stores it in persistence storage (i.e. SQLite Database). Pokémon will be always loaded from local database.
-- This improves the load time.
-- Clean and Simple UI.
+
+It loads **Pokémon** data from **PokéAPI** and display it with a simple and clean UI powered by **Jetpack Compose**.
 
 ## Built With 🛠
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
@@ -39,13 +40,13 @@ It loads **Pokémon** data from PokéAPI and stores it in persistence storage (i
 
 # Package Structure
 
-    org.sabaini.pokedex    # Root Package
+    org.sabaini.pokedex  # Root Package
     .
-    ├── data             # For data handling.
+    ├── data             # For data handling
     │   ├── local        # Local Persistence Database. Room (SQLite) database 
     │   └── remote       # Remote Data Handlers
     |
-    └── di               # Dependency Injection
+    ├── di               # Dependency Injection
     |
     ├── ui               # View layer
     │   ├── pokedex      # Main screen with the pokémon list
@@ -59,10 +60,7 @@ It loads **Pokémon** data from PokéAPI and stores it in persistence storage (i
 ## Architecture
 This app uses the [Android recommended architecture](https://developer.android.com/jetpack/guide) for building robust, high-quality apps.
 
-![](https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview.png)
-![](https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview-ui.png)
-![](https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview-data.png)
-
+<img src="https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview.png" width="30%" height="30%"> <img src="https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview-ui.png" width="30%" height="30%"> <img src="https://developer.android.com/topic/libraries/architecture/images/mad-arch-overview-data.png" width="30%" height="30%">
 
 ## Open API
 
@@ -70,11 +68,6 @@ This app uses the [Android recommended architecture](https://developer.android.c
 
 Pokedex using the [PokeAPI](https://pokeapi.co/) for constructing RESTful API.<br>
 PokeAPI provides a RESTful API interface to highly detailed objects built from thousands of lines of data related to Pokémon.
-
-## Contact
-If you need any help, you can connect with me.
-
-Visit:- [sabaini.org](https://sabaini.org)
 
 ## License
 ```
