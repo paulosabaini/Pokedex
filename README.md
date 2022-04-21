@@ -55,7 +55,7 @@ It loads **Pokémon** data from **PokéAPI** and display it with a simple and cl
     │   ├── theme        # App theme
     │   └── viewmodel    # ViewModel classes
     |
-    └── utils            # Utility Classes
+    └── utils            # Utility classes
 
 ## Architecture
 This app uses the [Android recommended architecture](https://developer.android.com/jetpack/guide) for building robust, high-quality apps.
@@ -64,10 +64,10 @@ This app uses the [Android recommended architecture](https://developer.android.c
 
 ## Open API
 
-![](https://user-images.githubusercontent.com/24237865/83422649-d1b1d980-a464-11ea-8c91-a24fdf89cd6b.png)
+![](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
 
-Pokedex using the [PokeAPI](https://pokeapi.co/) for constructing RESTful API.<br>
-PokeAPI provides a RESTful API interface to highly detailed objects built from thousands of lines of data related to Pokémon.
+This app uses the [PokéAPI](https://pokeapi.co/).
+All the Pokémon data you'll ever need in one place, easily accessible through a modern RESTful API.
 
 ## License
 ```
