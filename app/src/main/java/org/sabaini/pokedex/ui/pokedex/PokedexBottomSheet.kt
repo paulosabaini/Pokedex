@@ -3,16 +3,33 @@ package org.sabaini.pokedex.ui.pokedex
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -111,7 +128,7 @@ fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
 @Composable
 @ExperimentalFoundationApi
 fun GenerationsOptions() {
-    val generations = Enums.Generations.values().asList()
+    val generations = Enums.Generations.entries
 
     Column {
         Text(
@@ -124,13 +141,13 @@ fun GenerationsOptions() {
                 .padding(top = dimensionResource(R.dimen.dimen_of_10_dp))
         )
         LazyVerticalGrid(
-            cells = GridCells.Fixed(TWO),
+            columns = GridCells.Fixed(TWO),
             contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp))
         ) {
-            items(generations.size) { index ->
+            items(generations) { generation ->
                 GenerationCard(
-                    name = generations[index].gen,
-                    image = painterResource(generations[index].drawable)
+                    name = generation.gen,
+                    image = painterResource(generation.drawable)
                 )
             }
         }
