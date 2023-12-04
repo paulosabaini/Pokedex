@@ -11,7 +11,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImagePainter
 import coil.compose.ImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
@@ -97,7 +99,7 @@ fun PokemonInfoImage(
     pokemon: PokemonInfoUiState,
     dominantColor: MutableState<Color>
 ) {
-    val painter = rememberImagePainter(data = pokemon.getImageUrl())
+    val painter = rememberAsyncImagePainter(model = pokemon.getImageUrl())
     val painterState = painter.state
 
     Image(
@@ -108,14 +110,14 @@ fun PokemonInfoImage(
             .size(dimensionResource(R.dimen.dimen_of_150_dp))
             .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp))
     )
-    if (painterState is ImagePainter.State.Loading) {
+    if (painterState is AsyncImagePainter.State.Loading) {
         CircularProgressIndicator(
             color = MaterialTheme.colors.primary,
             modifier = Modifier
                 .size(dimensionResource(R.dimen.dimen_of_150_dp))
                 .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp))
         )
-    } else if (painterState is ImagePainter.State.Success && dominantColor.value == Color.Transparent) {
+    } else if (painterState is AsyncImagePainter.State.Success && dominantColor.value == Color.Transparent) {
         LaunchedEffect(key1 = painter) {
             launch {
                 val image = painter.imageLoader.execute(painter.request).drawable

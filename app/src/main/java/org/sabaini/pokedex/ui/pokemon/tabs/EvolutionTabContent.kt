@@ -21,7 +21,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImagePainter
 import coil.compose.ImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
@@ -108,7 +110,7 @@ fun EvolutionCardPokemon(pokemon: PokemonInfoUiState, stage: String) {
 @Composable
 @ExperimentalCoilApi
 fun EvolutionCardPokemonImage(pokemon: PokemonInfoUiState) {
-    val painter = rememberImagePainter(data = pokemon.getImageUrl())
+    val painter = rememberAsyncImagePainter(model = pokemon.getImageUrl())
     val painterState = painter.state
     val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
     val vibrantColor = remember { mutableStateOf(pokemon.getBorderColor()) }
@@ -128,7 +130,7 @@ fun EvolutionCardPokemonImage(pokemon: PokemonInfoUiState) {
             .background(color = dominantColor.value)
     )
 
-    if (painterState is ImagePainter.State.Loading) {
+    if (painterState is AsyncImagePainter.State.Loading) {
         CircularProgressIndicator(
             color = MaterialTheme.colors.primary,
             modifier = Modifier
@@ -140,7 +142,7 @@ fun EvolutionCardPokemonImage(pokemon: PokemonInfoUiState) {
                     CircleShape
                 )
         )
-    } else if (painterState is ImagePainter.State.Success && dominantColor.value == Color.Transparent && vibrantColor.value == Color.Transparent) {
+    } else if (painterState is AsyncImagePainter.State.Success && dominantColor.value == Color.Transparent && vibrantColor.value == Color.Transparent) {
         LaunchedEffect(key1 = painter) {
             launch {
                 val image = painter.imageLoader.execute(painter.request).drawable
