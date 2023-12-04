@@ -2,10 +2,11 @@ package org.sabaini.pokedex.ui.pokemon.tabs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -32,9 +33,9 @@ fun PokemonInfoTabs(pagerState: PagerState) {
         modifier = Modifier.clip(
             RoundedCornerShape(
                 topStart = dimensionResource(R.dimen.dimen_of_30_dp),
-                topEnd = dimensionResource(R.dimen.dimen_of_30_dp)
-            )
-        )
+                topEnd = dimensionResource(R.dimen.dimen_of_30_dp),
+            ),
+        ),
     ) {
         TabsOptions(tabs = tabs, pagerState = pagerState)
         TabsContent(tabs = tabs, pagerState = pagerState)
@@ -49,20 +50,23 @@ fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
 
     TabRow(
         selectedTabIndex = pagerState.currentPage,
-        backgroundColor = Black,
+        containerColor = Black,
         contentColor = Color.White,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
-                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                modifier = Modifier.tabIndicatorOffset(
+                    currentTabPosition = tabPositions[pagerState.currentPage],
+                ),
+                color = Color.White,
             )
-        }
+        },
     ) {
         tabs.forEachIndexed { index, tab ->
             Tab(
                 text = {
                     Text(
                         text = tab.title,
-                        fontSize = dimensionResource(R.dimen.dimen_of_13_sp).value.sp
+                        fontSize = dimensionResource(R.dimen.dimen_of_13_sp).value.sp,
                     )
                 },
                 selected = pagerState.currentPage == index,
@@ -70,7 +74,7 @@ fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
                     scope.launch {
                         pagerState.animateScrollToPage(index)
                     }
-                }
+                },
             )
         }
     }

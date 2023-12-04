@@ -21,33 +21,33 @@ fun FabSpeedDial(onClick: (Int) -> Unit) {
             setMainFabClosedDrawable(
                 AppCompatResources.getDrawable(
                     context,
-                    R.drawable.baseline_tune_24
-                )
+                    R.drawable.baseline_tune_24,
+                ),
             )
             setMainFabOpenedDrawable(
                 AppCompatResources.getDrawable(
                     context,
-                    R.drawable.outline_close_24
-                )
+                    R.drawable.outline_close_24,
+                ),
             )
 
             addActionItem(
                 SpeedDialActionItem.Builder(
                     R.id.menu_item_gen,
-                    R.drawable.baseline_catching_pokemon_24
+                    R.drawable.baseline_catching_pokemon_24,
                 )
                     .setLabel(R.string.all_gen)
                     .setFabBackgroundColor(White.toArgb())
-                    .create()
+                    .create(),
             )
             addActionItem(
                 SpeedDialActionItem.Builder(
                     R.id.menu_item_search,
-                    R.drawable.baseline_search_24
+                    R.drawable.baseline_search_24,
                 )
                     .setLabel(R.string.search)
                     .setFabBackgroundColor(White.toArgb())
-                    .create()
+                    .create(),
             )
 
             setOnActionSelectedListener { actionItem ->

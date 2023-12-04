@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,15 +16,15 @@ import org.sabaini.pokedex.util.Enums
 @Composable
 fun PokemonType(
     type: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .background(
                 Enums.PokemonTypeColor.valueOf(type.uppercase()).color,
-                RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp))
+                RoundedCornerShape(dimensionResource(R.dimen.dimen_of_10_dp)),
             )
-            .padding(dimensionResource(R.dimen.dimen_of_5_dp))
+            .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
     ) {
         Text(
             text = type,

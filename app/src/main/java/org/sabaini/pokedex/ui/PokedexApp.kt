@@ -2,9 +2,15 @@ package org.sabaini.pokedex.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +42,6 @@ import org.sabaini.pokedex.util.Constants.BLANK
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 @ExperimentalPagerApi
-@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun PokedexApp() {
     PokedexTheme {
@@ -48,14 +53,14 @@ fun PokedexApp() {
                 PokedexTopBar(upAvailable) {
                     navController.navigateUp()
                 }
-            }
-        ) {
-            NavHost(navController = navController, startDestination = POKEDEX_SCREEN) {
+            },
+        ) { paddingValues ->
+            NavHost(modifier = Modifier.padding(paddingValues), navController = navController, startDestination = POKEDEX_SCREEN) {
                 composable(POKEDEX_SCREEN) {
                     upAvailable.value = false
                     PokedexScreen(viewModel = hiltViewModel(), onClickPokemon = { name ->
                         navController.navigate(
-                            "$POKEMON_SCREEN/$name"
+                            "$POKEMON_SCREEN/$name",
                         )
                     })
                 }
@@ -64,8 +69,8 @@ fun PokedexApp() {
                     arguments = listOf(
                         navArgument(POKEMON_SCREEN_ARGUMENT) {
                             type = NavType.StringType
-                        }
-                    )
+                        },
+                    ),
                 ) { entry ->
                     upAvailable.value = true
                     val pokemonName = entry.arguments?.getString(POKEMON_SCREEN_ARGUMENT)
@@ -83,7 +88,7 @@ fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) 
             title = {
                 Text(
                     text = stringResource(R.string.pokedex),
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             },
             navigationIcon = {
@@ -91,10 +96,13 @@ fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) 
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.back),
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
-            }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
         )
     } else {
         TopAppBar(
@@ -102,9 +110,12 @@ fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) 
                 Text(
                     text = stringResource(R.string.pokedex),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp))
+                    modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp)),
                 )
-            }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
         )
     }
 }

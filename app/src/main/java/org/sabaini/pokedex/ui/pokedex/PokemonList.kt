@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -25,24 +23,22 @@ import org.sabaini.pokedex.util.Constants
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-@ExperimentalMaterialApi
 fun PokemonList(
     pokemons: Flow<PagingData<PokemonUiState>>,
     onClickPokemon: (String) -> Unit,
-    onBackgroundColorChange: (PokemonUiState) -> Unit
+    onBackgroundColorChange: (PokemonUiState) -> Unit,
 ) {
-
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = dimensionResource(R.dimen.dimen_of_150_dp))
+        columns = GridCells.Adaptive(minSize = dimensionResource(R.dimen.dimen_of_150_dp)),
     ) {
         items(lazyPokemonItems.itemCount) { index ->
             lazyPokemonItems[index]?.let {
                 PokemonCard(
                     pokemon = it,
                     onItemClicked = onClickPokemon,
-                    onBackgroundColorChange = onBackgroundColorChange
+                    onBackgroundColorChange = onBackgroundColorChange,
                 )
             }
         }
@@ -59,25 +55,28 @@ private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<Pokemo
             loadState.refresh is LoadState.Loading -> {
                 item(span = span) { LoadingView(Modifier.fillMaxSize()) }
             }
+
             loadState.append is LoadState.Loading -> {
                 item(span = span) { LoadingItem() }
             }
+
             loadState.refresh is LoadState.Error -> {
                 val e = lazyPokemonItems.loadState.refresh as LoadState.Error
                 item(span = span) {
                     ErrorItem(
                         message = e.error.localizedMessage ?: Constants.BLANK,
                         modifier = Modifier.fillMaxSize(),
-                        onClickRetry = { retry() }
+                        onClickRetry = { retry() },
                     )
                 }
             }
+
             loadState.append is LoadState.Error -> {
                 val e = lazyPokemonItems.loadState.append as LoadState.Error
                 item(span = span) {
                     ErrorItem(
                         message = e.error.localizedMessage ?: Constants.BLANK,
-                        onClickRetry = { retry() }
+                        onClickRetry = { retry() },
                     )
                 }
             }

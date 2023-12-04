@@ -11,13 +11,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import org.sabaini.pokedex.data.remote.PokemonApi
-import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.PokemonRepository
 import org.sabaini.pokedex.data.local.PokemonDao
 import org.sabaini.pokedex.data.local.PokemonDatabase
 import org.sabaini.pokedex.data.local.PokemonInfoDao
 import org.sabaini.pokedex.data.local.PokemonLocalDataSource
+import org.sabaini.pokedex.data.remote.PokemonApi
+import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.util.Constants.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,7 +33,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             PokemonDatabase::class.java,
-            "pokemon_db"
+            "pokemon_db",
         )
             .fallbackToDestructiveMigration()
             .build()
@@ -64,7 +64,7 @@ object AppModule {
     fun providePokemonRepository(
         pokemonRemoteDataSource: PokemonRemoteDataSource,
         pokemonLocalDataSource: PokemonLocalDataSource,
-        externalScope: CoroutineScope
+        externalScope: CoroutineScope,
     ): PokemonRepository {
         return PokemonRepository(pokemonRemoteDataSource, pokemonLocalDataSource, externalScope)
     }
@@ -73,7 +73,7 @@ object AppModule {
     @Provides
     fun providePokemonRemoteDataSource(
         pokemonApi: PokemonApi,
-        ioDispatcher: CoroutineDispatcher
+        ioDispatcher: CoroutineDispatcher,
     ): PokemonRemoteDataSource {
         return PokemonRemoteDataSource(pokemonApi, ioDispatcher)
     }
@@ -83,7 +83,7 @@ object AppModule {
     fun providePokemonLocalDataSource(
         pokemonDao: PokemonDao,
         pokemonInfoDao: PokemonInfoDao,
-        ioDispatcher: CoroutineDispatcher
+        ioDispatcher: CoroutineDispatcher,
     ): PokemonLocalDataSource {
         return PokemonLocalDataSource(pokemonDao, pokemonInfoDao, ioDispatcher)
     }

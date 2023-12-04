@@ -10,7 +10,7 @@ interface PokemonApi {
     @GET("pokemon")
     suspend fun fetchPokemonList(
         @Query("limit") limit: Int = PAGING_SIZE,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): PokemonListApiModel
 
     @GET("pokemon/{name}")

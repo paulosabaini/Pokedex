@@ -22,7 +22,7 @@ class PokemonsSource @Inject constructor(private val repository: PokemonReposito
             LoadResult.Page(
                 data = pokemons,
                 prevKey = if (nextPage == ZERO) null else nextPage - ONE,
-                nextKey = nextPage.plus(ONE)
+                nextKey = nextPage.plus(ONE),
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

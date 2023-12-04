@@ -8,7 +8,7 @@ typealias ComposableFun = @Composable () -> Unit
 
 @ExperimentalCoilApi
 sealed class TabItem(var title: String, var screen: ComposableFun) {
-    object About : TabItem("About", { AboutContent(hiltViewModel()) })
-    object BaseStats : TabItem("Base Stats", { BaseStatsContent(hiltViewModel()) })
-    object Evolution : TabItem("Evolution", { EvolutionContent(hiltViewModel()) })
+    data object About : TabItem("About", { AboutContent(hiltViewModel()) })
+    data object BaseStats : TabItem("Base Stats", { BaseStatsContent(hiltViewModel()) })
+    data object Evolution : TabItem("Evolution", { EvolutionContent(hiltViewModel()) })
 }

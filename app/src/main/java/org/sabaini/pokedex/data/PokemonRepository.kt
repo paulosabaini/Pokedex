@@ -3,8 +3,14 @@ package org.sabaini.pokedex.data
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
-import org.sabaini.pokedex.data.local.*
-import org.sabaini.pokedex.data.remote.*
+import org.sabaini.pokedex.data.local.PokemonInfoEvolutionLocalModel
+import org.sabaini.pokedex.data.local.PokemonInfoLocalModel
+import org.sabaini.pokedex.data.local.PokemonLocalDataSource
+import org.sabaini.pokedex.data.local.asUiState
+import org.sabaini.pokedex.data.remote.PokemonInfoApiModel
+import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
+import org.sabaini.pokedex.data.remote.asLocalModel
+import org.sabaini.pokedex.data.remote.asStatLocalModel
 import org.sabaini.pokedex.ui.state.PokemonInfoEvolutionUiState
 import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
@@ -24,7 +30,7 @@ import javax.inject.Inject
 class PokemonRepository @Inject constructor(
     private val pokemonRemoteDataSource: PokemonRemoteDataSource,
     private val pokemonLocalDataSource: PokemonLocalDataSource,
-    private val externalScope: CoroutineScope
+    private val externalScope: CoroutineScope,
 ) {
     suspend fun getPokemonList(page: Int, refresh: Boolean = false): List<PokemonUiState> {
         return if (refresh) {
@@ -41,7 +47,7 @@ class PokemonRepository @Inject constructor(
 
     suspend fun getPokemonInfo(
         name: String,
-        refresh: Boolean = false
+        refresh: Boolean = false,
     ): PokemonInfoUiState? {
         return if (refresh) {
             externalScope.async {
@@ -73,7 +79,7 @@ class PokemonRepository @Inject constructor(
                 PokemonInfoEvolutionLocalModel(
                     localPokemon.evolutionChainId.toInt(),
                     pokemonInfo.id,
-                    minLevel
+                    minLevel,
                 )
             evolutionCounter++
             localModelEvolutions.add(evolution)
@@ -92,7 +98,7 @@ class PokemonRepository @Inject constructor(
         val descriptionText =
             species.flavorTextEntries.find { it.version.name == FIRE_RED && it.language.name == ENGLISH }?.flavorText?.replace(
                 NEW_LINE,
-                SPACE
+                SPACE,
             ) ?: BLANK
         val evolutionChainId =
             species.evolutionChain.url.split(SLASH.toRegex()).dropLast(ONE).last()
@@ -112,7 +118,8 @@ class PokemonRepository @Inject constructor(
                 .copy(
                     evolutionChain = getEvolutionChain(pokemonInfo.evolutionChainId.toInt()),
                     baseStats = getBaseStats(pokemonInfo.id),
-                    backgroundColor = pokedexPokemon.backgroundColor?.let { color -> Color(color) })
+                    backgroundColor = pokedexPokemon.backgroundColor?.let { color -> Color(color) },
+                )
         }
     }
 
@@ -123,7 +130,7 @@ class PokemonRepository @Inject constructor(
             val pokemon = pokemonLocalDataSource.fetchPokemonInfo(it.idPokemon)
             PokemonInfoEvolutionUiState(
                 pokemon = pokemon.asUiState(),
-                minLevel = it.minLevel
+                minLevel = it.minLevel,
             )
         }
     }
@@ -135,7 +142,7 @@ class PokemonRepository @Inject constructor(
             PokemonInfoStatUiState(
                 name = statEnum.stat,
                 baseState = it.baseState / 100f,
-                color = statEnum.color
+                color = statEnum.color,
             )
         }
     }

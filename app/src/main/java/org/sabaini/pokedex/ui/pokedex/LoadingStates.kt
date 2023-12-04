@@ -1,7 +1,15 @@
 package org.sabaini.pokedex.ui.pokedex
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +23,12 @@ import org.sabaini.pokedex.ui.theme.PokedexTheme
 
 @Composable
 fun LoadingView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CircularProgressIndicator()
     }
@@ -37,11 +45,11 @@ fun PreviewLoadingView() {
 @Composable
 fun LoadingItem() {
     CircularProgressIndicator(
-        color = MaterialTheme.colors.primary,
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(R.dimen.dimen_of_16_dp))
-            .wrapContentWidth(Alignment.CenterHorizontally)
+            .wrapContentWidth(Alignment.CenterHorizontally),
     )
 }
 
@@ -57,22 +65,22 @@ fun PreviewLoadingItem() {
 fun ErrorItem(
     message: String,
     modifier: Modifier = Modifier,
-    onClickRetry: () -> Unit
+    onClickRetry: () -> Unit,
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = message,
             color = Color.White,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp))
+            modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
         )
         Button(
             onClick = onClickRetry,
-            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp))
+            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp)),
         ) {
             Text(text = stringResource(R.string.retry))
         }
@@ -85,7 +93,7 @@ fun PreviewErrorItem() {
     PokedexTheme {
         ErrorItem(
             message = "Error message",
-            onClickRetry = {}
+            onClickRetry = {},
         )
     }
 }

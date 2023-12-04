@@ -1,37 +1,26 @@
 package org.sabaini.pokedex.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
     primary = Red,
-    primaryVariant = RedVariant,
     secondary = Red,
     background = Black,
     onPrimary = White,
-    onSecondary = White
+    onSecondary = White,
 )
 
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
     primary = Red,
-    primaryVariant = RedVariant,
     secondary = Red,
     background = Black,
     onPrimary = White,
-    onSecondary = White
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    onSecondary = White,
 )
 
 @Composable
@@ -46,9 +35,9 @@ fun PokedexTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
     systemUiController.setStatusBarColor(colors.primary)
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

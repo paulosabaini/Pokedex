@@ -13,7 +13,7 @@ data class PokemonUiState(
     var page: Int,
     val name: String,
     val url: String,
-    var backgroundColor: Color? = null
+    var backgroundColor: Color? = null,
 ) {
     private fun getPokemonNumber(): String {
         return url.split(SLASH.toRegex()).dropLast(ONE).last()
@@ -42,7 +42,7 @@ data class PokemonInfoUiState(
     var backgroundColor: Color? = null,
     var borderColor: Color? = null,
     val baseStats: List<PokemonInfoStatUiState> = listOf(),
-    val evolutionChain: List<PokemonInfoEvolutionUiState> = listOf()
+    val evolutionChain: List<PokemonInfoEvolutionUiState> = listOf(),
 ) {
     fun getFormattedPokemonNumber(): String {
         return getDisplayPokemonNumber(id.toString())
@@ -68,10 +68,10 @@ data class PokemonInfoUiState(
 data class PokemonInfoStatUiState(
     val name: String,
     val baseState: Float,
-    val color: Color
+    val color: Color,
 )
 
 data class PokemonInfoEvolutionUiState(
     val pokemon: PokemonInfoUiState,
-    val minLevel: Int
+    val minLevel: Int,
 )

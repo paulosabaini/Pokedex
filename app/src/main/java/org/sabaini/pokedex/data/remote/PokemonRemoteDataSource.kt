@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class PokemonRemoteDataSource @Inject constructor(
     private val pokemonApi: PokemonApi,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) {
     suspend fun fetchPokemonList(page: Int): PokemonListApiModel =
         withContext(ioDispatcher) {
@@ -29,4 +29,3 @@ class PokemonRemoteDataSource @Inject constructor(
             pokemonApi.fetchPokemonInfoEvolutions(id)
         }
 }
-

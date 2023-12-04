@@ -1,9 +1,15 @@
 package org.sabaini.pokedex.ui.pokemon.tabs
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,18 +31,18 @@ fun AboutContent(viewModel: PokemonViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
-            .padding(dimensionResource(R.dimen.dimen_of_15_dp))
+            .padding(dimensionResource(R.dimen.dimen_of_15_dp)),
     ) {
         Text(
             text = viewModel.pokemonInfoUiState.description,
             color = Color.White,
             textAlign = TextAlign.Justify,
-            fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp
+            fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp,
         )
 
         HeightAndWeightCard(
             height = viewModel.pokemonInfoUiState.getFormattedHeight(),
-            weight = viewModel.pokemonInfoUiState.getFormattedWeight()
+            weight = viewModel.pokemonInfoUiState.getFormattedWeight(),
         )
     }
 }
@@ -44,14 +50,14 @@ fun AboutContent(viewModel: PokemonViewModel) {
 @Composable
 fun HeightAndWeightCard(height: String, weight: String) {
     Card(
-        backgroundColor = Color.White,
-        elevation = dimensionResource(R.dimen.dimen_of_3_dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.dimen_of_3_dp)),
         modifier = Modifier
             .padding(
                 vertical = dimensionResource(R.dimen.dimen_of_10_dp),
-                horizontal = dimensionResource(R.dimen.dimen_of_5_dp)
+                horizontal = dimensionResource(R.dimen.dimen_of_5_dp),
             )
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Row(horizontalArrangement = Arrangement.SpaceEvenly) {
             HeightAndWeightText(height)
@@ -64,7 +70,7 @@ fun HeightAndWeightCard(height: String, weight: String) {
 fun HeightAndWeightText(value: String) {
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = stringResource(R.string.height), color = LightGray)
         Text(text = value, color = Color.Black)

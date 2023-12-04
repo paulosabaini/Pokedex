@@ -1,8 +1,11 @@
 package org.sabaini.pokedex.ui.pokedex
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import coil.annotation.ExperimentalCoilApi
 import kotlinx.coroutines.launch
@@ -12,10 +15,8 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
-
     val searchModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val genModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
@@ -29,6 +30,7 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
                             searchModalBottomSheetState.show()
                         }
                     }
+
                     R.id.menu_item_gen -> {
                         coroutineScope.launch {
                             genModalBottomSheetState.show()
@@ -36,11 +38,11 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
                     }
                 }
             }
-        }
-    ) {
+        },
+    ) { _ ->
         PokemonList(
             pokemons = viewModel.pokeFlow,
-            onClickPokemon = onClickPokemon
+            onClickPokemon = onClickPokemon,
         ) { viewModel.updatePokemonColor(it) }
     }
 

@@ -15,16 +15,16 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,11 +51,10 @@ import org.sabaini.pokedex.util.Constants.TWO
 import org.sabaini.pokedex.util.Enums
 
 @Composable
-@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun SearchBottomSheetLayout(
     sheetState: ModalBottomSheetState,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
 ) {
     ModalBottomSheetLayout(
         sheetState = sheetState,
@@ -65,8 +64,8 @@ fun SearchBottomSheetLayout(
         sheetBackgroundColor = Black,
         sheetShape = RoundedCornerShape(
             topStart = dimensionResource(R.dimen.dimen_of_10_dp),
-            topEnd = dimensionResource(R.dimen.dimen_of_10_dp)
-        )
+            topEnd = dimensionResource(R.dimen.dimen_of_10_dp),
+        ),
     ) {}
 }
 
@@ -85,7 +84,7 @@ fun SearchTextField(onSearch: (String) -> Unit) {
             onDone = {
                 keyboardController?.hide()
                 onSearch(text)
-            }
+            },
         ),
         placeholder = {
             Text(stringResource(R.string.search_placeholder))
@@ -95,22 +94,22 @@ fun SearchTextField(onSearch: (String) -> Unit) {
             Icon(
                 Icons.Filled.Search,
                 stringResource(R.string.search_placeholder),
-                tint = Color.Black
+                tint = Color.Black,
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            unfocusedIndicatorColor = Color.Transparent,
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(R.dimen.dimen_of_16_dp))
+            .padding(dimensionResource(R.dimen.dimen_of_16_dp)),
     )
 }
 
 @Composable
-@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
     ModalBottomSheetLayout(
@@ -120,8 +119,8 @@ fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
         },
         sheetShape = RoundedCornerShape(
             topStart = dimensionResource(R.dimen.dimen_of_10_dp),
-            topEnd = dimensionResource(R.dimen.dimen_of_10_dp)
-        )
+            topEnd = dimensionResource(R.dimen.dimen_of_10_dp),
+        ),
     ) {}
 }
 
@@ -138,16 +137,16 @@ fun GenerationsOptions() {
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = dimensionResource(R.dimen.dimen_of_10_dp))
+                .padding(top = dimensionResource(R.dimen.dimen_of_10_dp)),
         )
         LazyVerticalGrid(
             columns = GridCells.Fixed(TWO),
-            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp))
+            contentPadding = PaddingValues(dimensionResource(R.dimen.dimen_of_10_dp)),
         ) {
             items(generations) { generation ->
                 GenerationCard(
                     name = generation.gen,
-                    image = painterResource(generation.drawable)
+                    image = painterResource(generation.drawable),
                 )
             }
         }
@@ -157,10 +156,13 @@ fun GenerationsOptions() {
 @Composable
 fun GenerationCard(name: String, image: Painter) {
     Card(
-        elevation = dimensionResource(R.dimen.dimen_of_3_dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.dimen_of_3_dp)),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+        ),
         modifier = Modifier
             .padding(dimensionResource(R.dimen.dimen_of_10_dp))
-            .clickable { }
+            .clickable { },
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = name, textAlign = Center)
@@ -170,10 +172,9 @@ fun GenerationCard(name: String, image: Painter) {
                 modifier = Modifier
                     .width(dimensionResource(R.dimen.dimen_of_160_dp))
                     .height(dimensionResource(R.dimen.dimen_of_80_dp))
-                    .padding(dimensionResource(R.dimen.dimen_of_5_dp))
+                    .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
             )
         }
-
     }
 }
 

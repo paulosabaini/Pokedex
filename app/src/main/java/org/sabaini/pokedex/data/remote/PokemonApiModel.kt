@@ -11,12 +11,12 @@ data class PokemonListApiModel(
     val count: Int,
     val next: String,
     val previous: String?,
-    val results: List<PokemonApiModel>
+    val results: List<PokemonApiModel>,
 )
 
 data class PokemonApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )
 
 fun List<PokemonApiModel>.asLocalModel(page: Int): List<PokemonLocalModel> {
@@ -24,7 +24,7 @@ fun List<PokemonApiModel>.asLocalModel(page: Int): List<PokemonLocalModel> {
         PokemonLocalModel(
             page = page,
             name = it.name,
-            url = it.url
+            url = it.url,
         )
     }
 }
@@ -35,7 +35,7 @@ data class PokemonInfoApiModel(
     val types: List<PokemonInfoTypesApiModel>,
     val height: Int,
     val weight: Int,
-    val stats: List<PokemonInfoStatsApiModel>
+    val stats: List<PokemonInfoStatsApiModel>,
 )
 
 fun PokemonInfoApiModel.asLocalModel(): PokemonInfoLocalModel {
@@ -46,7 +46,7 @@ fun PokemonInfoApiModel.asLocalModel(): PokemonInfoLocalModel {
         description = BLANK,
         height = this.height,
         weight = this.weight,
-        evolutionChainId = BLANK
+        evolutionChainId = BLANK,
     )
 }
 
@@ -55,63 +55,63 @@ fun List<PokemonInfoStatsApiModel>.asStatLocalModel(id: Int): List<PokemonInfoSt
         PokemonInfoStatLocalModel(
             idPokemon = id,
             name = it.stat.name,
-            baseState = it.baseState
+            baseState = it.baseState,
         )
     }
 }
 
 data class PokemonInfoTypesApiModel(
     val slot: Int,
-    val type: PokemonInfoTypeApiModel
+    val type: PokemonInfoTypeApiModel,
 )
 
 data class PokemonInfoTypeApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )
 
 data class PokemonInfoStatsApiModel(
     @SerializedName("base_stat")
     val baseState: Int,
     val effort: Int,
-    val stat: PokemonInfoStatApiModel
+    val stat: PokemonInfoStatApiModel,
 )
 
 data class PokemonInfoStatApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )
 
 data class PokemonInfoSpeciesApiModel(
     @SerializedName("flavor_text_entries")
     val flavorTextEntries: List<PokemonInfoSpeciesFlavorTextApiModel>,
     @SerializedName("evolution_chain")
-    val evolutionChain: PokemonInfoSpeciesEvolutionChain
+    val evolutionChain: PokemonInfoSpeciesEvolutionChain,
 )
 
 data class PokemonInfoSpeciesFlavorTextApiModel(
     @SerializedName("flavor_text")
     val flavorText: String,
     val language: PokemonInfoSpeciesFlavorTextLanguageApiModel,
-    val version: PokemonInfoSpeciesFlavorTextVersionApiModel
+    val version: PokemonInfoSpeciesFlavorTextVersionApiModel,
 )
 
 data class PokemonInfoSpeciesFlavorTextLanguageApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )
 
 data class PokemonInfoSpeciesFlavorTextVersionApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )
 
 data class PokemonInfoSpeciesEvolutionChain(
-    val url: String
+    val url: String,
 )
 
 data class PokemonInfoEvolutionApiModel(
-    val chain: PokemonInfoEvolutionChainApiModel
+    val chain: PokemonInfoEvolutionChainApiModel,
 )
 
 data class PokemonInfoEvolutionChainApiModel(
@@ -119,15 +119,15 @@ data class PokemonInfoEvolutionChainApiModel(
     val evolutionDetails: List<PokemonInfoEvolutionDetailsApiModel>,
     @SerializedName("evolves_to")
     val evolvesTo: List<PokemonInfoEvolutionChainApiModel>,
-    val species: PokemonInfoEvolutionSpecieApiModel
+    val species: PokemonInfoEvolutionSpecieApiModel,
 )
 
 data class PokemonInfoEvolutionDetailsApiModel(
     @SerializedName("min_level")
-    val minLevel: Int
+    val minLevel: Int,
 )
 
 data class PokemonInfoEvolutionSpecieApiModel(
     val name: String,
-    val url: String
+    val url: String,
 )

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PokemonLocalDataSource @Inject constructor(
     private val pokemonDao: PokemonDao,
     private val pokemonInfoDao: PokemonInfoDao,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) {
     suspend fun fetchPokemons(page: Int): List<PokemonLocalModel> =
         withContext(ioDispatcher) {

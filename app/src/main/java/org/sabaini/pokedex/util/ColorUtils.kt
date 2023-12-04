@@ -10,7 +10,7 @@ object ColorUtils {
 
     fun calculateDominantColor(
         drawable: Drawable,
-        onFinish: (Color) -> Unit
+        onFinish: (Color) -> Unit,
     ) {
         val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
@@ -23,7 +23,7 @@ object ColorUtils {
 
     fun calculateVibrantColor(
         drawable: Drawable,
-        onFinish: (Color) -> Unit
+        onFinish: (Color) -> Unit,
     ) {
         val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 

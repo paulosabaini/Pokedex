@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PokedexViewModel @Inject constructor(
     private val source: PokemonsSource,
-    private val repository: PokemonRepository
+    private val repository: PokemonRepository,
 ) : ViewModel() {
 
     val pokeFlow: Flow<PagingData<PokemonUiState>> = Pager(PagingConfig(PAGING_SIZE)) {
