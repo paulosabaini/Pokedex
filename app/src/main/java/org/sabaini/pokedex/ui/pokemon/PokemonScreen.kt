@@ -34,11 +34,19 @@ import java.util.Locale
 
 @ExperimentalCoilApi
 @Composable
-fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
+fun PokemonScreen(
+    pokemonName: String,
+    viewModel: PokemonViewModel,
+    onDominantColor: (Color) -> Unit,
+) {
     viewModel.fetchPokemonInfo(pokemonName)
 
     val dominantColor =
         remember { mutableStateOf(viewModel.pokemonInfoUiState.getBackgroundColor()) }
+
+    LaunchedEffect(dominantColor.value) {
+        onDominantColor(dominantColor.value)
+    }
 
     Column(modifier = Modifier.background(color = dominantColor.value)) {
         Column {

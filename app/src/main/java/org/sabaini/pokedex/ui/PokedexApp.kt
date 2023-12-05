@@ -13,8 +13,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,10 +47,11 @@ fun PokedexApp() {
     PokedexTheme {
         val navController = rememberNavController()
         val upAvailable = remember { mutableStateOf(false) }
+        var customTopAppBarColor by remember { mutableStateOf(Color.Transparent) }
 
         Scaffold(
             topBar = {
-                PokedexTopBar(upAvailable) {
+                PokedexTopBar(upAvailable, customTopAppBarColor) {
                     navController.navigateUp()
                 }
             },
@@ -76,7 +79,9 @@ fun PokedexApp() {
                 ) { entry ->
                     upAvailable.value = true
                     val pokemonName = entry.arguments?.getString(POKEMON_SCREEN_ARGUMENT)
-                    PokemonScreen(pokemonName = pokemonName ?: BLANK, hiltViewModel())
+                    PokemonScreen(pokemonName = pokemonName ?: BLANK, hiltViewModel()) {
+                        customTopAppBarColor = it
+                    }
                 }
             }
         }
@@ -84,7 +89,11 @@ fun PokedexApp() {
 }
 
 @Composable
-fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) {
+fun PokedexTopBar(
+    upAvailable: MutableState<Boolean>,
+    customTopAppBarColor: Color,
+    onNavigateUp: () -> Unit,
+) {
     if (upAvailable.value) {
         TopAppBar(
             title = {
@@ -103,7 +112,7 @@ fun PokedexTopBar(upAvailable: MutableState<Boolean>, onNavigateUp: () -> Unit) 
                 }
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = customTopAppBarColor,
             ),
         )
     } else {
