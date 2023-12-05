@@ -1,6 +1,9 @@
 package org.sabaini.pokedex.ui.pokemon.tabs
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -15,19 +18,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.util.Constants
 
-@ExperimentalPagerApi
 @ExperimentalCoilApi
 @Composable
-fun PokemonInfoTabs(pagerState: PagerState) {
+fun PokemonInfoTabs() {
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution)
+    val pagerState = rememberPagerState(
+        initialPage = Constants.ZERO,
+        initialPageOffsetFraction = 0f,
+    ) {
+        tabs.size
+    }
 
     Column(
         modifier = Modifier.clip(
@@ -42,7 +47,6 @@ fun PokemonInfoTabs(pagerState: PagerState) {
     }
 }
 
-@ExperimentalPagerApi
 @ExperimentalCoilApi
 @Composable
 fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
@@ -80,11 +84,10 @@ fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
     }
 }
 
-@ExperimentalPagerApi
 @ExperimentalCoilApi
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
-    HorizontalPager(state = pagerState, count = tabs.size) { page ->
+    HorizontalPager(state = pagerState) { page ->
         tabs[page].screen()
     }
 }

@@ -24,24 +24,19 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokemon.tabs.PokemonInfoTabs
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
-import org.sabaini.pokedex.util.Constants.ZERO
 import java.util.Locale
 
 @ExperimentalCoilApi
-@ExperimentalPagerApi
 @Composable
 fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
     viewModel.fetchPokemonInfo(pokemonName)
 
-    val pagerState = rememberPagerState(ZERO)
     val dominantColor =
         remember { mutableStateOf(viewModel.pokemonInfoUiState.getBackgroundColor()) }
 
@@ -55,7 +50,7 @@ fun PokemonScreen(pokemonName: String, viewModel: PokemonViewModel) {
             PokemonInfoImage(pokemon = viewModel.pokemonInfoUiState, dominantColor = dominantColor)
         }
 
-        PokemonInfoTabs(pagerState = pagerState)
+        PokemonInfoTabs()
     }
 }
 

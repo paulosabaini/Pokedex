@@ -28,7 +28,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.pager.ExperimentalPagerApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.Destinations.POKEDEX_SCREEN
 import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN
@@ -41,7 +40,6 @@ import org.sabaini.pokedex.util.Constants.BLANK
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
-@ExperimentalPagerApi
 @ExperimentalComposeUiApi
 fun PokedexApp() {
     PokedexTheme {
@@ -55,7 +53,11 @@ fun PokedexApp() {
                 }
             },
         ) { paddingValues ->
-            NavHost(modifier = Modifier.padding(paddingValues), navController = navController, startDestination = POKEDEX_SCREEN) {
+            NavHost(
+                modifier = Modifier.padding(paddingValues),
+                navController = navController,
+                startDestination = POKEDEX_SCREEN,
+            ) {
                 composable(POKEDEX_SCREEN) {
                     upAvailable.value = false
                     PokedexScreen(viewModel = hiltViewModel(), onClickPokemon = { name ->

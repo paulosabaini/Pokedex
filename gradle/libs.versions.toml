@@ -8,7 +8,6 @@ ksp                                 = "1.9.20-1.0.14"
 ktlint                              = "3.16.0"
 
 # production libraries
-accompanist                         = "0.32.0"
 coil                                = "2.5.0"
 compose-bom                         = "2023.10.01"
 compose-compiler                    = "1.5.4"
@@ -28,6 +27,7 @@ timber                              = "5.0.1"
 speed-dial                          = "3.2.0"
 paging                              = "3.2.1"
 palette                             = "1.0.0"
+activity                            = "1.8.1"
 
 # test libraries
 test-junit                          = "5.10.1"
@@ -53,14 +53,11 @@ ktlint                              = { id = "org.jmailen.kotlinter", version.re
 
 [libraries]
 # production libraries
-accompanist-swipe-refresh           = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
-accompanist-pager                   = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
-accompanist-pager-indicators        = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
-accompanist-systemuicontroller      = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 coil                                = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                         = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-ui-tooling-preview          = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-material3                   = { group = "androidx.compose.material3", name = "material3" }
+compose-material                    = { group = "androidx.compose.material", name = "material" }
 material-icons                      = { group = "androidx.compose.material", name = "material-icons-extended" }
 desugar                             = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 detekt-compose-rules                = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-compose-rules" }
@@ -83,6 +80,7 @@ speed-dial                          = { module = "com.leinardi.android:speed-dia
 paging                              = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 paging-runtime                      = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 palette                             = { module = "androidx.palette:palette-ktx", version.ref = "palette" }
+activity                            = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 
 # test libraries
 test-junit                          = { module = "org.junit.jupiter:junit-jupiter", version.ref = "test-junit" }

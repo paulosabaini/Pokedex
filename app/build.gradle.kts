@@ -61,6 +61,7 @@ android {
         freeCompilerArgs = listOf(
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
         )
     }
 
@@ -72,11 +73,9 @@ android {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.accompanist.pager)
-    implementation(libs.accompanist.pager.indicators)
-    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.coil)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material)
     implementation(libs.material.icons)
     implementation(libs.hilt)
     implementation(libs.kotlin.coroutines)
@@ -93,6 +92,7 @@ dependencies {
     implementation(libs.paging)
     implementation(libs.paging.runtime)
     implementation(libs.palette)
+    implementation(libs.activity)
     testImplementation(libs.bundles.common.test)
     androidTestImplementation(libs.bundles.common.android.test)
     debugImplementation(libs.debug.compose.manifest)
