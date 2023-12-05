@@ -11,11 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
-import kotlinx.coroutines.flow.Flow
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants
@@ -25,18 +22,16 @@ import org.sabaini.pokedex.util.Constants
 @ExperimentalCoilApi
 fun PokemonList(
     modifier: Modifier = Modifier,
-    pokemons: Flow<PagingData<PokemonUiState>>,
+    pokemons: LazyPagingItems<PokemonUiState>,
     onClickPokemon: (String) -> Unit,
     onBackgroundColorChange: (PokemonUiState) -> Unit,
 ) {
-    val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
-
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(minSize = dimensionResource(R.dimen.dimen_of_150_dp)),
     ) {
-        items(lazyPokemonItems.itemCount) { index ->
-            lazyPokemonItems[index]?.let {
+        items(pokemons.itemCount) { index ->
+            pokemons[index]?.let {
                 PokemonCard(
                     pokemon = it,
                     onItemClicked = onClickPokemon,
@@ -44,7 +39,7 @@ fun PokemonList(
                 )
             }
         }
-        renderLoading(lazyPokemonItems)
+        renderLoading(pokemons)
     }
 }
 

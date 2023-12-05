@@ -96,6 +96,7 @@ test-android-runner                 = { module = "androidx.test:runner", version
 
 # debug libraries
 debug-compose-manifest              = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-tooling                          = { group = "androidx.compose.ui", name = "ui-tooling" }
 
 
 [bundles]

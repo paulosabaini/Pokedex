@@ -57,7 +57,7 @@ fun PokemonCard(
 }
 
 @Composable
-fun PokemonCardHeader(pokemon: PokemonUiState) {
+private fun PokemonCardHeader(pokemon: PokemonUiState) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -80,7 +80,7 @@ fun PokemonCardHeader(pokemon: PokemonUiState) {
 
 @Composable
 @ExperimentalCoilApi
-fun PokemonCardImage(
+private fun PokemonCardImage(
     pokemon: PokemonUiState,
     dominantColor: MutableState<Color>,
     onBackgroundColorChange: (PokemonUiState) -> Unit,
@@ -103,10 +103,12 @@ fun PokemonCardImage(
         LaunchedEffect(key1 = painter) {
             launch {
                 val image = painter.imageLoader.execute(painter.request).drawable
-                ColorUtils.calculateDominantColor(image!!) {
-                    dominantColor.value = it
-                    pokemon.backgroundColor = it
-                    onBackgroundColorChange(pokemon)
+                image?.let { imageDrawable ->
+                    ColorUtils.calculateDominantColor(imageDrawable) {
+                        dominantColor.value = it
+                        pokemon.backgroundColor = it
+                        onBackgroundColorChange(pokemon)
+                    }
                 }
             }
         }

@@ -95,6 +95,7 @@ dependencies {
     testImplementation(libs.bundles.common.test)
     androidTestImplementation(libs.bundles.common.android.test)
     debugImplementation(libs.debug.compose.manifest)
+    debugImplementation(libs.ui.tooling)
 
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)

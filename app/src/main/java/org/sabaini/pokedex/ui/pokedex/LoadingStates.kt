@@ -22,23 +22,13 @@ import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun LoadingView(
-    modifier: Modifier = Modifier,
-) {
+fun LoadingView(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CircularProgressIndicator()
-    }
-}
-
-@Preview
-@Composable
-fun PreviewLoadingView() {
-    PokedexTheme {
-        LoadingView()
     }
 }
 
@@ -51,14 +41,6 @@ fun LoadingItem() {
             .padding(dimensionResource(R.dimen.dimen_of_16_dp))
             .wrapContentWidth(Alignment.CenterHorizontally),
     )
-}
-
-@Preview
-@Composable
-fun PreviewLoadingItem() {
-    PokedexTheme {
-        LoadingItem()
-    }
 }
 
 @Composable
@@ -89,7 +71,23 @@ fun ErrorItem(
 
 @Preview
 @Composable
-fun PreviewErrorItem() {
+private fun LoadingViewPreview() {
+    PokedexTheme {
+        LoadingView()
+    }
+}
+
+@Preview
+@Composable
+private fun LoadingItemPreview() {
+    PokedexTheme {
+        LoadingItem()
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorItemPreview() {
     PokedexTheme {
         ErrorItem(
             message = "Error message",

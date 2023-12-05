@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
@@ -24,6 +25,7 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
     var showSearchBottomSheet by remember { mutableStateOf(false) }
     var showGenBottomSheet by remember { mutableStateOf(false) }
+    val pokemons = viewModel.pokeFlow.collectAsLazyPagingItems()
 
     Scaffold(
         floatingActionButton = {
@@ -42,7 +44,7 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
     ) { contentPadding ->
         PokemonList(
             modifier = Modifier.consumeWindowInsets(contentPadding).padding(contentPadding),
-            pokemons = viewModel.pokeFlow,
+            pokemons = pokemons,
             onClickPokemon = onClickPokemon,
         ) { viewModel.updatePokemonColor(it) }
 
