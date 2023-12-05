@@ -1,6 +1,5 @@
 package org.sabaini.pokedex.ui.viewmodel
 
-import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -26,9 +25,9 @@ class PokedexViewModel @Inject constructor(
         source
     }.flow.cachedIn(viewModelScope)
 
-    fun updatePokemonColor(pokemon: PokemonUiState) {
+    fun updatePokemonColor(pokemonName: String, color: Int) {
         viewModelScope.launch {
-            repository.updatePokemonBackgroundColor(pokemon.name, pokemon.backgroundColor?.toArgb())
+            repository.updatePokemonBackgroundColor(pokemonName, color)
         }
     }
 }

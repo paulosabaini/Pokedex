@@ -1,6 +1,5 @@
 package org.sabaini.pokedex.ui.pokedex
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,45 +12,49 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.util.ColorUtils
-import java.util.Locale
+import org.sabaini.pokedex.util.toTitleCase
 
 @ExperimentalCoilApi
 @Composable
 fun PokemonCard(
-    pokemon: PokemonUiState,
-    onItemClicked: (String) -> Unit,
-    onBackgroundColorChange: (PokemonUiState) -> Unit,
     modifier: Modifier = Modifier,
+    pokemon: PokemonUiState,
+    onCalculateDominantColor: (Color) -> Unit,
+    onItemClicked: (String) -> Unit,
 ) {
-    val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
-
+    var containerColor by remember {
+        mutableStateOf(pokemon.backgroundColor ?: LightGray)
+    }
     Card(
         onClick = { onItemClicked(pokemon.name) },
-        colors = CardDefaults.cardColors(containerColor = dominantColor.value),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
         modifier = modifier
             .padding(dimensionResource(R.dimen.dimen_of_5_dp))
             .size(dimensionResource(R.dimen.dimen_of_150_dp)),
     ) {
         PokemonCardHeader(pokemon)
         PokemonCardImage(
-            pokemon = pokemon,
-            dominantColor = dominantColor,
-            onBackgroundColorChange = onBackgroundColorChange,
+            pokemonName = pokemon.name,
+            pokemonImageUrl = pokemon.getImageUrl(),
+            onCalculateDominantColor = {
+                containerColor = it
+                onCalculateDominantColor(it)
+            },
         )
     }
 }
@@ -65,9 +68,7 @@ private fun PokemonCardHeader(pokemon: PokemonUiState) {
             .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
     ) {
         Text(
-            text = pokemon.name.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-            },
+            text = pokemon.name.toTitleCase(),
             color = Color.White,
             fontWeight = FontWeight.Bold,
         )
@@ -81,36 +82,38 @@ private fun PokemonCardHeader(pokemon: PokemonUiState) {
 @Composable
 @ExperimentalCoilApi
 private fun PokemonCardImage(
-    pokemon: PokemonUiState,
-    dominantColor: MutableState<Color>,
-    onBackgroundColorChange: (PokemonUiState) -> Unit,
+    pokemonName: String,
+    pokemonImageUrl: String,
+    onCalculateDominantColor: (Color) -> Unit,
 ) {
-    val painter = rememberAsyncImagePainter(model = pokemon.getImageUrl())
-    val painterState = painter.state
+    var showLoading by remember { mutableStateOf(true) }
 
-    Image(
-        painter = painter,
-        contentDescription = pokemon.name,
+    AsyncImage(
+        model = pokemonImageUrl,
+        contentDescription = pokemonName,
         modifier = Modifier
             .fillMaxSize()
             .padding(top = dimensionResource(R.dimen.dimen_of_30_dp)),
-    )
-    if (painterState is AsyncImagePainter.State.Loading) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
-        )
-    } else if (painterState is AsyncImagePainter.State.Success && dominantColor.value == Color.Transparent) {
-        LaunchedEffect(key1 = painter) {
-            launch {
-                val image = painter.imageLoader.execute(painter.request).drawable
-                image?.let { imageDrawable ->
-                    ColorUtils.calculateDominantColor(imageDrawable) {
-                        dominantColor.value = it
-                        pokemon.backgroundColor = it
-                        onBackgroundColorChange(pokemon)
+        onState = { painterState ->
+            when (painterState) {
+                is AsyncImagePainter.State.Loading -> showLoading = true
+                is AsyncImagePainter.State.Empty -> showLoading = true
+                is AsyncImagePainter.State.Error -> showLoading = true
+                is AsyncImagePainter.State.Success -> {
+                    ColorUtils.calculateDominantColor(painterState.result.drawable) {
+                        onCalculateDominantColor(it)
                     }
                 }
             }
-        }
+        },
+    )
+
+    if (showLoading) {
+        CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = dimensionResource(R.dimen.dimen_of_30_dp)),
+        )
     }
 }

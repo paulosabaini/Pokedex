@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
@@ -45,8 +46,11 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
         PokemonList(
             modifier = Modifier.consumeWindowInsets(contentPadding).padding(contentPadding),
             pokemons = pokemons,
+            onBackgroundColorChange = { pokemon, color ->
+                viewModel.updatePokemonColor(pokemon, color.toArgb())
+            },
             onClickPokemon = onClickPokemon,
-        ) { viewModel.updatePokemonColor(it) }
+        )
 
         if (showSearchBottomSheet) {
             SearchBottomSheetLayout(

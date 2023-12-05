@@ -23,8 +23,4 @@ data class PokemonUiState(
     fun getImageUrl(): String {
         return getPokemonImageUrl(getPokemonNumber())
     }
-
-    fun getBackgroundColor(): Color {
-        return backgroundColor ?: Color.Transparent
-    }
 }

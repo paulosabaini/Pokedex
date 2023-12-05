@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -24,7 +25,7 @@ fun PokemonList(
     modifier: Modifier = Modifier,
     pokemons: LazyPagingItems<PokemonUiState>,
     onClickPokemon: (String) -> Unit,
-    onBackgroundColorChange: (PokemonUiState) -> Unit,
+    onBackgroundColorChange: (String, Color) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -34,8 +35,10 @@ fun PokemonList(
             pokemons[index]?.let {
                 PokemonCard(
                     pokemon = it,
+                    onCalculateDominantColor = { color ->
+                        onBackgroundColorChange(it.name, color)
+                    },
                     onItemClicked = onClickPokemon,
-                    onBackgroundColorChange = onBackgroundColorChange,
                 )
             }
         }
