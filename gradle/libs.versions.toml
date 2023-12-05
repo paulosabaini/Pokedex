@@ -57,7 +57,6 @@ coil                                = { module = "io.coil-kt:coil-compose", vers
 compose-bom                         = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-ui-tooling-preview          = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-material3                   = { group = "androidx.compose.material3", name = "material3" }
-compose-material                    = { group = "androidx.compose.material", name = "material" }
 material-icons                      = { group = "androidx.compose.material", name = "material-icons-extended" }
 desugar                             = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 detekt-compose-rules                = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-compose-rules" }

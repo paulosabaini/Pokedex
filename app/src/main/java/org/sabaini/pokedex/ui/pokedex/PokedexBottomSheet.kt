@@ -15,16 +15,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,20 +54,23 @@ import org.sabaini.pokedex.util.Enums
 @Composable
 @ExperimentalComposeUiApi
 fun SearchBottomSheetLayout(
-    sheetState: ModalBottomSheetState,
+    onDismiss: () -> Unit,
     onSearch: (String) -> Unit,
 ) {
-    ModalBottomSheetLayout(
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
         sheetState = sheetState,
-        sheetContent = {
-            SearchTextField(onSearch = onSearch)
-        },
-        sheetBackgroundColor = Black,
-        sheetShape = RoundedCornerShape(
+        onDismissRequest = onDismiss,
+        dragHandle = { BottomSheetDefaults.DragHandle() },
+        containerColor = Black,
+        shape = RoundedCornerShape(
             topStart = dimensionResource(R.dimen.dimen_of_10_dp),
             topEnd = dimensionResource(R.dimen.dimen_of_10_dp),
         ),
-    ) {}
+    ) {
+        SearchTextField(onSearch = onSearch)
+    }
 }
 
 @Composable
@@ -111,17 +115,21 @@ fun SearchTextField(onSearch: (String) -> Unit) {
 
 @Composable
 @ExperimentalFoundationApi
-fun GenFilterBottomSheetLayout(sheetState: ModalBottomSheetState) {
-    ModalBottomSheetLayout(
+fun GenFilterBottomSheetLayout(onDismiss: () -> Unit) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
         sheetState = sheetState,
-        sheetContent = {
-            GenerationsOptions()
-        },
-        sheetShape = RoundedCornerShape(
+        onDismissRequest = onDismiss,
+        dragHandle = { BottomSheetDefaults.DragHandle() },
+        containerColor = Color.White,
+        shape = RoundedCornerShape(
             topStart = dimensionResource(R.dimen.dimen_of_10_dp),
             topEnd = dimensionResource(R.dimen.dimen_of_10_dp),
         ),
-    ) {}
+    ) {
+        GenerationsOptions()
+    }
 }
 
 @Composable

@@ -75,7 +75,6 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.coil)
     implementation(libs.compose.material3)
-    implementation(libs.compose.material)
     implementation(libs.material.icons)
     implementation(libs.hilt)
     implementation(libs.kotlin.coroutines)

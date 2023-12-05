@@ -4,15 +4,15 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
-import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
@@ -22,24 +22,19 @@ import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
-    val searchModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val genModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val coroutineScope = rememberCoroutineScope()
+    var showSearchBottomSheet by remember { mutableStateOf(false) }
+    var showGenBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
         floatingActionButton = {
             FabSpeedDial {
                 when (it) {
                     R.id.menu_item_search -> {
-                        coroutineScope.launch {
-                            searchModalBottomSheetState.show()
-                        }
+                        showSearchBottomSheet = true
                     }
 
                     R.id.menu_item_gen -> {
-                        coroutineScope.launch {
-                            genModalBottomSheetState.show()
-                        }
+                        showGenBottomSheet = true
                     }
                 }
             }
@@ -50,13 +45,20 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
             pokemons = viewModel.pokeFlow,
             onClickPokemon = onClickPokemon,
         ) { viewModel.updatePokemonColor(it) }
-    }
 
-    SearchBottomSheetLayout(sheetState = searchModalBottomSheetState) {
-        coroutineScope.launch {
-            searchModalBottomSheetState.hide()
+        if (showSearchBottomSheet) {
+            SearchBottomSheetLayout(
+                onDismiss = {
+                    showSearchBottomSheet = false
+                },
+                onSearch = {},
+            )
+        }
+
+        if (showGenBottomSheet) {
+            GenFilterBottomSheetLayout {
+                showGenBottomSheet = false
+            }
         }
     }
-
-    GenFilterBottomSheetLayout(sheetState = genModalBottomSheetState)
 }
