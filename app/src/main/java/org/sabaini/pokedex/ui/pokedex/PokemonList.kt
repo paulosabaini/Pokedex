@@ -24,6 +24,7 @@ import org.sabaini.pokedex.util.Constants
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
 fun PokemonList(
+    modifier: Modifier = Modifier,
     pokemons: Flow<PagingData<PokemonUiState>>,
     onClickPokemon: (String) -> Unit,
     onBackgroundColorChange: (PokemonUiState) -> Unit,
@@ -31,6 +32,7 @@ fun PokemonList(
     val lazyPokemonItems = pokemons.collectAsLazyPagingItems()
 
     LazyVerticalGrid(
+        modifier = modifier,
         columns = GridCells.Adaptive(minSize = dimensionResource(R.dimen.dimen_of_150_dp)),
     ) {
         items(lazyPokemonItems.itemCount) { index ->

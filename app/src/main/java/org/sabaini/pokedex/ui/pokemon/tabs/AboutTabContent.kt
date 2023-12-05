@@ -60,19 +60,19 @@ fun HeightAndWeightCard(height: String, weight: String) {
             .fillMaxWidth(),
     ) {
         Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            HeightAndWeightText(height)
-            HeightAndWeightText(weight)
+            HeightAndWeightText(stringResource(R.string.height), height)
+            HeightAndWeightText(stringResource(R.string.weight), weight)
         }
     }
 }
 
 @Composable
-fun HeightAndWeightText(value: String) {
+fun HeightAndWeightText(title: String, value: String) {
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = stringResource(R.string.height), color = LightGray)
+        Text(text = title, color = LightGray)
         Text(text = value, color = Color.Black)
     }
 }

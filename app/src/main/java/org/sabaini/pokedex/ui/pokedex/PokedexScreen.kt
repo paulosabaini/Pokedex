@@ -1,17 +1,22 @@
 package org.sabaini.pokedex.ui.pokedex
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalCoilApi
@@ -39,8 +44,9 @@ fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit)
                 }
             }
         },
-    ) { _ ->
+    ) { contentPadding ->
         PokemonList(
+            modifier = Modifier.consumeWindowInsets(contentPadding).padding(contentPadding),
             pokemons = viewModel.pokeFlow,
             onClickPokemon = onClickPokemon,
         ) { viewModel.updatePokemonColor(it) }

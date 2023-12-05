@@ -6,7 +6,6 @@
     <string name="stat_value">%s/300</string>
     <string name="level_value">Level %s</string>
     <string name="arrow">Arrow</string>
-    <string name="coming_soon">Coming soon...</string>
     <string name="retry">Retry</string>
     <string name="evolution_stage_unevolved">Unevolved</string>
     <string name="evolution_stage_first">First evolution</string>
