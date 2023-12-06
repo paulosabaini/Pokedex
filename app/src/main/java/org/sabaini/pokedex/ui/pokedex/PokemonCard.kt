@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import org.sabaini.pokedex.R
@@ -29,7 +28,6 @@ import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.toTitleCase
 
-@ExperimentalCoilApi
 @Composable
 fun PokemonCard(
     modifier: Modifier = Modifier,
@@ -80,7 +78,6 @@ private fun PokemonCardHeader(pokemon: PokemonUiState) {
 }
 
 @Composable
-@ExperimentalCoilApi
 private fun PokemonCardImage(
     pokemonName: String,
     pokemonImageUrl: String,
@@ -95,14 +92,15 @@ private fun PokemonCardImage(
             .fillMaxSize()
             .padding(top = dimensionResource(R.dimen.dimen_of_30_dp)),
         onState = { painterState ->
-            when (painterState) {
-                is AsyncImagePainter.State.Loading -> showLoading = true
-                is AsyncImagePainter.State.Empty -> showLoading = true
-                is AsyncImagePainter.State.Error -> showLoading = true
+            showLoading = when (painterState) {
+                is AsyncImagePainter.State.Loading -> true
+                is AsyncImagePainter.State.Empty -> true
+                is AsyncImagePainter.State.Error -> true
                 is AsyncImagePainter.State.Success -> {
                     ColorUtils.calculateDominantColor(painterState.result.drawable) {
                         onCalculateDominantColor(it)
                     }
+                    false
                 }
             }
         },

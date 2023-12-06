@@ -1,6 +1,5 @@
 package org.sabaini.pokedex.ui.pokedex
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
@@ -14,14 +13,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-@ExperimentalFoundationApi
-@ExperimentalCoilApi
 @ExperimentalComposeUiApi
 fun PokedexScreen(viewModel: PokedexViewModel, onClickPokemon: (String) -> Unit) {
     var showSearchBottomSheet by remember { mutableStateOf(false) }

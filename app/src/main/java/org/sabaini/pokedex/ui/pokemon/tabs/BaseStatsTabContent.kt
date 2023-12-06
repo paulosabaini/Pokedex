@@ -23,6 +23,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
@@ -31,13 +32,14 @@ import org.sabaini.pokedex.util.Constants.THREE
 
 @Composable
 fun BaseStatsContent(viewModel: PokemonViewModel) {
+    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
             .padding(dimensionResource(R.dimen.dimen_of_15_dp)),
     ) {
-        viewModel.pokemonInfoUiState.baseStats.forEach {
+        pokemon.value.baseStats.forEach {
             StatsBar(statName = it.name, barColor = it.color, progressValue = it.baseState)
         }
     }

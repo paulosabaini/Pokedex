@@ -37,7 +37,6 @@ import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN_ARGUMENT
 import org.sabaini.pokedex.ui.pokedex.PokedexScreen
 import org.sabaini.pokedex.ui.pokemon.PokemonScreen
 import org.sabaini.pokedex.ui.theme.PokedexTheme
-import org.sabaini.pokedex.util.Constants.BLANK
 
 @Composable
 @ExperimentalFoundationApi
@@ -76,10 +75,9 @@ fun PokedexApp() {
                             type = NavType.StringType
                         },
                     ),
-                ) { entry ->
+                ) {
                     upAvailable.value = true
-                    val pokemonName = entry.arguments?.getString(POKEMON_SCREEN_ARGUMENT)
-                    PokemonScreen(pokemonName = pokemonName ?: BLANK, hiltViewModel()) {
+                    PokemonScreen(hiltViewModel()) {
                         customTopAppBarColor = it
                     }
                 }

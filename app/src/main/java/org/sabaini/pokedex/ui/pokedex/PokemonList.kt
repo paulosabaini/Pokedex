@@ -1,6 +1,5 @@
 package org.sabaini.pokedex.ui.pokedex
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -13,14 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants
 
 @Composable
-@ExperimentalFoundationApi
-@ExperimentalCoilApi
 fun PokemonList(
     modifier: Modifier = Modifier,
     pokemons: LazyPagingItems<PokemonUiState>,
@@ -46,7 +42,6 @@ fun PokemonList(
     }
 }
 
-@ExperimentalFoundationApi
 private fun LazyGridScope.renderLoading(lazyPokemonItems: LazyPagingItems<PokemonUiState>) {
     val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(Constants.SPAN_OVER_SIZED) }
 

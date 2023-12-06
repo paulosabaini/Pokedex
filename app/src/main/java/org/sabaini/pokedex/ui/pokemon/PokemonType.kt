@@ -15,8 +15,8 @@ import org.sabaini.pokedex.util.Enums
 
 @Composable
 fun PokemonType(
-    type: String,
     modifier: Modifier = Modifier,
+    type: String,
 ) {
     Box(
         modifier = modifier

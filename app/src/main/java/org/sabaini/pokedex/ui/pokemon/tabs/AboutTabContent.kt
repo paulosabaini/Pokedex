@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.theme.LightGray
@@ -27,6 +28,8 @@ import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 
 @Composable
 fun AboutContent(viewModel: PokemonViewModel) {
+    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,15 +37,15 @@ fun AboutContent(viewModel: PokemonViewModel) {
             .padding(dimensionResource(R.dimen.dimen_of_15_dp)),
     ) {
         Text(
-            text = viewModel.pokemonInfoUiState.description,
+            text = pokemon.value.description,
             color = Color.White,
             textAlign = TextAlign.Justify,
             fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp,
         )
 
         HeightAndWeightCard(
-            height = viewModel.pokemonInfoUiState.getFormattedHeight(),
-            weight = viewModel.pokemonInfoUiState.getFormattedWeight(),
+            height = pokemon.value.getFormattedHeight(),
+            weight = pokemon.value.getFormattedWeight(),
         )
     }
 }

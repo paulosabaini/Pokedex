@@ -1,5 +1,7 @@
 package org.sabaini.pokedex.util
 
+import org.sabaini.pokedex.util.Constants.ZERO
+
 object PokemonUtils {
 
     fun getPokemonImageUrl(id: String): String {
@@ -7,6 +9,7 @@ object PokemonUtils {
     }
 
     fun getDisplayPokemonNumber(id: String): String {
+        if (id == ZERO.toString()) return String()
         return Constants.NUMBER + id.padStart(Constants.THREE, Constants.ZERO_CHAR)
     }
 }
