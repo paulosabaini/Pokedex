@@ -12,4 +12,9 @@ object PokemonUtils {
         if (id == ZERO.toString()) return String()
         return Constants.NUMBER + id.padStart(Constants.THREE, Constants.ZERO_CHAR)
     }
+
+    fun getPokemonBaseStatValue(value: Float) = value / Constants.THREE
+
+    fun getPokemonBaseStatePercentage(value: Float) =
+        (value * Constants.ONE_HUNDRED).toInt().toString()
 }

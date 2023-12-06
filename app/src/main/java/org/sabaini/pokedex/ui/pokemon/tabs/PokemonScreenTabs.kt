@@ -20,12 +20,13 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.util.Constants
 
 @ExperimentalCoilApi
 @Composable
-fun PokemonInfoTabs() {
+fun PokemonInfoTabs(pokemon: PokemonInfoUiState) {
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution)
     val pagerState = rememberPagerState(
         initialPage = Constants.ZERO,
@@ -43,13 +44,13 @@ fun PokemonInfoTabs() {
         ),
     ) {
         TabsOptions(tabs = tabs, pagerState = pagerState)
-        TabsContent(tabs = tabs, pagerState = pagerState)
+        TabsContent(tabs = tabs, pagerState = pagerState, pokemon = pokemon)
     }
 }
 
 @ExperimentalCoilApi
 @Composable
-fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
+private fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
 
     TabRow(
@@ -86,8 +87,8 @@ fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
 
 @ExperimentalCoilApi
 @Composable
-fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
+private fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, pokemon: PokemonInfoUiState) {
     HorizontalPager(state = pagerState) { page ->
-        tabs[page].screen()
+        tabs[page].screen(pokemon)
     }
 }

@@ -30,7 +30,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -39,14 +38,12 @@ import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokemon.PokemonType
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
-import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants
 
 @ExperimentalCoilApi
 @Composable
-fun EvolutionContent(viewModel: PokemonViewModel) {
-    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
+fun EvolutionContent(pokemon: PokemonInfoUiState) {
     val evolutionStages =
         listOf(
             stringResource(R.string.evolution_stage_unevolved),
@@ -65,7 +62,7 @@ fun EvolutionContent(viewModel: PokemonViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize(),
         ) {
-            itemsIndexed(pokemon.value.evolutionChain) { index, evolution ->
+            itemsIndexed(pokemon.evolutionChain) { index, evolution ->
                 EvolutionCard(
                     pokemon = evolution.pokemon,
                     stage = evolutionStages[index],

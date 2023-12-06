@@ -19,17 +19,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.theme.LightGray
-import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 
 @Composable
-fun AboutContent(viewModel: PokemonViewModel) {
-    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
-
+fun AboutContent(pokemon: PokemonInfoUiState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,21 +33,21 @@ fun AboutContent(viewModel: PokemonViewModel) {
             .padding(dimensionResource(R.dimen.dimen_of_15_dp)),
     ) {
         Text(
-            text = pokemon.value.description,
+            text = pokemon.description,
             color = Color.White,
             textAlign = TextAlign.Justify,
             fontSize = dimensionResource(R.dimen.dimen_of_16_sp).value.sp,
         )
 
         HeightAndWeightCard(
-            height = pokemon.value.getFormattedHeight(),
-            weight = pokemon.value.getFormattedWeight(),
+            height = pokemon.getFormattedHeight(),
+            weight = pokemon.getFormattedWeight(),
         )
     }
 }
 
 @Composable
-fun HeightAndWeightCard(height: String, weight: String) {
+private fun HeightAndWeightCard(height: String, weight: String) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.dimen_of_3_dp)),
@@ -70,7 +66,7 @@ fun HeightAndWeightCard(height: String, weight: String) {
 }
 
 @Composable
-fun HeightAndWeightText(title: String, value: String) {
+private fun HeightAndWeightText(title: String, value: String) {
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,6 +78,6 @@ fun HeightAndWeightText(title: String, value: String) {
 
 @Preview
 @Composable
-fun AboutContentPreview() {
-    AboutContent(hiltViewModel())
+private fun AboutContentPreview() {
+    AboutContent(PokemonInfoUiState())
 }

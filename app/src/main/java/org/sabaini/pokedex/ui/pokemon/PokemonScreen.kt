@@ -54,7 +54,7 @@ fun PokemonScreen(
             pokemonName = pokemon.value.name,
             pokemonImageUrl = pokemon.value.getImageUrl(),
         )
-        PokemonInfoTabs()
+        PokemonInfoTabs(pokemon.value)
     }
 }
 

@@ -22,31 +22,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sabaini.pokedex.R
+import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
-import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
-import org.sabaini.pokedex.util.Constants.ONE_HUNDRED
-import org.sabaini.pokedex.util.Constants.THREE
+import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatValue
+import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatePercentage
 
 @Composable
-fun BaseStatsContent(viewModel: PokemonViewModel) {
-    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
+fun BaseStatsContent(pokemon: PokemonInfoUiState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
             .padding(dimensionResource(R.dimen.dimen_of_15_dp)),
     ) {
-        pokemon.value.baseStats.forEach {
+        pokemon.baseStats.forEach {
             StatsBar(statName = it.name, barColor = it.color, progressValue = it.baseState)
         }
     }
 }
 
 @Composable
-fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
+private fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -58,7 +55,7 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
 
         Box(contentAlignment = Alignment.Center) {
             LinearProgressIndicator(
-                progress = progressValue / THREE,
+                progress = getPokemonBaseStatValue(progressValue),
                 trackColor = Color.DarkGray,
                 color = barColor,
                 modifier = Modifier
@@ -70,7 +67,7 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
             Text(
                 text = stringResource(
                     R.string.stat_value,
-                    (progressValue * ONE_HUNDRED).toInt().toString(),
+                    getPokemonBaseStatePercentage(progressValue),
                 ),
                 color = Color.White,
             )
@@ -80,14 +77,8 @@ fun StatsBar(statName: String, barColor: Color, progressValue: Float) {
 
 @Preview
 @Composable
-fun StatsBarPreview() {
+private fun StatsBarPreview() {
     Surface(color = Black) {
         StatsBar("EXP", Color.Red, 0.5f)
     }
-}
-
-@Preview
-@Composable
-fun BaseStatsPreview() {
-    BaseStatsContent(hiltViewModel())
 }
