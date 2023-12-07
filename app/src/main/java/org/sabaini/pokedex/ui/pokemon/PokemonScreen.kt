@@ -73,7 +73,7 @@ private fun PokemonNameAndNumber(pokemonName: String, pokemonNumber: String) {
         )
         Text(
             text = pokemonNumber,
-            color = Color.LightGray,
+            color = Color.White,
             fontSize = dimensionResource(R.dimen.dimen_of_25_sp).value.sp,
             fontWeight = FontWeight.Bold,
         )

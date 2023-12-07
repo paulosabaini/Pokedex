@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -109,6 +110,7 @@ private fun PokemonEvolutionNameAndTypes(pokemon: PokemonInfoUiState) {
     Column {
         Text(text = pokemon.getFormattedPokemonNumber(), color = Color.White)
         Text(text = pokemon.name.toTitleCase(), color = Color.White, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dimen_of_4_dp)))
         Row {
             pokemon.types.forEach { type ->
                 PokemonType(

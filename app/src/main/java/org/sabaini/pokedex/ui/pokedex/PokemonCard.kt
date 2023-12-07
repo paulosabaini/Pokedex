@@ -72,7 +72,7 @@ private fun PokemonCardHeader(pokemon: PokemonUiState) {
         )
         Text(
             text = pokemon.getFormattedPokemonNumber(),
-            color = Color.LightGray,
+            color = Color.White,
         )
     }
 }

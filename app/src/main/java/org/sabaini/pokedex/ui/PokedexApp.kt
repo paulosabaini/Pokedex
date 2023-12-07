@@ -96,6 +96,7 @@ fun PokedexTopBar(
                 Text(
                     text = stringResource(R.string.pokedex),
                     fontWeight = FontWeight.Bold,
+                    color = Color.White,
                 )
             },
             navigationIcon = {
@@ -117,6 +118,7 @@ fun PokedexTopBar(
                 Text(
                     text = stringResource(R.string.pokedex),
                     fontWeight = FontWeight.Bold,
+                    color = Color.White,
                     modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_5_dp)),
                 )
             },
