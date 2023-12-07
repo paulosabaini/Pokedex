@@ -3,7 +3,9 @@
     <dimen name="dimen_of_1_dp">1dp</dimen>
     <dimen name="dimen_of_2_dp">2dp</dimen>
     <dimen name="dimen_of_3_dp">3dp</dimen>
+    <dimen name="dimen_of_4_dp">4dp</dimen>
     <dimen name="dimen_of_5_dp">5dp</dimen>
+    <dimen name="dimen_of_8_dp">8dp</dimen>
     <dimen name="dimen_of_10_dp">10dp</dimen>
     <dimen name="dimen_of_15_dp">15dp</dimen>
     <dimen name="dimen_of_16_dp">16dp</dimen>
