@@ -1,5 +1,3 @@
-![](media/pokedex_header.png)
-
 # Pokédex 🔴
 
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
@@ -12,13 +10,13 @@
 
 **Pokédex** is a sample Android application 📱 built to demonstrate the use of *Jetpack Compose* and *Modern Android development* tools.
 
-***You can Install and test latest Pokédex app from below 👇***
-
-[![Pokédex App](https://img.shields.io/badge/Pokédex🔴-APK-red.svg?style=for-the-badge&logo=android)](https://github.com/paulosabaini/pokedex/releases/latest/download/app.apk)
-
-## About
-
 It loads **Pokémon** data from **PokéAPI** and display it with a simple and clean UI powered by **Jetpack Compose**.
+
+## Screenshots
+
+<img src="./screenshots/01.png" width="40%" height="30%"> <img src="./screenshots/02.png" width="40%" height="30%">
+
+<img src="./screenshots/03.png" width="40%" height="30%"> <img src="./screenshots/04.png" width="40%" height="30%"> 
 
 ## Built With 🛠
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
@@ -34,28 +32,8 @@ It loads **Pokémon** data from **PokéAPI** and display it with a simple and cl
   - [Paging](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - The Paging library helps you load and display pages of data from a larger dataset from local storage or over network.
   - [Navigation](https://developer.android.com/guide/navigation) - Navigation refers to the interactions that allow users to navigate across, into, and back out from the different pieces of content within your app.
   - [Palette](https://developer.android.com/training/material/palette-colors) - The palette library is a support library that extracts prominent colors from images to help you create visually engaging apps.
-- [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
-- [Accompanist](https://github.com/google/accompanist) - Accompanist is a group of libraries that aim to supplement Jetpack Compose with features that are commonly required by developers but not yet available.
+- [Material 3](https://m3.material.io) - Material 3 is the latest version of Google’s open-source design system.
 - [Floating Action Button Speed Dial](https://github.com/leinardi/FloatingActionButtonSpeedDial) - Android library providing an implementation of the Material Design Floating Action Button Speed Dial.
-
-# Package Structure
-
-    org.sabaini.pokedex  # Root Package
-    .
-    ├── data             # For data handling
-    │   ├── local        # Local Persistence Database. Room (SQLite) database 
-    │   └── remote       # Remote Data Handlers
-    |
-    ├── di               # Dependency Injection
-    |
-    ├── ui               # View layer
-    │   ├── pokedex      # Main screen with the pokémon list
-    │   ├── pokemon      # Pokémon detail screen
-    │   ├── state        # Ui State models
-    │   ├── theme        # App theme
-    │   └── viewmodel    # ViewModel classes
-    |
-    └── utils            # Utility classes
 
 ## Architecture
 This app uses the [Android recommended architecture](https://developer.android.com/jetpack/guide) for building robust, high-quality apps.
