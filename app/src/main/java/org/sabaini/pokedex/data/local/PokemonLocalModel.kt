@@ -3,7 +3,7 @@ package org.sabaini.pokedex.data.local
 import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants.COMMA
 import org.sabaini.pokedex.util.Constants.ZERO

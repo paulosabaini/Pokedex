@@ -11,9 +11,9 @@ import org.sabaini.pokedex.data.remote.PokemonInfoApiModel
 import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.remote.asLocalModel
 import org.sabaini.pokedex.data.remote.asStatLocalModel
-import org.sabaini.pokedex.ui.state.PokemonInfoEvolutionUiState
-import org.sabaini.pokedex.ui.state.PokemonInfoStatUiState
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoEvolutionUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoStatUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
 import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.ENGLISH

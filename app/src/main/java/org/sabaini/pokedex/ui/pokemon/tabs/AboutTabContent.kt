@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.ui.theme.LightGray
 

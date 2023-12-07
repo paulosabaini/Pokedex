@@ -6,10 +6,12 @@
     <string name="stat_value">%s/300</string>
     <string name="level_value">(Level %s)</string>
     <string name="arrow">Arrow</string>
+    <string name="error">Error</string>
     <string name="retry">Retry</string>
     <string name="all_gen">All gen</string>
     <string name="search">Search</string>
     <string name="search_placeholder">Search Pokemon</string>
     <string name="generation">Generation</string>
     <string name="back">Back</string>
+    <string name="loading_error">Ops… Something went wrong while trying to fetch the pokemon info. Please try again.</string>
 </resources>

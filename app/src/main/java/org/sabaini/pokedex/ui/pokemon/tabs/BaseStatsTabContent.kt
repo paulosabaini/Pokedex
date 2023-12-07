@@ -23,7 +23,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatValue
 import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatePercentage

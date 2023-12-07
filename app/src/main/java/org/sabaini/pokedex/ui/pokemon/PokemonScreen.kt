@@ -4,31 +4,33 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokemon.tabs.PokemonInfoTabs
 import org.sabaini.pokedex.ui.theme.LightGray
-import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
+import org.sabaini.pokedex.ui.theme.Red
 import org.sabaini.pokedex.util.toTitleCase
 
 @Composable
@@ -36,23 +38,85 @@ fun PokemonScreen(
     viewModel: PokemonViewModel,
     onDominantColor: (Color) -> Unit,
 ) {
-    val pokemon = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(pokemon.value.backgroundColor) {
-        onDominantColor(pokemon.value.backgroundColor ?: LightGray)
+    when (uiState.value) {
+        is PokemonScreenUiState.Loading -> {
+            onDominantColor(Red)
+            PokemonInfoLoading()
+        }
+
+        is PokemonScreenUiState.Error -> {
+            onDominantColor(Red)
+            PokemonInfoError()
+        }
+
+        is PokemonScreenUiState.Success -> PokemonInfo(
+            pokemon = (uiState.value as PokemonScreenUiState.Success).pokemonInfo,
+            onDominantColor = onDominantColor,
+        )
+    }
+}
+
+@Composable
+private fun PokemonInfoLoading() {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth().padding(
+            top = dimensionResource(R.dimen.dimen_of_16_dp),
+        ),
+    ) {
+        CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .size(dimensionResource(R.dimen.dimen_of_64_dp))
+                .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp)),
+        )
+    }
+}
+
+@Composable
+private fun PokemonInfoError() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dimen_of_16_dp)))
+        Icon(
+            Icons.Filled.Error,
+            contentDescription = stringResource(R.string.error),
+            tint = Red,
+            modifier = Modifier.size(dimensionResource(R.dimen.dimen_of_64_dp)),
+        )
+        Text(
+            text = stringResource(R.string.loading_error),
+            color = Color.White,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
+private fun PokemonInfo(
+    pokemon: PokemonInfoUiState,
+    onDominantColor: (Color) -> Unit,
+) {
+    LaunchedEffect(pokemon.backgroundColor) {
+        onDominantColor(pokemon.backgroundColor ?: LightGray)
     }
 
-    Column(modifier = Modifier.background(color = pokemon.value.backgroundColor ?: LightGray)) {
+    Column(modifier = Modifier.background(color = pokemon.backgroundColor ?: LightGray)) {
         PokemonNameAndNumber(
-            pokemonName = pokemon.value.name,
-            pokemonNumber = pokemon.value.getFormattedPokemonNumber(),
+            pokemonName = pokemon.name,
+            pokemonNumber = pokemon.getFormattedPokemonNumber(),
         )
-        PokemonTypes(types = pokemon.value.types)
+        PokemonTypes(types = pokemon.types)
         PokemonInfoImage(
-            pokemonName = pokemon.value.name,
-            pokemonImageUrl = pokemon.value.getImageUrl(),
+            pokemonName = pokemon.name,
+            pokemonImageUrl = pokemon.getImageUrl(),
         )
-        PokemonInfoTabs(pokemon.value)
+        PokemonInfoTabs(pokemon)
     }
 }
 
@@ -102,8 +166,6 @@ private fun PokemonInfoImage(
     pokemonName: String,
     pokemonImageUrl: String,
 ) {
-    var showLoading by remember { mutableStateOf(true) }
-
     AsyncImage(
         model = pokemonImageUrl,
         contentDescription = pokemonName,
@@ -111,24 +173,5 @@ private fun PokemonInfoImage(
             .fillMaxWidth()
             .size(dimensionResource(R.dimen.dimen_of_150_dp))
             .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp)),
-        onState = { painterState ->
-            showLoading = when (painterState) {
-                is AsyncImagePainter.State.Loading -> true
-                is AsyncImagePainter.State.Empty -> true
-                is AsyncImagePainter.State.Error -> true
-                is AsyncImagePainter.State.Success -> false
-            }
-        },
     )
-
-    if (showLoading) {
-        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .size(dimensionResource(R.dimen.dimen_of_64_dp))
-                    .padding(bottom = dimensionResource(R.dimen.dimen_of_10_dp)),
-            )
-        }
-    }
 }

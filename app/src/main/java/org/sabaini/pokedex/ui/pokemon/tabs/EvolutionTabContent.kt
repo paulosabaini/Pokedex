@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokemon.PokemonType
-import org.sabaini.pokedex.ui.state.PokemonInfoUiState
+import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.util.Constants
 import org.sabaini.pokedex.util.toTitleCase
