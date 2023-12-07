@@ -29,7 +29,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import coil.annotation.ExperimentalCoilApi
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.Destinations.POKEDEX_SCREEN
 import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN
@@ -40,7 +39,6 @@ import org.sabaini.pokedex.ui.theme.PokedexTheme
 
 @Composable
 @ExperimentalFoundationApi
-@ExperimentalCoilApi
 @ExperimentalComposeUiApi
 fun PokedexApp() {
     PokedexTheme {

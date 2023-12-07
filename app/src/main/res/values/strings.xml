@@ -4,13 +4,9 @@
     <string name="weight">Weight</string>
     <string name="height">Height</string>
     <string name="stat_value">%s/300</string>
-    <string name="level_value">Level %s</string>
+    <string name="level_value">(Level %s)</string>
     <string name="arrow">Arrow</string>
     <string name="retry">Retry</string>
-    <string name="evolution_stage_unevolved">Unevolved</string>
-    <string name="evolution_stage_first">First evolution</string>
-    <string name="evolution_stage_second">Second evolution</string>
-    <string name="evolution_stage_third">Third evolution</string>
     <string name="all_gen">All gen</string>
     <string name="search">Search</string>
     <string name="search_placeholder">Search Pokemon</string>

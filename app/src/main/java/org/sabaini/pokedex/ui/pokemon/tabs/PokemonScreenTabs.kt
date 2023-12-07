@@ -17,14 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
 import org.sabaini.pokedex.util.Constants
 
-@ExperimentalCoilApi
 @Composable
 fun PokemonInfoTabs(pokemon: PokemonInfoUiState) {
     val tabs = listOf(TabItem.About, TabItem.BaseStats, TabItem.Evolution)
@@ -48,7 +46,6 @@ fun PokemonInfoTabs(pokemon: PokemonInfoUiState) {
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
@@ -85,7 +82,6 @@ private fun TabsOptions(tabs: List<TabItem>, pagerState: PagerState) {
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, pokemon: PokemonInfoUiState) {
     HorizontalPager(state = pagerState) { page ->

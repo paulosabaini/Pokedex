@@ -23,7 +23,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import org.sabaini.pokedex.R
@@ -32,7 +31,6 @@ import org.sabaini.pokedex.ui.theme.LightGray
 import org.sabaini.pokedex.ui.viewmodel.PokemonViewModel
 import org.sabaini.pokedex.util.toTitleCase
 
-@ExperimentalCoilApi
 @Composable
 fun PokemonScreen(
     viewModel: PokemonViewModel,

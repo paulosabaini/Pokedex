@@ -1,57 +1,37 @@
 package org.sabaini.pokedex.ui.pokemon.tabs
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import kotlinx.coroutines.launch
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import org.sabaini.pokedex.R
 import org.sabaini.pokedex.ui.pokemon.PokemonType
 import org.sabaini.pokedex.ui.state.PokemonInfoUiState
 import org.sabaini.pokedex.ui.theme.Black
-import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.Constants
+import org.sabaini.pokedex.util.toTitleCase
 
-@ExperimentalCoilApi
 @Composable
 fun EvolutionContent(pokemon: PokemonInfoUiState) {
-    val evolutionStages =
-        listOf(
-            stringResource(R.string.evolution_stage_unevolved),
-            stringResource(R.string.evolution_stage_first),
-            stringResource(R.string.evolution_stage_second),
-            stringResource(R.string.evolution_stage_third),
-        )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,10 +42,9 @@ fun EvolutionContent(pokemon: PokemonInfoUiState) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize(),
         ) {
-            itemsIndexed(pokemon.evolutionChain) { index, evolution ->
-                EvolutionCard(
+            items(pokemon.evolutionChain) { evolution ->
+                PokemonEvolution(
                     pokemon = evolution.pokemon,
-                    stage = evolutionStages[index],
                     minLevel = evolution.minLevel,
                 )
             }
@@ -73,111 +52,63 @@ fun EvolutionContent(pokemon: PokemonInfoUiState) {
     }
 }
 
-@ExperimentalCoilApi
 @Composable
-fun EvolutionCard(
+private fun PokemonEvolution(
     pokemon: PokemonInfoUiState,
-    stage: String,
     minLevel: Int,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         if (minLevel != Constants.ZERO) EvolutionArrow(minLevel.toString())
-        EvolutionCardPokemon(pokemon, stage)
+        PokemonEvolutionDetails(pokemon)
     }
 }
 
 @Composable
-fun EvolutionArrow(minLevel: String) {
+private fun EvolutionArrow(minLevel: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = stringResource(R.string.level_value, minLevel),
-            color = Color.White,
-        )
         Icon(
             Icons.Filled.ArrowDownward,
             contentDescription = stringResource(R.string.arrow),
             tint = Color.White,
         )
+        Text(
+            text = stringResource(R.string.level_value, minLevel),
+            color = Color.White,
+            fontSize = dimensionResource(R.dimen.dimen_of_12_sp).value.sp,
+        )
     }
 }
 
 @Composable
-@ExperimentalCoilApi
-fun EvolutionCardPokemon(pokemon: PokemonInfoUiState, stage: String) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+private fun PokemonEvolutionDetails(pokemon: PokemonInfoUiState) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(dimensionResource(R.dimen.dimen_of_10_dp)),
     ) {
-        EvolutionCardPokemonImage(pokemon)
-        Text(text = stage, color = Color.White)
-        EvolutionCardPokemonNameAndTypes(pokemon)
+        PokemonEvolutionImage(pokemon.name, pokemon.getImageUrl())
+        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.dimen_of_16_dp)))
+        PokemonEvolutionNameAndTypes(pokemon)
     }
 }
 
 @Composable
-@ExperimentalCoilApi
-fun EvolutionCardPokemonImage(pokemon: PokemonInfoUiState) {
-    val painter = rememberAsyncImagePainter(model = pokemon.getImageUrl())
-    val painterState = painter.state
-    val dominantColor = remember { mutableStateOf(pokemon.getBackgroundColor()) }
-    val vibrantColor = remember { mutableStateOf(pokemon.getBorderColor()) }
-
-    Image(
-        painter = painter,
-        contentDescription = pokemon.name,
-        contentScale = ContentScale.Crop,
+private fun PokemonEvolutionImage(
+    pokemonName: String,
+    pokemonImageUrl: String,
+) {
+    AsyncImage(
+        model = pokemonImageUrl,
+        contentDescription = pokemonName,
         modifier = Modifier
-            .size(dimensionResource(R.dimen.dimen_of_64_dp))
-            .clip(CircleShape)
-            .border(
-                dimensionResource(R.dimen.dimen_of_2_dp),
-                vibrantColor.value,
-                CircleShape,
-            )
-            .background(color = dominantColor.value),
+            .size(dimensionResource(R.dimen.dimen_of_80_dp)),
     )
-
-    if (painterState is AsyncImagePainter.State.Loading) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .size(dimensionResource(R.dimen.dimen_of_64_dp))
-                .clip(CircleShape)
-                .border(
-                    dimensionResource(R.dimen.dimen_of_2_dp),
-                    Color.Transparent,
-                    CircleShape,
-                ),
-        )
-    } else if (painterState is AsyncImagePainter.State.Success && dominantColor.value == Color.Transparent && vibrantColor.value == Color.Transparent) {
-        LaunchedEffect(key1 = painter) {
-            launch {
-                val image = painter.imageLoader.execute(painter.request).drawable
-                ColorUtils.calculateDominantColor(image!!) {
-                    dominantColor.value = it
-                    pokemon.backgroundColor = it
-                }
-                ColorUtils.calculateVibrantColor(image) {
-                    vibrantColor.value = it
-                    pokemon.borderColor = it
-                }
-            }
-        }
-    }
 }
 
 @Composable
-fun EvolutionCardPokemonNameAndTypes(pokemon: PokemonInfoUiState) {
-    Column(
-        modifier = Modifier
-            .background(
-                Color.White.copy(alpha = Constants.ZERO_POINT_ONE_FLOAT),
-                RoundedCornerShape(dimensionResource(R.dimen.dimen_of_5_dp)),
-            )
-            .padding(dimensionResource(R.dimen.dimen_of_5_dp)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(text = pokemon.name, color = Color.White, fontWeight = FontWeight.Bold)
+private fun PokemonEvolutionNameAndTypes(pokemon: PokemonInfoUiState) {
+    Column {
+        Text(text = pokemon.getFormattedPokemonNumber(), color = Color.White)
+        Text(text = pokemon.name.toTitleCase(), color = Color.White, fontWeight = FontWeight.Bold)
         Row {
             pokemon.types.forEach { type ->
                 PokemonType(
