@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon
+package org.sabaini.pokedex.presentation.pokemon
 
 sealed class PokemonScreenUiState {
     data class Success(val pokemonInfo: PokemonInfoUiState) : PokemonScreenUiState()

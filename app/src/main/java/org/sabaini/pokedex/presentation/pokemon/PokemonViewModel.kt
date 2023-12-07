@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon
+package org.sabaini.pokedex.presentation.pokemon
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.data.PokemonRepository
-import org.sabaini.pokedex.ui.Destinations
+import org.sabaini.pokedex.presentation.Destinations
 import javax.inject.Inject
 
 @HiltViewModel

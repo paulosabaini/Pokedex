@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,7 +13,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants
 
 @Composable

@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon
+package org.sabaini.pokedex.presentation.pokemon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.pokemon.tabs.PokemonInfoTabs
-import org.sabaini.pokedex.ui.theme.LightGray
-import org.sabaini.pokedex.ui.theme.Red
+import org.sabaini.pokedex.presentation.pokemon.tabs.PokemonInfoTabs
+import org.sabaini.pokedex.presentation.theme.LightGray
+import org.sabaini.pokedex.presentation.theme.Red
 import org.sabaini.pokedex.util.toTitleCase
 
 @Composable

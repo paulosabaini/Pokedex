@@ -1,7 +1,7 @@
-package org.sabaini.pokedex.ui.pokemon.tabs
+package org.sabaini.pokedex.presentation.pokemon.tabs
 
 import androidx.compose.runtime.Composable
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoUiState
 
 typealias ComposableFun = @Composable (pokemon: PokemonInfoUiState) -> Unit
 

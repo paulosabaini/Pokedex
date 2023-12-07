@@ -11,10 +11,10 @@ import org.sabaini.pokedex.data.remote.PokemonInfoApiModel
 import org.sabaini.pokedex.data.remote.PokemonRemoteDataSource
 import org.sabaini.pokedex.data.remote.asLocalModel
 import org.sabaini.pokedex.data.remote.asStatLocalModel
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoEvolutionUiState
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoStatUiState
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
-import org.sabaini.pokedex.ui.state.PokemonUiState
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoEvolutionUiState
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoStatUiState
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoUiState
+import org.sabaini.pokedex.presentation.pokedex.PokemonUiState
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.ENGLISH
 import org.sabaini.pokedex.util.Constants.FIRE_RED

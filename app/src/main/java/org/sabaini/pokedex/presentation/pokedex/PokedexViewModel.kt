@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.viewmodel
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.data.PokemonRepository
 import org.sabaini.pokedex.data.PokemonsSource
-import org.sabaini.pokedex.ui.state.PokemonUiState
 import org.sabaini.pokedex.util.Constants.PAGING_SIZE
 import javax.inject.Inject
 

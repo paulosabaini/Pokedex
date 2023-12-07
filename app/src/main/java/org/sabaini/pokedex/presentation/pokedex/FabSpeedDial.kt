@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.Composable
@@ -7,8 +7,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.theme.Red
-import org.sabaini.pokedex.ui.theme.White
+import org.sabaini.pokedex.presentation.theme.Red
+import org.sabaini.pokedex.presentation.theme.White
 
 @Composable
 fun FabSpeedDial(onClick: (Int) -> Unit) {

@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.theme.PokedexTheme
+import org.sabaini.pokedex.presentation.theme.PokedexTheme
 
 @Composable
 fun LoadingView(modifier: Modifier = Modifier) {

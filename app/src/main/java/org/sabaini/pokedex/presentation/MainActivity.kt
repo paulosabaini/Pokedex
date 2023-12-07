@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui
+package org.sabaini.pokedex.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

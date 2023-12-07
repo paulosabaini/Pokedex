@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon.tabs
+package org.sabaini.pokedex.presentation.pokemon.tabs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
@@ -19,8 +19,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
-import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoUiState
+import org.sabaini.pokedex.presentation.theme.Black
 import org.sabaini.pokedex.util.Constants
 
 @Composable

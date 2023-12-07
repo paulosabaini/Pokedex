@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon
+package org.sabaini.pokedex.presentation.pokemon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

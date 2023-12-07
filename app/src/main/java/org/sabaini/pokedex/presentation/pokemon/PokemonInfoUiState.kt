@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon
+package org.sabaini.pokedex.presentation.pokemon
 
 import androidx.compose.ui.graphics.Color
 import org.sabaini.pokedex.util.Constants

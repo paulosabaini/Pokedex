@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon.tabs
+package org.sabaini.pokedex.presentation.pokemon.tabs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.pokemon.PokemonType
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
-import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.presentation.pokemon.PokemonType
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoUiState
+import org.sabaini.pokedex.presentation.theme.Black
 import org.sabaini.pokedex.util.Constants
 import org.sabaini.pokedex.util.toTitleCase
 

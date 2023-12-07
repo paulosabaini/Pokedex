@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.paging.compose.collectAsLazyPagingItems
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.viewmodel.PokedexViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

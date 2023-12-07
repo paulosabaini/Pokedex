@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui
+package org.sabaini.pokedex.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
@@ -30,12 +30,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.Destinations.POKEDEX_SCREEN
-import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN
-import org.sabaini.pokedex.ui.Destinations.POKEMON_SCREEN_ARGUMENT
-import org.sabaini.pokedex.ui.pokedex.PokedexScreen
-import org.sabaini.pokedex.ui.pokemon.PokemonScreen
-import org.sabaini.pokedex.ui.theme.PokedexTheme
+import org.sabaini.pokedex.presentation.Destinations.POKEDEX_SCREEN
+import org.sabaini.pokedex.presentation.Destinations.POKEMON_SCREEN
+import org.sabaini.pokedex.presentation.Destinations.POKEMON_SCREEN_ARGUMENT
+import org.sabaini.pokedex.presentation.pokedex.PokedexScreen
+import org.sabaini.pokedex.presentation.pokemon.PokemonScreen
+import org.sabaini.pokedex.presentation.theme.PokedexTheme
 
 @Composable
 @ExperimentalFoundationApi

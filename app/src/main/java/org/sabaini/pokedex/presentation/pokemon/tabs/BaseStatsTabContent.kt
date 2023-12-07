@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokemon.tabs
+package org.sabaini.pokedex.presentation.pokemon.tabs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.pokemon.PokemonInfoUiState
-import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.presentation.pokemon.PokemonInfoUiState
+import org.sabaini.pokedex.presentation.theme.Black
 import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatValue
 import org.sabaini.pokedex.util.PokemonUtils.getPokemonBaseStatePercentage
 

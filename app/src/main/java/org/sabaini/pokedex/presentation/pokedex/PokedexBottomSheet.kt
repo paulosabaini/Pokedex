@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -46,7 +46,7 @@ import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.theme.Black
+import org.sabaini.pokedex.presentation.theme.Black
 import org.sabaini.pokedex.util.Constants.BLANK
 import org.sabaini.pokedex.util.Constants.TWO
 import org.sabaini.pokedex.util.Enums

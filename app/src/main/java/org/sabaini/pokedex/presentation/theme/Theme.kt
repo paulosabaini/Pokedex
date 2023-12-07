@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.theme
+package org.sabaini.pokedex.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

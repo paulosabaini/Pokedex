@@ -1,4 +1,4 @@
-package org.sabaini.pokedex.ui.pokedex
+package org.sabaini.pokedex.presentation.pokedex
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -23,8 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import org.sabaini.pokedex.R
-import org.sabaini.pokedex.ui.state.PokemonUiState
-import org.sabaini.pokedex.ui.theme.LightGray
+import org.sabaini.pokedex.presentation.theme.LightGray
 import org.sabaini.pokedex.util.ColorUtils
 import org.sabaini.pokedex.util.toTitleCase
 
